@@ -1,5 +1,14 @@
 "use strict";
 
+
+let asteroidTypes = [
+    ["big", 4],
+]
+let asteroidImages = [];
+
+
+
+
 let gameState = {
     loading: false,
     mainMenu: false,
@@ -66,14 +75,18 @@ class userInterface {
 class asteroid {
     constructor() {
         randomSeed(Date.now()); // Set the current seed to the epoch time
-        this.d = Math.floor(random(50, 150));
+        this.d = Math.floor(random(25, 70));
 
         this.x = random(this.d, width - this.d);
-        this.y = random(this.d, height - this.d);
+        this.y = random(this.d, usableHeight - this.d);
 
         this.sprite = new Sprite(this.x, this.y, this.d); // Create the asteroid sprite itself
 
-        this.resources = this.d; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
+        let index = Math.floor(random(0, 1000)) % asteroidImages.length
+        this.sprite.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
+        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
+
+        this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
     }
 
     consumeResource() {
@@ -294,7 +307,13 @@ function drawEndScreen() {
 }
 
 function preload() {
-
+    for (let i = 0; i < asteroidTypes.length; i++) {
+        for (let j = 1; j < asteroidTypes[i][1] + 1; j++) {
+            let assetName = asteroidTypes[i][0] + j + ".png";
+            loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
+        }
+        
+    }
 }
 
 function setup() {
