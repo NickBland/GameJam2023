@@ -43,6 +43,8 @@ let usableHeight;
 
 let shop
 
+let selectedType = "none";
+
 class userInterface {
     constructor() {
         // Draw a container on the bottom of the screen, with a lighter opacity so that the player can see through it
@@ -72,7 +74,7 @@ class asteroid {
         this.y = random(this.d, height - this.d);
 
         this.sprite = new Sprite(this.x, this.y, this.d); // Create the asteroid sprite itself
-
+        this.sprite.collider = "k";
         this.resources = this.d; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
     }
 
@@ -99,17 +101,20 @@ class corsairShip { // Fighter drone
         this.sprite.damage = 20;
         this.sprite.w = 15;
         this.sprite.h = 15;
+        this.timer = 0;
     }
 
-    move(x,y){
-        //Movement logic for ships
+    travel() {
+        if(timer == 0){
+
+        }
     }
 
-    attack(){
+    attack() {
         //Create projectiles
     }
 
-    takeDamage(){
+    takeDamage() {
         //subtract health when hit by enemy projectiles
         //logic to die when 0 health
     }
@@ -127,27 +132,27 @@ class miningShip { // Mining drone
         this.sprite.resources = 0;
     }
 
-    move(x,y){
+    move(x, y) {
         //Movement logic for ships
     }
 
-    collectResources(){
+    collectResources() {
         //increases resource count when near asteroid
         //this would be what tells the asteroid to lose health
         //possibly returns to MS when full?
     }
 
-    attack(){
+    attack() {
         //Create projectiles
     }
 
-    takeDamage(){
+    takeDamage() {
         //subtract health when hit by enemy projectiles
         //logic to die when 0 health
     }
 }
 
-class destroyerShip{
+class destroyerShip {
     constructor(x, y) {
         this.sprite = new Sprite();
         this.sprite.x = x;
@@ -158,21 +163,21 @@ class destroyerShip{
         this.sprite.h = 20;
     }
 
-    move(x,y){
+    move(x, y) {
         //Movement logic for ships
     }
 
-    attack(){
+    attack() {
         //Create projectiles
     }
 
-    takeDamage(){
+    takeDamage() {
         //subtract health when hit by enemy projectiles
         //logic to die when 0 health
     }
 }
 
-class cruiserShip{
+class cruiserShip {
     constructor(x, y) {
         this.sprite = new Sprite();
         this.sprite.x = x;
@@ -183,20 +188,20 @@ class cruiserShip{
         this.sprite.h = 35;
     }
 
-    move(x,y){
+    move(x, y) {
         //Movement logic for ships
     }
 
-    attack(){
+    attack() {
         //Create projectiles
     }
 
-    takeDamage(){
+    takeDamage() {
         //subtract health when hit by enemy projectiles
         //logic to die when 0 health
     }
 }
-class battleshipShip{
+class battleshipShip {
     constructor(x, y) {
         this.sprite = new Sprite();
         this.sprite.x = x;
@@ -207,15 +212,15 @@ class battleshipShip{
         this.sprite.h = 50;
     }
 
-    move(x,y){
+    move(x, y) {
         //Movement logic for ships
     }
 
-    attack(){
+    attack() {
         //Create projectiles
     }
 
-    takeDamage(){
+    takeDamage() {
         //subtract health when hit by enemy projectiles
         //logic to die when 0 health
     }
@@ -229,29 +234,52 @@ class mothership {
         this.health = 500;
         this.shipType = ["mining", "corsair", "destroyer", "cruiser", "battleship"]; //Should hold the types of ship the MS can create - needs to be filled
 
-        this.ownedShips = [];
+        this.ownedShips = {
+            miningShipsArr: [],
+            corsairShipsArr: [],
+            destroyerShipsArr: [],
+            cruiserShipsArr: [],
+            battleshipShipsArr: [],
+        };
 
         this.sprite = new Sprite(this.x, this.y, this.w, this.h, "k"); //creates the mothership sprite
     }
 
     //Creates the child units - needs to be fed the argument for unit type
     createUnit(type) {
+        let unit;
         switch (type) {
             case "mining":
-                
+                unit = new miningShip(mothership1.x, mothership1.y);
+                this.ownedShips.miningShipsArr.push(unit);
+                this.ownedShips.miningShipsGroup.push(unit.sprite);
                 break;
 
             case "corsair":
-                
+                unit = new corsairShip(mothership1.x, mothership1.y);
+                this.ownedShips.corsairShipsArr.push(unit);
+                this.ownedShips.corsairShipsGroup.push(unit.sprite);
                 break;
 
             case "destroyer":
-                
+                unit = new destroyerShip(mothership1.x, mothership1.y);
+                this.ownedShips.destroyerShipsArr.push(unit);
+                this.ownedShips.destroyerShipsGroup.push(unit.sprite);
+                break;
+            case "cruiser":
+                unit = new cruiserShip(mothership1.x, mothership1.y);
+                this.ownedShips.cruiserShipsArr.push(unit);
+                this.ownedShips.cruiserShipsGroup.push(unit.sprite);
+                break;
+            case "battleship":
+                unit = new battleshipShip(mothership1.x, mothership1.y);
+                this.ownedShips.battleshipShipsArr.push(unit);
+                this.ownedShips.battleshipShipsGroup.push(unit.sprite);
                 break;
             default:
         }
 
-        this.ownedShips.push(unit);
+        
     }
 
     takeDamage() {
@@ -277,6 +305,44 @@ function drawInitialGameState() {
     mothership1 = new mothership(100, 100);
     mothership2 = new mothership(width - 100, usableHeight - 100);
     initialGameState = false;
+
+    //Temporary - this spawns one of eac htype on startup for testing
+    for (let i = 0; i < mothership1.shipType.length; i++) {
+        mothership1.createUnit(mothership1.shipType[i])
+    }
+}
+
+function shipSelection() {
+    if(kb.presses("1")){
+        selectedType = "mining";
+    }
+    if(kb.presses("2")){
+        selectedType = "corsair";
+    }
+    if(kb.presses("3")){
+        selectedType = "destroyer";
+    }
+    if(kb.presses("4")){
+        selectedType = "cruiser";
+    }
+    if(kb.presses("5")){
+        selectedType = "battleship";
+    }
+    if(mouse.presses("left")){
+        selectedType = "none";
+    }
+}
+
+function shipMovement(){
+    if(mouse.presses("right")){
+    switch (selectedType){
+        case "corsair":
+            for(let i=0; i<mothership1.ownedShips.corsairShipsArr.length; i++){
+                mothership1.ownedShips.corsairShipsArr[i].travel();
+            }
+            break;
+    }
+}
 }
 
 function drawGameScreen() {
@@ -286,6 +352,9 @@ function drawGameScreen() {
     }
 
     shop.drawInterface()
+
+    shipSelection();
+    shipMovement();
 
 }
 
@@ -299,7 +368,7 @@ function preload() {
 
 function setup() {
     new Canvas(800, 800);
-    //Works
+
 }
 
 function draw() {
