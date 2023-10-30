@@ -42,6 +42,32 @@ function drawMainMenuScreen() {
 
 let initialGameState = true;
 
+let mothership1, mothership2;
+
+let usableHeight;
+
+
+let shop
+
+class userInterface {
+    constructor() {
+        // Draw a container on the bottom of the screen, with a lighter opacity so that the player can see through it
+        this.container = {
+            w: width,
+            h: 100,
+            x: 0,
+            y: height - 100,
+        }
+    }
+
+
+    drawInterface() {
+        fill(255, 255, 255, 100);
+        rect(this.container.x, this.container.y, this.container.w, this.container.h);
+        noFill();
+    }
+}
+
 
 class asteroid {
     constructor() {
@@ -69,6 +95,23 @@ class asteroid {
 
 }
 
+
+class corsairShip { // Fighter drone
+    constructor(x, y) {
+        this.x = x;
+        this.y = y
+        this.health = 100;
+    }
+}
+
+class miningShip { // Mining drone
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.health = 50;
+    }    
+}
+
 class mothership {
     constructor(x,y) {
         this.x = x;
@@ -77,6 +120,8 @@ class mothership {
         this.h = 75;
         this.health = 500;
         this.shipType = ["type1","type2","type3"]; //Should hold the types of ship the MS can create - needs to be filled
+
+        this.ownedShips = [];
 
         this.sprite = new Sprite(this.x, this.y, this.w, this.h); //creates the mothership sprite
     }
@@ -105,6 +150,8 @@ class mothership {
                 break;
             default:
         }
+
+        this.ownedShips.push(unit);
     }
 
     takeDamage(){
@@ -124,9 +171,11 @@ class mothership {
 }
 
 function drawInitialGameState() {
+    shop = new userInterface;
+    usableHeight = height - shop.container.h;
     let asteroid1 = new asteroid;
-    let mothership1 = new mothership(100,100);
-    let mothership2 = new mothership(width-100,height-100);
+    mothership1 = new mothership(100,100);
+    mothership2 = new mothership(width-100,usableHeight-100);
     initialGameState = false;
 }
 
@@ -135,6 +184,8 @@ function drawGameScreen() {
     if (initialGameState) {
         drawInitialGameState();
     }
+
+    shop.drawInterface()
 
 }
 
