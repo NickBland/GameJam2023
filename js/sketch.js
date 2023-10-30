@@ -124,12 +124,19 @@ class corsairShip { // Fighter drone
         this.sprite.w = 15;
         this.sprite.h = 15;
         this.timer = 0;
+
+        this.movingTowardsX = 0;
+        this.movingTowardsY = 0;
+    }
+
+    setDestination(x, y) {
+        this.movingTowardsX = x;
+        this.movingTowardsY = y;
     }
 
     travel() {
-        if(timer == 0){
-
-        }
+        this.sprite.moveTo(this.movingTowardsX, this.movingTowardsY, 3);
+        this.sprite.rotation = this.sprite.direction;
     }
 
     attack() {
@@ -274,29 +281,24 @@ class mothership {
             case "mining":
                 unit = new miningShip(mothership1.x, mothership1.y);
                 this.ownedShips.miningShipsArr.push(unit);
-                this.ownedShips.miningShipsGroup.push(unit.sprite);
                 break;
 
             case "corsair":
                 unit = new corsairShip(mothership1.x, mothership1.y);
                 this.ownedShips.corsairShipsArr.push(unit);
-                this.ownedShips.corsairShipsGroup.push(unit.sprite);
                 break;
 
             case "destroyer":
                 unit = new destroyerShip(mothership1.x, mothership1.y);
                 this.ownedShips.destroyerShipsArr.push(unit);
-                this.ownedShips.destroyerShipsGroup.push(unit.sprite);
                 break;
             case "cruiser":
                 unit = new cruiserShip(mothership1.x, mothership1.y);
                 this.ownedShips.cruiserShipsArr.push(unit);
-                this.ownedShips.cruiserShipsGroup.push(unit.sprite);
                 break;
             case "battleship":
                 unit = new battleshipShip(mothership1.x, mothership1.y);
                 this.ownedShips.battleshipShipsArr.push(unit);
-                this.ownedShips.battleshipShipsGroup.push(unit.sprite);
                 break;
             default:
         }
@@ -356,15 +358,36 @@ function shipSelection() {
 }
 
 function shipMovement(){
-    if(mouse.presses("right")){
-    switch (selectedType){
-        case "corsair":
-            for(let i=0; i<mothership1.ownedShips.corsairShipsArr.length; i++){
-                mothership1.ownedShips.corsairShipsArr[i].travel();
-            }
+    // Handle player input for ship movement
+    if(mouse.pressing("right")) {
+        switch (selectedType){
+            case "corsair":
+                for(let i=0; i < mothership1.ownedShips.corsairShipsArr.length; i++){
+                    let thisShip = mothership1.ownedShips.corsairShipsArr[i];
+                    if (thisShip.timer === 0) {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    } else {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    }
+                }
             break;
+        }
     }
-}
+
+    // Handle Corsair Movement when in motion
+    for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
+        let thisShip = mothership1.ownedShips.corsairShipsArr[i]
+        if (thisShip.timer > 0) {
+            thisShip.travel();
+            thisShip.timer--;
+        } else if (thisShip.timer === 0) {
+            thisShip.sprite.speed = 0;
+        }else if (thisShip.timer < 0) {
+            thisShip.timer = 0;
+        }
+    }
 }
 
 function drawGameScreen() {
