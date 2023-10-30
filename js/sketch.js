@@ -6,7 +6,7 @@ let asteroidTypes = [
 ]
 let asteroidImages = [];
 
-let numerals= [];
+let numerals = [];
 
 
 
@@ -71,14 +71,14 @@ class userInterface {
         fill(255, 255, 255, 100);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
-        
+
         // Draw in the health of the mothership at the bottom right
         let healthDigit1, healthDigit2, healthDigit3;
         healthDigit3 = numerals[Math.floor(mothership1.heath % 10)];
         healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
         healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
 
-        image(healthDigit1, width*0.9, this.h/2);
+        image(healthDigit1, width * 0.9, this.h / 2);
     }
 }
 
@@ -113,8 +113,7 @@ class asteroid {
 
 }
 
-
-class corsairShip { // Fighter drone
+class spawnedShip {
     constructor(x, y) {
         this.sprite = new Sprite();
         this.sprite.x = x;
@@ -149,11 +148,15 @@ class corsairShip { // Fighter drone
     }
 }
 
-class miningShip { // Mining drone
+class corsairShip extends spawnedShip { // Fighter drone
     constructor(x, y) {
-        this.sprite = new Sprite();
-        this.sprite.x = x;
-        this.sprite.y = y;
+        super(x, y);
+    }
+}
+
+class miningShip extends spawnedShip { // Mining drone
+    constructor(x, y) {
+        super(x, y);
         this.sprite.health = 50;
         this.sprite.damage = 10;
         this.sprite.w = 10;
@@ -161,97 +164,37 @@ class miningShip { // Mining drone
         this.sprite.resources = 0;
     }
 
-    move(x, y) {
-        //Movement logic for ships
-    }
-
-    collectResources() {
-        //increases resource count when near asteroid
-        //this would be what tells the asteroid to lose health
-        //possibly returns to MS when full?
-    }
-
     attack() {
-        //Create projectiles
-    }
-
-    takeDamage() {
-        //subtract health when hit by enemy projectiles
-        //logic to die when 0 health
+        return;
     }
 }
 
-class destroyerShip {
+class destroyerShip extends spawnedShip {
     constructor(x, y) {
-        this.sprite = new Sprite();
-        this.sprite.x = x;
-        this.sprite.y = y;
+        super(x, y);
         this.sprite.health = 150;
         this.sprite.damage = 25;
         this.sprite.w = 15;
         this.sprite.h = 20;
     }
-
-    move(x, y) {
-        //Movement logic for ships
-    }
-
-    attack() {
-        //Create projectiles
-    }
-
-    takeDamage() {
-        //subtract health when hit by enemy projectiles
-        //logic to die when 0 health
-    }
 }
 
-class cruiserShip {
+class cruiserShip extends spawnedShip {
     constructor(x, y) {
-        this.sprite = new Sprite();
-        this.sprite.x = x;
-        this.sprite.y = y;
+        super(x, y);
         this.sprite.health = 200;
         this.sprite.damage = 35;
         this.sprite.w = 20;
         this.sprite.h = 35;
     }
-
-    move(x, y) {
-        //Movement logic for ships
-    }
-
-    attack() {
-        //Create projectiles
-    }
-
-    takeDamage() {
-        //subtract health when hit by enemy projectiles
-        //logic to die when 0 health
-    }
 }
-class battleshipShip {
+class battleshipShip extends spawnedShip {
     constructor(x, y) {
-        this.sprite = new Sprite();
-        this.sprite.x = x;
-        this.sprite.y = y;
+        super(x, y);
         this.sprite.health = 300;
         this.sprite.damage = 75;
         this.sprite.w = 35;
         this.sprite.h = 50;
-    }
-
-    move(x, y) {
-        //Movement logic for ships
-    }
-
-    attack() {
-        //Create projectiles
-    }
-
-    takeDamage() {
-        //subtract health when hit by enemy projectiles
-        //logic to die when 0 health
     }
 }
 class mothership {
@@ -303,7 +246,7 @@ class mothership {
             default:
         }
 
-        
+
     }
 
     takeDamage() {
@@ -337,32 +280,32 @@ function drawInitialGameState() {
 }
 
 function shipSelection() {
-    if(kb.presses("1")){
+    if (kb.presses("1")) {
         selectedType = "mining";
     }
-    if(kb.presses("2")){
+    if (kb.presses("2")) {
         selectedType = "corsair";
     }
-    if(kb.presses("3")){
+    if (kb.presses("3")) {
         selectedType = "destroyer";
     }
-    if(kb.presses("4")){
+    if (kb.presses("4")) {
         selectedType = "cruiser";
     }
-    if(kb.presses("5")){
+    if (kb.presses("5")) {
         selectedType = "battleship";
     }
-    if(mouse.presses("left")){
+    if (mouse.presses("left")) {
         selectedType = "none";
     }
 }
 
-function shipMovement(){
+function shipMovement() {
     // Handle player input for ship movement
-    if(mouse.pressing("right")) {
-        switch (selectedType){
+    if (mouse.pressing("right")) {
+        switch (selectedType) {
             case "corsair":
-                for(let i=0; i < mothership1.ownedShips.corsairShipsArr.length; i++){
+                for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.corsairShipsArr[i];
                     if (thisShip.timer === 0) {
                         thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
@@ -372,7 +315,7 @@ function shipMovement(){
                         thisShip.setDestination(mouse.x, mouse.y);
                     }
                 }
-            break;
+                break;
         }
     }
 
@@ -384,7 +327,7 @@ function shipMovement(){
             thisShip.timer--;
         } else if (thisShip.timer === 0) {
             thisShip.sprite.speed = 0;
-        }else if (thisShip.timer < 0) {
+        } else if (thisShip.timer < 0) {
             thisShip.timer = 0;
         }
     }
