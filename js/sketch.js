@@ -6,6 +6,7 @@ let asteroidTypes = [
 ]
 let asteroidImages = [];
 
+let numerals= [];
 
 
 
@@ -68,6 +69,14 @@ class userInterface {
         fill(255, 255, 255, 100);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
+        
+        // Draw in the health of the mothership at the bottom right
+        let healthDigit1, healthDigit2, healthDigit3;
+        healthDigit3 = numerals[Math.floor(mothership1.heath % 10)];
+        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
+        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
+
+        image(healthDigit1, width*0.9, this.h/2);
     }
 }
 
@@ -312,7 +321,11 @@ function preload() {
             let assetName = asteroidTypes[i][0] + j + ".png";
             loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
         }
-        
+    }
+
+    for (let i = 0; i < 10; i++) {
+        let assetName = "numeral" + i + ".png";
+        loadImage("assets/images/typography/" + assetName, asset => numerals.push(asset));
     }
 }
 
