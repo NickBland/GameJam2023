@@ -115,25 +115,27 @@ class asteroid {
 
 class spawnedShip {
     constructor(x, y) {
-        this.sprite = new Sprite();
+        this.sprite = new Sprite(); //creates a new ship at the mothership
         this.sprite.x = x;
         this.sprite.y = y;
         this.sprite.health = 100;
         this.sprite.damage = 20;
         this.sprite.w = 15;
         this.sprite.h = 15;
+        //Default attributes match the Corsair ship type
+
         this.timer = 0;
 
         this.movingTowardsX = 0;
         this.movingTowardsY = 0;
     }
 
-    setDestination(x, y) {
+    setDestination(x, y) {  //Sets where the ship is moving to
         this.movingTowardsX = x;
         this.movingTowardsY = y;
     }
 
-    travel() {
+    travel() {  //Moves the ship to destination
         this.sprite.moveTo(this.movingTowardsX, this.movingTowardsY, 3);
         this.sprite.rotation = this.sprite.direction;
     }
@@ -169,7 +171,7 @@ class miningShip extends spawnedShip { // Mining drone
     }
 }
 
-class destroyerShip extends spawnedShip {
+class destroyerShip extends spawnedShip {   // Medium-Fighter Drone
     constructor(x, y) {
         super(x, y);
         this.sprite.health = 150;
@@ -179,7 +181,7 @@ class destroyerShip extends spawnedShip {
     }
 }
 
-class cruiserShip extends spawnedShip {
+class cruiserShip extends spawnedShip { // Heavy-Fighter Drone
     constructor(x, y) {
         super(x, y);
         this.sprite.health = 200;
@@ -188,7 +190,8 @@ class cruiserShip extends spawnedShip {
         this.sprite.h = 35;
     }
 }
-class battleshipShip extends spawnedShip {
+
+class battleshipShip extends spawnedShip {  //Super-Fighter Drone
     constructor(x, y) {
         super(x, y);
         this.sprite.health = 300;
@@ -235,10 +238,12 @@ class mothership {
                 unit = new destroyerShip(mothership1.x, mothership1.y);
                 this.ownedShips.destroyerShipsArr.push(unit);
                 break;
+
             case "cruiser":
                 unit = new cruiserShip(mothership1.x, mothership1.y);
                 this.ownedShips.cruiserShipsArr.push(unit);
                 break;
+
             case "battleship":
                 unit = new battleshipShip(mothership1.x, mothership1.y);
                 this.ownedShips.battleshipShipsArr.push(unit);
@@ -316,19 +321,71 @@ function shipMovement() {
                     }
                 }
                 break;
+            case "mining":
+                for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.miningShipsArr[i];
+                    if (thisShip.timer === 0) {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                        console.log(thisShip.timer)
+                    } else {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    }
+                }
+                break;
+            case "destroyer":
+                for (let i = 0; i < mothership1.ownedShips.destroyerShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.destroyerShipsArr[i];
+                    if (thisShip.timer === 0) {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    } else {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    }
+                }
+                break;
+            case "cruiser":
+                for (let i = 0; i < mothership1.ownedShips.cruiserShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.cruiserShipsArr[i];
+                    if (thisShip.timer === 0) {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    } else {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    }
+                }
+                break;
+            case "battleship":
+                for (let i = 0; i < mothership1.ownedShips.battleshipShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.battleshipShipsArr[i];
+                    if (thisShip.timer === 0) {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    } else {
+                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+                        thisShip.setDestination(mouse.x, mouse.y);
+                    }
+                }
+                break;
         }
     }
 
-    // Handle Corsair Movement when in motion
-    for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
-        let thisShip = mothership1.ownedShips.corsairShipsArr[i]
-        if (thisShip.timer > 0) {
-            thisShip.travel();
-            thisShip.timer--;
-        } else if (thisShip.timer === 0) {
-            thisShip.sprite.speed = 0;
-        } else if (thisShip.timer < 0) {
-            thisShip.timer = 0;
+    // Handle Ship Movement when in motion
+    let ownedShipsKeys = Object.keys(mothership1.ownedShips);   //Turns the ownedShip Object into an array to access it using index not.
+    for (let j = 0; j < Object.keys(mothership1.ownedShips).length; j++) {  //Iterates through each type of ship
+        for (let i = 0; i < mothership1.ownedShips[ownedShipsKeys[j]].length; i++) {    //Iterates through each ship in a type
+            let thisShip = mothership1.ownedShips[ownedShipsKeys[j]][i];
+            if (thisShip.timer > 0) {
+                thisShip.travel();
+                thisShip.timer--;
+            } else if (thisShip.timer === 0) {
+                thisShip.sprite.speed = 0;
+            } else if (thisShip.timer < 0) {
+                thisShip.timer = 0;
+            }
         }
     }
 }
