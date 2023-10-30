@@ -1,5 +1,15 @@
 "use strict";
 
+
+let asteroidTypes = [
+    ["big", 4],
+]
+let asteroidImages = [];
+
+let numerals= [];
+
+
+
 let gameState = {
     loading: false,
     mainMenu: false,
@@ -61,6 +71,14 @@ class userInterface {
         fill(255, 255, 255, 100);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
+        
+        // Draw in the health of the mothership at the bottom right
+        let healthDigit1, healthDigit2, healthDigit3;
+        healthDigit3 = numerals[Math.floor(mothership1.heath % 10)];
+        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
+        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
+
+        image(healthDigit1, width*0.9, this.h/2);
     }
 }
 
@@ -68,14 +86,18 @@ class userInterface {
 class asteroid {
     constructor() {
         randomSeed(Date.now()); // Set the current seed to the epoch time
-        this.d = Math.floor(random(50, 150));
+        this.d = Math.floor(random(25, 70));
 
         this.x = random(this.d, width - this.d);
-        this.y = random(this.d, height - this.d);
+        this.y = random(this.d, usableHeight - this.d);
 
         this.sprite = new Sprite(this.x, this.y, this.d); // Create the asteroid sprite itself
-        this.sprite.collider = "k";
-        this.resources = this.d; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
+
+        let index = Math.floor(random(0, 1000)) % asteroidImages.length
+        this.sprite.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
+        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
+
+        this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
     }
 
     consumeResource() {
@@ -363,7 +385,17 @@ function drawEndScreen() {
 }
 
 function preload() {
+    for (let i = 0; i < asteroidTypes.length; i++) {
+        for (let j = 1; j < asteroidTypes[i][1] + 1; j++) {
+            let assetName = asteroidTypes[i][0] + j + ".png";
+            loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
+        }
+    }
 
+    for (let i = 0; i < 10; i++) {
+        let assetName = "numeral" + i + ".png";
+        loadImage("assets/images/typography/" + assetName, asset => numerals.push(asset));
+    }
 }
 
 function setup() {
