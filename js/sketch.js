@@ -150,8 +150,10 @@ class spawnedShip {
         this.sprite.rotation = this.sprite.direction;
     }
 
-    attack() {
-        //Create projectiles
+    attack(thisEnemy) {
+        //createProjectile(thisEnemy);
+
+        this.sprite.attractTo(thisEnemy.sprite, -25);
     }
 
     takeDamage() {
@@ -235,27 +237,27 @@ class mothership {
         let unit;
         switch (type) {
             case "mining":
-                unit = new miningShip(mothership1.x, mothership1.y);
+                unit = new miningShip(this.x, this.y);
                 this.ownedShips.miningShipsArr.push(unit);
                 break;
 
             case "corsair":
-                unit = new corsairShip(mothership1.x, mothership1.y);
+                unit = new corsairShip(this.x, this.y);
                 this.ownedShips.corsairShipsArr.push(unit);
                 break;
 
             case "destroyer":
-                unit = new destroyerShip(mothership1.x, mothership1.y);
+                unit = new destroyerShip(this.x, this.y);
                 this.ownedShips.destroyerShipsArr.push(unit);
                 break;
 
             case "cruiser":
-                unit = new cruiserShip(mothership1.x, mothership1.y);
+                unit = new cruiserShip(this.x, this.y);
                 this.ownedShips.cruiserShipsArr.push(unit);
                 break;
 
             case "battleship":
-                unit = new battleshipShip(mothership1.x, mothership1.y);
+                unit = new battleshipShip(this.x, this.y);
                 this.ownedShips.battleshipShipsArr.push(unit);
                 break;
             default:
@@ -369,6 +371,24 @@ function shipMovement() {
     }
 }
 
+function shipCombat(){
+    let ownedShipsKeys = Object.keys(mothership1.ownedShips);   //Turns the ownedShip Object into an array to access it using index not.
+    for (let j = 0; j < Object.keys(mothership1.ownedShips).length; j++) {  //Iterates through each type of ship
+        for (let i = 0; i < mothership1.ownedShips[ownedShipsKeys[j]].length; i++) {    //Iterates through each ship in a type
+            let thisShip = mothership1.ownedShips[ownedShipsKeys[j]][i];
+            let enemyShipsKeys = Object.keys(mothership2.ownedShips);
+            for (let k = 0; k < Object.keys(mothership2.ownedShips).length; k++) {  //Iterates through each type of ship
+                for (let l = 0; l < mothership2.ownedShips[enemyShipsKeys[k]].length; l++) {    //Iterates through each ship in a type
+                    let thisEnemy = mothership2.ownedShips[enemyShipsKeys[k]][l];
+                    if(dist(thisShip.sprite.x,thisShip.sprite.y,thisEnemy.sprite.x,thisEnemy.sprite.y)<=50){
+                        thisShip.attack(thisEnemy);
+                    }
+                }
+            }
+        }
+    }
+}
+
 function drawGameScreen() {
     background("green");
     if (initialGameState) {
@@ -379,7 +399,7 @@ function drawGameScreen() {
 
     shipSelection();
     shipMovement();
-
+    shipCombat();
 }
 
 function drawEndScreen() {
