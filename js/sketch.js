@@ -135,6 +135,16 @@ class spawnedShip {
         this.movingTowardsY = y;
     }
 
+    movementLogic(thisShip) {
+        if (thisShip.timer === 0) {
+            thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+            thisShip.setDestination(mouse.x, mouse.y);
+        } else {
+            thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
+            thisShip.setDestination(mouse.x, mouse.y);
+        }
+    }
+
     travel() {  //Moves the ship to destination
         this.sprite.moveTo(this.movingTowardsX, this.movingTowardsY, 3);
         this.sprite.rotation = this.sprite.direction;
@@ -312,62 +322,31 @@ function shipMovement() {
             case "corsair":
                 for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.corsairShipsArr[i];
-                    if (thisShip.timer === 0) {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    } else {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    }
+                    thisShip.movementLogic(thisShip);
                 }
                 break;
             case "mining":
                 for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.miningShipsArr[i];
-                    if (thisShip.timer === 0) {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                        console.log(thisShip.timer)
-                    } else {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    }
+                    thisShip.movementLogic(thisShip);
                 }
                 break;
             case "destroyer":
                 for (let i = 0; i < mothership1.ownedShips.destroyerShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.destroyerShipsArr[i];
-                    if (thisShip.timer === 0) {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    } else {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    }
+                    thisShip.movementLogic(thisShip);
                 }
                 break;
             case "cruiser":
                 for (let i = 0; i < mothership1.ownedShips.cruiserShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.cruiserShipsArr[i];
-                    if (thisShip.timer === 0) {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    } else {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    }
+                    thisShip.movementLogic(thisShip);
                 }
                 break;
             case "battleship":
                 for (let i = 0; i < mothership1.ownedShips.battleshipShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.battleshipShipsArr[i];
-                    if (thisShip.timer === 0) {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    } else {
-                        thisShip.timer = Math.floor(dist(thisShip.sprite.x, thisShip.sprite.y, mouse.x, mouse.y)) / 3;
-                        thisShip.setDestination(mouse.x, mouse.y);
-                    }
+                    thisShip.movementLogic(thisShip);
                 }
                 break;
         }
