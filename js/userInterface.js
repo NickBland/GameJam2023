@@ -7,6 +7,9 @@ class userInterface {
             x: 0,
             y: height - 100,
         }
+
+        this.groupTypes = ["mining", "corsair", "destroyer", "cruiser", "battleship", "none"];
+        this.selectedGroup;
     }
 
 
@@ -51,12 +54,73 @@ class userInterface {
         rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarFill, mothership1HealthBarHeight)
     }
 
+    #drawSelected() {
+        // Draw which group the user has selected. Also give the user the ability to change what group is selected via the MOUSE.
+        // This will be drawn as boxes on the left hand side of the interface. 
+
+        let initialSelectorPositionWidth = 25;
+        let initialSelectorPositionHeight = initialSelectorPositionWidth;
+        let initialSelectorPositionX = initialSelectorPositionWidth;
+        let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight * 1.5;
+
+        fill("white")
+        text("Selected Group", initialSelectorPositionX + initialSelectorPositionWidth * 2.25, initialSelectorPositionY - initialSelectorPositionHeight * 0.75);
+
+        // To be used as an index of which button is currently selected by the user.
+
+        for (let i = 0; i < 5; i++) {
+            let offsetY = 0; // Important for the bottom row buttons
+            // Determine the offset for the staggered buttons. This should be every second button
+            if (i % 2 !== 0) {
+                offsetY = initialSelectorPositionHeight * 1.25;
+            }
+
+            fill(128); // Set unselected colour to something you can see on top of the overlay
+            if (i === this.selectedGroup) {
+                fill("red");
+            }
+
+
+            // Draw a rectangle in a 3 top row, 2 bottom row, staggered layout. 
+            rect(initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75), initialSelectorPositionY + offsetY, initialSelectorPositionWidth, initialSelectorPositionHeight);
+
+            fill("white"); // Text colour
+            text(i + 1, initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75) + initialSelectorPositionWidth / 2, initialSelectorPositionY + offsetY + initialSelectorPositionHeight / 2)
+        }
+    }
+
+    groupSelection() {
+        if (kb.presses("1")) {
+            this.selectedGroup = this.groupTypes.indexOf("mining");
+        }
+        if (kb.presses("2")) {
+            this.selectedGroup = this.groupTypes.indexOf("corsair");
+        }
+        if (kb.presses("3")) {
+            this.selectedGroup = this.groupTypes.indexOf("destroyer");
+        }
+        if (kb.presses("4")) {
+            this.selectedGroup = this.groupTypes.indexOf("cruiser");
+        }
+        if (kb.presses("5")) {
+            this.selectedGroup = this.groupTypes.indexOf("battleship");
+        }
+        if (mouse.presses("left")) {
+            this.selectedGroup = this.groupTypes.indexOf("none");
+        }
+    }
+
     drawInterface() {
         fill(255, 255, 255, 150);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
 
+        // In the future, the camera.off() function should be invoked here, as these elements are to be STATIC at the bottom of the screen.
+
         this.#drawHealth();
-        
+        this.#drawSelected();
+
+        // In addition, the camera.on() function should be invoked here, after all static elements have been drawn on screen.
+
     }
 }

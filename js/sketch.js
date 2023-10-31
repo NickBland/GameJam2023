@@ -51,9 +51,7 @@ let mothership1, mothership2;
 
 let usableHeight;
 
-let shop
-
-let selectedType = "none";
+let ui;
 
 
 class asteroid {
@@ -256,8 +254,8 @@ class mothership {
 }
 
 function drawInitialGameState() {
-    shop = new userInterface;
-    usableHeight = height - shop.container.h;
+    ui = new userInterface;
+    usableHeight = height - ui.container.h;
     let asteroid1 = new asteroid;
     mothership1 = new mothership(100, 100);
     mothership2 = new mothership(width - 100, usableHeight - 100);
@@ -269,56 +267,35 @@ function drawInitialGameState() {
     }
 }
 
-function shipSelection() {
-    if (kb.presses("1")) {
-        selectedType = "mining";
-    }
-    if (kb.presses("2")) {
-        selectedType = "corsair";
-    }
-    if (kb.presses("3")) {
-        selectedType = "destroyer";
-    }
-    if (kb.presses("4")) {
-        selectedType = "cruiser";
-    }
-    if (kb.presses("5")) {
-        selectedType = "battleship";
-    }
-    if (mouse.presses("left")) {
-        selectedType = "none";
-    }
-}
-
 function shipMovement() {
     // Handle player input for ship movement
     if (mouse.pressing("right")) {
-        switch (selectedType) {
-            case "corsair":
+        switch (ui.selectedGroup) {
+            case 0:
                 for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.corsairShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "mining":
+            case 1:
                 for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.miningShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "destroyer":
+            case 2:
                 for (let i = 0; i < mothership1.ownedShips.destroyerShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.destroyerShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "cruiser":
+            case 3:
                 for (let i = 0; i < mothership1.ownedShips.cruiserShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.cruiserShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "battleship":
+            case 4:
                 for (let i = 0; i < mothership1.ownedShips.battleshipShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.battleshipShipsArr[i];
                     thisShip.movementLogic(thisShip);
@@ -368,9 +345,9 @@ function drawGameScreen() {
         drawInitialGameState();
     }
 
-    shop.drawInterface()
+    ui.drawInterface();
+    ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
 
-    shipSelection();
     shipMovement();
     shipCombat();
 }
