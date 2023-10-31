@@ -6,6 +6,7 @@ let asteroidTypes = [
 ]
 let asteroidImages = [];
 
+let asteroidImg = [];
 let numerals = [];
 
 
@@ -93,8 +94,11 @@ class asteroid {
 
         this.sprite = new Sprite(this.x, this.y, this.d); // Create the asteroid sprite itself
 
-        let index = Math.floor(random(0, 1000)) % asteroidImages.length
-        this.sprite.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
+        //let index = Math.floor(random(0, 1000)) % asteroidImages.length
+        //this.sprite.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
+        let index = Math.floor(random(0, 1000)) % asteroidImg.length
+        this.sprite.img = asteroidImg[index].get()
+        
         this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
 
         this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
@@ -412,6 +416,11 @@ function preload() {
             let assetName = asteroidTypes[i][0] + j + ".png";
             loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
         }
+    }
+
+    for (let i = 1; i < 3; i++) {
+        let assetName = "Asteroids#0" + i + ".png";
+        loadImage("assets/asteroids/" + assetName, asset => asteroidImg.push(asset));
     }
 
     for (let i = 0; i < 10; i++) {
