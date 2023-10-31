@@ -81,6 +81,31 @@ class userInterface {
         image(healthDigit3, width * 0.85 + healthDigit1.w*2, height - healthDigit1.h*3);
         imageMode(CORNER);
 
+        fill("white");
+        textAlign(CENTER, CENTER);
+        textSize(20);
+        text("Mothership Health", width * 0.85 + healthDigit1.w, height - healthDigit1.h*4.3);
+
+        // Next, draw a small bar beneath the numbers for added ~~flavour~~
+        let mothership1HealthBarX = width * 0.85 - healthDigit1.w;
+        let mothership1HealthBarY = height - healthDigit1.h*2;
+        let mothership1HealthBarWidth = healthDigit1.w * 4;
+        let mothership1HealthBarHeight = 10;
+        let mothership1HealthPercentage = mothership1.health / 500
+        let mothership1HealthBarFill = mothership1HealthBarWidth * mothership1HealthPercentage; // Calculate % to fill bar
+
+        fill("white");
+        rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarWidth, mothership1HealthBarHeight);
+        if (mothership1HealthPercentage > 0.75) {
+            fill("green");
+        } else if (mothership1HealthPercentage > 0.5) {
+            fill("yellow");
+        } else if (mothership1HealthPercentage > 0.25) {
+            fill("orange");
+        } else {
+            fill("red");
+        }
+        rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarFill, mothership1HealthBarHeight)
     }
 
 
