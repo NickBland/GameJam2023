@@ -419,8 +419,8 @@ function preload() {
     }
 
     for (let i = 1; i < 3; i++) {
-        let assetName = "Asteroids#0" + i + ".png";
-        loadImage("assets/asteroids/" + assetName, asset => asteroidImg.push(asset));
+        let assetName = "asteroids#0" + i + ".png";
+        loadImage("./assets/asteroids/" + assetName, asset => asteroidImg.push(asset));
     }
 
     for (let i = 0; i < 10; i++) {
