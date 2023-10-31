@@ -1,3 +1,6 @@
+/**
+ * @class User Interface class deals with elements at the bottom of the gameplay screen.
+ */
 class userInterface {
     #groupButtons; // Private buttons so they can't be accessed outside the UI
     constructor() {
@@ -15,8 +18,11 @@ class userInterface {
         this.#groupButtons = this.#setupGroupSelector();
     }
 
+    /**
+     * Function creates the sprites needed for the group selection buttons at the bottom of the screen
+     * @returns an array of the sprites correlating to the buttons at the bottom of the screen
+     */
     #setupGroupSelector() {
-        // Return an array of square button sprites which will be drawn on the bottom left side of the screen
         let buttonArray = []
 
         let initialSelectorPositionWidth = 25;
@@ -51,10 +57,10 @@ class userInterface {
         return buttonArray;
     }
 
-
+    /**
+     * Draws the health of the mothership at the bottom right of the interface
+     */
     #drawHealth() {
-        // Draw health of the mothership at the bottom right of the interface
-
         // This next block determines what each digit is using modulus. The digits will be 0 if it is less than its number (eg. third digit at 99 will be 0)
         let healthDigit1, healthDigit2, healthDigit3;
         healthDigit3 = numerals[Math.floor(mothership1.health % 10)];
@@ -93,7 +99,10 @@ class userInterface {
         rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarFill, mothership1HealthBarHeight)
     }
 
-    #drawSelected() {
+    /**
+     * Updates the state of the group selection buttons by adjusting the appearance of the stroke and internal colour depending on hover/selection
+     */
+    #updateGroupButtonStates() {
 
         fill("white")
         text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h);
@@ -117,6 +126,11 @@ class userInterface {
         }
     }
 
+    /**
+     * Handles selection of a group of ships from the user's input
+     * Keyboard numbers 1-5 correspond to "mining", "corsair", "destroyer", "cruiser", and "battleship" groups
+     * Left Mouse clicks correspond to no group selected, unless the user is hovering over one of the button on the UI
+     */
     groupSelection() {
         if (kb.presses("1")) {
             this.selectedGroup = this.groupTypes.indexOf("mining");
@@ -146,6 +160,9 @@ class userInterface {
         }
     }
 
+    /**
+     * Handles drawing the user interface on to the screen.
+     */
     drawInterface() {
         fill(255, 255, 255, 150);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
@@ -154,7 +171,7 @@ class userInterface {
         // In the future, the camera.off() function should be invoked here, as these elements are to be STATIC at the bottom of the screen.
 
         this.#drawHealth();
-        this.#drawSelected();
+        this.#updateGroupButtonStates();
 
         // In addition, the camera.on() function should be invoked here, after all static elements have been drawn on screen.
 
