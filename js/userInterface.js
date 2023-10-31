@@ -1,4 +1,5 @@
 class userInterface {
+    #groupButtons; // Private buttons so they can't be accessed outside the UI
     constructor() {
         // Draw a container on the bottom of the screen, with a lighter opacity so that the player can see through it
         this.container = {
@@ -10,6 +11,44 @@ class userInterface {
 
         this.groupTypes = ["mining", "corsair", "destroyer", "cruiser", "battleship", "none"];
         this.selectedGroup;
+
+        this.#groupButtons = this.#setupGroupSelector();
+    }
+
+    #setupGroupSelector() {
+        // Return an array of square button sprites which will be drawn on the bottom left side of the screen
+        let buttonArray = []
+
+        let initialSelectorPositionWidth = 25;
+        let initialSelectorPositionHeight = initialSelectorPositionWidth;
+        let initialSelectorPositionX = initialSelectorPositionWidth*1.5;
+        let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight * 1.75;
+
+        // To be used as an index of which button is currently selected by the user.
+
+        for (let i = 0; i < 5; i++) {
+            let button = new Sprite();
+
+            let offsetY = 0; // Important for the bottom row buttons
+            // Determine the offset for the staggered buttons. This should be every second button
+            if (i % 2 !== 0) {
+                offsetY = initialSelectorPositionHeight * 1.25;
+            }
+
+            button.color = 128; // Set unselected colour to something you can see on top of the overlay
+            
+
+            button.x = initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75);
+            button.y = initialSelectorPositionY + offsetY;
+            button.w = initialSelectorPositionWidth;
+            button.h = initialSelectorPositionHeight;
+            button.textSize = 20;
+            button.text = i + 1;
+            button.collider = "k";
+
+            buttonArray.push(button);
+        }
+        return buttonArray;
     }
 
 
@@ -55,37 +94,26 @@ class userInterface {
     }
 
     #drawSelected() {
-        // Draw which group the user has selected. Also give the user the ability to change what group is selected via the MOUSE.
-        // This will be drawn as boxes on the left hand side of the interface. 
-
-        let initialSelectorPositionWidth = 25;
-        let initialSelectorPositionHeight = initialSelectorPositionWidth;
-        let initialSelectorPositionX = initialSelectorPositionWidth;
-        let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight * 1.5;
 
         fill("white")
-        text("Selected Group", initialSelectorPositionX + initialSelectorPositionWidth * 2.25, initialSelectorPositionY - initialSelectorPositionHeight * 0.75);
+        text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h);
 
-        // To be used as an index of which button is currently selected by the user.
-
-        for (let i = 0; i < 5; i++) {
-            let offsetY = 0; // Important for the bottom row buttons
-            // Determine the offset for the staggered buttons. This should be every second button
-            if (i % 2 !== 0) {
-                offsetY = initialSelectorPositionHeight * 1.25;
+        for (let i = 0; i < this.#groupButtons.length; i++) {
+            // Stroke
+            if (this.#groupButtons[i].mouse.hovering()) {
+                this.#groupButtons[i].strokeWeight = 3;
+                this.#groupButtons[i].stroke = "white"
+            } else {
+                this.#groupButtons[i].strokeWeight = 1;
+                this.#groupButtons[i].stroke = "black"
             }
-
-            fill(128); // Set unselected colour to something you can see on top of the overlay
+            
+            // Internal Colour
             if (i === this.selectedGroup) {
-                fill("red");
+                this.#groupButtons[i].color = "red";
+            } else {
+                this.#groupButtons[i].color = 128;
             }
-
-
-            // Draw a rectangle in a 3 top row, 2 bottom row, staggered layout. 
-            rect(initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75), initialSelectorPositionY + offsetY, initialSelectorPositionWidth, initialSelectorPositionHeight);
-
-            fill("white"); // Text colour
-            text(i + 1, initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75) + initialSelectorPositionWidth / 2, initialSelectorPositionY + offsetY + initialSelectorPositionHeight / 2)
         }
     }
 
@@ -105,8 +133,16 @@ class userInterface {
         if (kb.presses("5")) {
             this.selectedGroup = this.groupTypes.indexOf("battleship");
         }
-        if (mouse.presses("left")) {
+
+        // Now handle the mouse!
+        if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
+        }
+
+        for (let i = 0; i < this.#groupButtons.length; i++) {
+            if (this.#groupButtons[i].mouse.hovering() && mouse.presses("left")) {
+                this.selectedGroup = i;
+            }
         }
     }
 
