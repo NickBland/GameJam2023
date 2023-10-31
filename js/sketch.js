@@ -6,7 +6,7 @@ let asteroidTypes = [
 ]
 let asteroidImages = [];
 
-let numerals = [];
+let numerals;
 
 
 
@@ -67,18 +67,31 @@ class userInterface {
     }
 
 
+    #drawHealth() {
+        // Draw health of the mothership at the bottom right of the interface
+
+        // This next block determines what each digit is using modulus. The digits will be 0 if it is less than its number (eg. third digit at 99 will be 0)
+        let healthDigit1, healthDigit2, healthDigit3;
+        healthDigit3 = numerals[Math.floor(mothership1.health % 10)];
+        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
+        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
+        imageMode(CENTER);
+        image(healthDigit1, width * 0.85, height - healthDigit1.h*3);
+        image(healthDigit2, width * 0.85 + healthDigit1.w, height - healthDigit1.h*3);
+        image(healthDigit3, width * 0.85 + healthDigit1.w*2, height - healthDigit1.h*3);
+        imageMode(CORNER);
+
+    }
+
+
+
     drawInterface() {
-        fill(255, 255, 255, 100);
+        fill(255, 255, 255, 150);
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
 
-        // Draw in the health of the mothership at the bottom right
-        let healthDigit1, healthDigit2, healthDigit3;
-        healthDigit3 = numerals[Math.floor(mothership1.heath % 10)];
-        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
-        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
-
-        image(healthDigit1, width * 0.9, this.h / 2);
+        this.#drawHealth();
+        
     }
 }
 
@@ -414,10 +427,8 @@ function preload() {
         }
     }
 
-    for (let i = 0; i < 10; i++) {
-        let assetName = "numeral" + i + ".png";
-        loadImage("assets/images/typography/" + assetName, asset => numerals.push(asset));
-    }
+    numerals = loadAnimation("assets/images/typography/numeral0.png",9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
+    // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
 
 function setup() {
