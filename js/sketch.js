@@ -1,20 +1,22 @@
 "use strict";
 
 
-let asteroidTypes = [
+/*let asteroidTypes = [
     ["big", 4],
-]
-let asteroidImages = [];
+]*/
+//let asteroidImages = [];
 
-let asteroidImg = [];
+let myfont, myfontB;
+let mainMenuBgImage, gameBgImage;
+let asteroidImgs = [];
 let numerals = [];
 
 
 
 let gameState = {
     loading: false,
-    mainMenu: false,
-    game: true,
+    mainMenu: true,
+    game: false,
     endScreen: false,
 }
 
@@ -41,7 +43,18 @@ function drawLoadingScreen() {
 }
 
 function drawMainMenuScreen() {
-    background("blue");
+    mainMenuBgImage.resize(width, height);
+    image(mainMenuBgImage, 0, 0);
+
+    stroke('#d19f5a')
+    strokeWeight(5)
+    noFill()
+    rect(0.2*canvas.w, 0.3*canvas.h, 0.6*canvas.w, 0.11*canvas.h, 20);
+    fill('#ffe7d6')
+    stroke('#8b4049')
+    textAlign(CENTER, CENTER)
+    textFont(myfontB, 40)
+    text("Game Title", canvas.w/2, 0.35*canvas.h)
 }
 
 // ================================================================================================
@@ -96,15 +109,24 @@ class asteroid {
 
         //let index = Math.floor(random(0, 1000)) % asteroidImages.length
         //this.sprite.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
-        let index = Math.floor(random(0, 1000)) % asteroidImg.length
-        this.sprite.img = asteroidImg[index].get()
-        
-        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
 
+        //Option1 asteroid 
+        /*let index = Math.floor(random(0, 1000)) % asteroidImgs.length;
+        this.sprite.img = asteroidImg[index].get();
+        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
+        this.sprite.rotation = random(0, 360);*/
+
+        //Option2 asteroid
+        this.sprite.addAni('initial', 'assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1})
+        this.sprite.addAni('explode', 'assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8})
+        this.sprite.changeAni('initial');
         this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
     }
 
     consumeResource() {
+        if (this.resources === 0) {
+            this.sprite.changeAni('explode');
+        }
         // Subtract after set amount of time of drone touching, or whatever
         // Needs logic to destroy asteroid when it hits 0
     }
@@ -394,7 +416,9 @@ function shipCombat(){
 }
 
 function drawGameScreen() {
-    background("green");
+    //background("red");
+    gameBgImage.resize(width, height);
+    image(gameBgImage, 0, 0);
     if (initialGameState) {
         drawInitialGameState();
     }
@@ -411,17 +435,26 @@ function drawEndScreen() {
 }
 
 function preload() {
-    for (let i = 0; i < asteroidTypes.length; i++) {
+    //font
+    myfont = loadFont('assets/font/PixeloidMono.ttf')
+    myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf')
+
+    //Background img
+    mainMenuBgImage = loadImage("assets/images/myassets/background/mainMenu.png")
+    gameBgImage = loadImage("assets/images/myassets/background/game.png")
+
+
+    //Asteroid img (option1)
+    loadImage("assets/images/myassets/asteroids/asteroid1.png", asset => asteroidImgs.push(asset));
+    loadImage("assets/images/myassets/asteroids/asteroid2.png", asset => asteroidImgs.push(asset));
+    //Asteroid img (option2 - addAni)
+    //Asteroid img (option3)
+    /*for (let i = 0; i < asteroidTypes.length; i++) {
         for (let j = 1; j < asteroidTypes[i][1] + 1; j++) {
             let assetName = asteroidTypes[i][0] + j + ".png";
             loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
         }
-    }
-
-    for (let i = 1; i < 3; i++) {
-        let assetName = "asteroids#0" + i + ".png";
-        loadImage("./assets/asteroids/" + assetName, asset => asteroidImg.push(asset));
-    }
+    }*/
 
     for (let i = 0; i < 10; i++) {
         let assetName = "numeral" + i + ".png";
@@ -449,6 +482,5 @@ function draw() {
             drawEndScreen();
             break;
     }
-
 
 }
