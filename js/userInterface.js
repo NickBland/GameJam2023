@@ -19,19 +19,19 @@ class userInterface {
         healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
         healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
         imageMode(CENTER);
-        image(healthDigit1, width * 0.85, height - healthDigit1.h*3);
-        image(healthDigit2, width * 0.85 + healthDigit1.w, height - healthDigit1.h*3);
-        image(healthDigit3, width * 0.85 + healthDigit1.w*2, height - healthDigit1.h*3);
+        image(healthDigit1, width * 0.85, this.container.y + healthDigit1.h * 2.5);
+        image(healthDigit2, width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 2.5);
+        image(healthDigit3, width * 0.85 + healthDigit1.w * 2, this.container.y + healthDigit1.h * 2.5);
         imageMode(CORNER);
 
         fill("white");
         textAlign(CENTER, CENTER);
         textSize(20);
-        text("Mothership Health", width * 0.85 + healthDigit1.w, height - healthDigit1.h*4.3);
+        text("Mothership Health", width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 1.25);
 
         // Next, draw a small bar beneath the numbers for added ~~flavour~~
         let mothership1HealthBarX = width * 0.85 - healthDigit1.w;
-        let mothership1HealthBarY = height - healthDigit1.h*2;
+        let mothership1HealthBarY = this.container.y + healthDigit1.h * 3.5;
         let mothership1HealthBarWidth = healthDigit1.w * 4;
         let mothership1HealthBarHeight = 10;
         let mothership1HealthPercentage = mothership1.health / 500
