@@ -24,7 +24,9 @@ class userInterface {
     setupSelectionBox() {
         this.selectionBox = new Sprite();
         this.selectionBox.colour = "white";
-        this.selectionBox.color.setAlpha(30); // Reduce alpha to something so you can see through it
+        this.selectionBox.color.setAlpha(30); // Reduce alpha to something smaller so you can see through it
+        this.selectionBox.stroke = "black";
+        this.selectionBox.strokeWeight = 3;
         this.selectionBox.overlapping(allSprites);
         this.selectionBox.rotationLock = true;
         this.selectionBox.visible = false;
@@ -224,9 +226,12 @@ class userInterface {
             let thisShip = data.playerShip.ships[i];
             if(thisShip.group == this.groupTypes[this.selectedGroup]){
                 thisShip.selected = true;
-            }
-            else{
+                thisShip.stroke = "white"
+                thisShip.strokeWeight = 2;
+            } else{
                 thisShip.selected = false;
+                thisShip.stroke = "black";
+                thisShip.strokeWeight = 1;
             }
         }
     }
@@ -275,6 +280,8 @@ class userInterface {
                 let selectedShip = data.playerShip.ships[i];
                 if (this.selectionBox.overlapping(selectedShip)) {
                     selectedShip.selected = true;
+                    selectedShip.stroke = "white"
+                    selectedShip.strokeWeight = 2;
                 }
             }
         }
