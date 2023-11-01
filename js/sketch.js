@@ -8,6 +8,7 @@
 
 let myfont, myfontB;
 let mainMenuBgImage, gameBgImage;
+let asteroid1
 let asteroidImgs = [];
 let numerals = [];
 
@@ -15,8 +16,8 @@ let numerals = [];
 
 let gameState = {
     loading: false,
-    mainMenu: true,
-    game: false,
+    mainMenu: false,
+    game: true,
     endScreen: false,
 }
 
@@ -120,6 +121,7 @@ class asteroid {
         this.sprite.addAni('initial', 'assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1})
         this.sprite.addAni('explode', 'assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8})
         this.sprite.changeAni('initial');
+        this.sprite.debug = true;
         this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
     }
 
@@ -311,7 +313,8 @@ class mothership {
 function drawInitialGameState() {
     shop = new userInterface;
     usableHeight = height - shop.container.h;
-    let asteroid1 = new asteroid;
+    asteroid1 = new asteroid;
+    asteroid1.sprite.ani.scale = asteroid1.d/45;
     mothership1 = new mothership(100, 100);
     mothership2 = new mothership(width - 100, usableHeight - 100);
     initialGameState = false;
