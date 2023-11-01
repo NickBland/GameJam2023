@@ -13,7 +13,7 @@ class userInterface {
         }
 
         this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
-        this.selectedGroup;
+        this.selectedGroup = this.groupTypes.indexOf("none"); // Ensure to set starting selection as none (was null before user clicked anything previously)
 
         this.#groupButtons = this.#setupGroupSelector();
 
@@ -155,7 +155,7 @@ class userInterface {
      * Updates the state of the group selection buttons by adjusting the appearance of the stroke and internal colour depending on hover/selection
      */
     #updateGroupButtonStates() {
-
+        textAlign(CENTER, CENTER);
         fill("white")
         text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h);
 
@@ -186,34 +186,35 @@ class userInterface {
     groupSelection() {
         if (kb.presses("1")) {
             this.selectedGroup = this.groupTypes.indexOf("drone");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("2")) {
             this.selectedGroup = this.groupTypes.indexOf("corsair");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("3")) {
             this.selectedGroup = this.groupTypes.indexOf("destroyer");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("4")) {
             this.selectedGroup = this.groupTypes.indexOf("cruiser");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("5")) {
             this.selectedGroup = this.groupTypes.indexOf("battleship");
-            this.updateSelection()
+            this.updateSelection();
         }
 
         // Now handle the mouse!
         if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
+            this.updateSelection();
         }
 
         for (let i = 0; i < this.#groupButtons.length; i++) {
             if (this.#groupButtons[i].mouse.hovering() && mouse.presses("left")) {
                 this.selectedGroup = i;
-                this.updateSelection()
+                this.updateSelection();
             }
         }
     }
