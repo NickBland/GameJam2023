@@ -51,6 +51,16 @@ class playerState {
     }
 
     harvestResources(thisShip, thisAsteroid){
-        console.log("Kerpow");
+        if(frameCount%10 == 0){
+            thisShip.resources++;
+            thisAsteroid.resources--;
+            if(thisAsteroid.resources<=0){
+                return(data.destroyAsteroid(thisAsteroid));
+            }
+        }
+        if(thisShip.resources>= 10){
+            this.setDestination(this.ships[0].x,this.ships[0].y, thisShip);
+            thisShip.moveTimer = dist(this.ships[0].x,this.ships[0].y, thisShip.x, thisShip.y);
+        }
     }
 }

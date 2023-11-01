@@ -60,4 +60,8 @@ class gameData {
             default:
         }
     }
+
+    destroyAsteroid(thisAsteroid){
+        console.log("Kabloom");
+    }
 }

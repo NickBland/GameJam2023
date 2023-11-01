@@ -46,8 +46,6 @@ let initialGameState = true;
 
 let data;
 
-let mothership1, mothership2;
-
 let ui;
 
 let selectionBox;
@@ -144,12 +142,27 @@ function shipAction() {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }
+
+        //Handles Resource Harvesting
+        if(thisShip.group == "drone"){
+            if(dist(thisShip.x,thisShip.y,data.playerMothership.x,data.playerMothership.y)<65){
+                data.playerShip.resources += thisShip.resources;
+                thisShip.resources = 0;
+                if(thisShip.target != null){
+                    data.playerShip.setDestination(thisShip.target.x,thisShip.target.y,thisShip);
+                    thisShip.timer = dist((thisShip.target.x,thisShip.target.y,thisShip.x,thisShip.y));
+                }
+            }
+        }
     }
 }
 
 function shipTarget() {
     for (let i = 0; i < data.playerShip.ships.length; i++) {
         let thisShip = data.playerShip.ships[i];
+        if(thisShip.selected&&mouse.presses("right")){
+            thisShip.target = null;
+        }
         for (let j = 0; j < data.enemyShip.ships.length; j++) {
             let thisEnemy = data.enemyShip.ships[j];
             if (thisShip.selected == true && thisEnemy.mouse.presses("right")) {
@@ -160,7 +173,6 @@ function shipTarget() {
             let thisAsteroid = data.asteroids[j];
             if (thisShip.selected == true && thisAsteroid.mouse.presses("right") && thisShip.group == "drone") {
                 thisShip.target = thisAsteroid;
-                console.log(thisShip)
             }
         }
     }

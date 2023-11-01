@@ -12,7 +12,7 @@ class spriteFactory {
         let ship = this.createObject(x, y);
         ship.group = group;
         ship.origin = {x:x, y:y};
-        ship.target = "none";
+        ship.target = null;
         ship.destinationX = 0;
         ship.destinationY = 0;
         ship.selected = false;
@@ -116,6 +116,8 @@ class spriteFactory {
         asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact
 
         asteroid.d = d;
+        asteroid.collider = "k";
+        asteroid.group = "asteroid";
         return asteroid;
     }
 }
