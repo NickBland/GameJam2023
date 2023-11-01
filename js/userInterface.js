@@ -142,23 +142,34 @@ class userInterface {
     groupSelection() {
         if (kb.presses("1")) {
             this.selectedGroup = this.groupTypes.indexOf("mining");
+            data.playerShip.ships.selected = false;
+            data.playerShip.drones.selected = true;
         }
         if (kb.presses("2")) {
             this.selectedGroup = this.groupTypes.indexOf("corsair");
+            data.playerShip.ships.selected = false;
+            data.playerShip.corsairs.selected = true;
         }
         if (kb.presses("3")) {
             this.selectedGroup = this.groupTypes.indexOf("destroyer");
+            data.playerShip.ships.selected = false;
+            data.playerShip.destroyers.selected = true;
         }
         if (kb.presses("4")) {
             this.selectedGroup = this.groupTypes.indexOf("cruiser");
+            data.playerShip.ships.selected = false;
+            data.playerShip.cruisers.selected = true;
         }
         if (kb.presses("5")) {
             this.selectedGroup = this.groupTypes.indexOf("battleship");
+            data.playerShip.ships.selected = false;
+            data.playerShip.battleships.selected = true;
         }
 
         // Now handle the mouse!
         if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
+            data.playerShip.ships.selected = false;
         }
 
         for (let i = 0; i < this.#groupButtons.length; i++) {

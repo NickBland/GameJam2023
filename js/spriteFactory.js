@@ -12,7 +12,7 @@ class spriteFactory {
         let ship = this.createObject(x, y);
         ship.group = group;
         ship.origin = {x:x, y:y};
-        ship.target = null;
+        ship.target = "none";
         ship.destinationX = 0;
         ship.destinationY = 0;
         ship.selected = false;
@@ -114,7 +114,7 @@ class spriteFactory {
         let index = Math.floor(random(0, 1000)) % asteroidImages.length;
         asteroid.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
         asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact
-        
+
         asteroid.d = d;
         return asteroid;
     }

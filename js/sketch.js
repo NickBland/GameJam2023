@@ -50,6 +50,10 @@ let mothership1, mothership2;
 
 let ui;
 
+let selectionBox;
+let selectionBoxX = 0;
+let selectionBoxY = 0;
+
 //TODO Functions lost in refactoring
 //Asteroid:
 // consumeResource() {
@@ -90,37 +94,18 @@ function drawInitialGameState() {
 function shipMovement() {
     // Handle player input for ship movement
     if (mouse.pressing("right")) {
-        switch (ui.selectedGroup) {
-            case 0:
-                for (let i = 0; i < data.playerShip.drones.length; i++) {
-                    let thisShip = data.playerShip.drones[i];
-                    data.playerShip.movementLogic(thisShip);
-                }
-                break;
-            case 1:
-                for (let i = 0; i < data.playerShip.corsairs.length; i++) {
-                    let thisShip = data.playerShip.corsairs[i];
-                    data.playerShip.movementLogic(thisShip);
-                }
-                break;
-            case 2:
-                for (let i = 0; i < data.playerShip.destroyers.length; i++) {
-                    let thisShip = data.playerShip.destroyers[i];
-                    data.playerShip.movementLogic(thisShip);
-                }
-                break;
-            case 3:
-                for (let i = 0; i < data.playerShip.cruisers.length; i++) {
-                    let thisShip = data.playerShip.cruisers[i];
-                    data.playerShip.movementLogic(thisShip);
-                }
-                break;
-            case 4:
-                for (let i = 0; i < data.playerShip.battleships.length; i++) {
-                    let thisShip = data.playerShip.battleships[i];
-                    data.playerShip.movementLogic(thisShip);
-                }
-                break;
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
+            let thisShip = data.playerShip.ships[i];
+            if (thisShip.selected == true) {
+                data.playerShip.movementLogic(thisShip);
+            }
+        }
+    }
+
+    //Unselects all ships when mouse is clicked
+    if (mouse.presses()) {
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
+            data.playerShip.ships[i].selected = false;
         }
     }
     // Handle Ship Movement when in motion
@@ -138,6 +123,7 @@ function shipMovement() {
     }
 }
 
+//Handles ship combat call and resource collection calls
 function shipAction() {
     for (let i = 0; i < data.playerShip.ships.length; i++) {
         let thisShip = data.playerShip.ships[i];
@@ -161,6 +147,25 @@ function shipAction() {
     }
 }
 
+function shipTarget() {
+    for (let i = 0; i < data.playerShip.ships.length; i++) {
+        let thisShip = data.playerShip.ships[i];
+        for (let j = 0; j < data.enemyShip.ships.length; j++) {
+            let thisEnemy = data.enemyShip.ships[j];
+            if (thisShip.selected == true && thisEnemy.mouse.presses("right")) {
+                thisShip.target = thisEnemy;
+            }
+        }
+        for (let j = 0; j < data.asteroids.length; j++) {
+            let thisAsteroid = data.asteroids[j];
+            if (thisShip.selected == true && thisAsteroid.mouse.presses("right") && thisShip.group == "drone") {
+                thisShip.target = thisAsteroid;
+                console.log(thisShip)
+            }
+        }
+    }
+}
+
 function drawGameScreen() {
     background("green");
     if (initialGameState) {
@@ -172,6 +177,7 @@ function drawGameScreen() {
 
     shipMovement();
     shipAction();
+    shipTarget();
 }
 
 function drawEndScreen() {
@@ -190,8 +196,14 @@ function preload() {
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
 
+
 function setup() {
     new Canvas(800, 800);
+
+    selectionBox = new Sprite();
+    selectionBox.overlapping(allSprites);
+    selectionBox.rotationLock = true;
+    selectionBox.visible = false;
 }
 
 function draw() {
@@ -210,5 +222,52 @@ function draw() {
             break;
     }
 
+    clickDrag();
+}
 
+function clickDrag() {
+    if (mouse.pressing()) {
+        if (mouseX > selectionBoxX) {
+            selectionBox.w = (mouseX - selectionBoxX) + 1;
+            selectionBox.x = (selectionBoxX + mouseX) / 2;
+        }
+        if (mouseY > selectionBoxY) {
+            selectionBox.h = (mouseY - selectionBoxY) + 1;
+            selectionBox.y = (selectionBoxY + mouseY) / 2;
+        }
+        if (mouseX < selectionBoxX) {
+            selectionBox.w = (selectionBoxX - mouseX) + 1;
+            selectionBox.x = mouseX + selectionBox.w / 2;
+        }
+        if (mouseY < selectionBoxY) {
+            selectionBox.h = (selectionBoxY - mouseY) + 1;
+            selectionBox.y = mouseY + selectionBox.h / 2;
+        }
+        selectionBox.visible = true;
+    }
+    else {
+        selectionBox.visible = false;
+        selectionBox.x = -50;
+        selectionBox.y = -50;
+        selectionBox.w = 10;
+        selectionBox.h = 10;
+
+        selectionBoxX = mouseX;
+        selectionBoxY = mouseY;
+    }
+
+    if (mouse.presses()) {
+        selectionBoxX = mouseX;
+        selectionBoxY = mouseY;
+    }
+
+    if (mouse.released()) {
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
+            let thisShip = data.playerShip.ships[i];
+            if (selectionBox.overlapping(thisShip)) {
+                console.log(thisShip);
+                thisShip.selected = true;
+            }
+        }
+    }
 }
