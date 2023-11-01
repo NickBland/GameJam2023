@@ -16,6 +16,20 @@ class userInterface {
         this.selectedGroup;
 
         this.#groupButtons = this.#setupGroupSelector();
+
+        this.selectionBox;
+    }
+
+    setupSelectionBox() {
+        this.selectionBox = new Sprite();
+        this.selectionBox.colour = "white";
+        this.selectionBox.color.setAlpha(30); // Reduce alpha to something so you can see through it
+        this.selectionBox.overlapping(allSprites);
+        this.selectionBox.rotationLock = true;
+        this.selectionBox.visible = false;
+
+        this.selectionBoxX = 0;
+        this.selectionBoxY = 0;
     }
 
     /**
@@ -211,6 +225,55 @@ class userInterface {
             }
             else{
                 thisShip.selected = false;
+            }
+        }
+    }
+
+    /**
+     * Defines usage of the click-to-drag selection mechanism
+     */
+    clickDrag() {
+        if (mouse.pressing()) {
+            if (mouseX > this.selectionBoxX) {
+                this.selectionBox.w = (mouseX - this.selectionBoxX) + 1;
+                this.selectionBox.x = (this.selectionBoxX + mouseX) / 2;
+            }
+            if (mouseY > this.selectionBoxY) {
+                this.selectionBox.h = (mouseY - this.selectionBoxY) + 1;
+                this.selectionBox.y = (this.selectionBoxY + mouseY) / 2;
+            }
+            if (mouseX < this.selectionBoxX) {
+                this.selectionBox.w = (this.selectionBoxX - mouseX) + 1;
+                this.selectionBox.x = mouseX + this.selectionBox.w / 2;
+            }
+            if (mouseY < this.selectionBoxY) {
+                this.selectionBox.h = (this.selectionBoxY - mouseY) + 1;
+                this.selectionBox.y = mouseY + this.selectionBox.h / 2;
+            }
+            this.selectionBox.visible = true;
+        }
+        else {
+            this.selectionBox.visible = false;
+            this.selectionBox.x = -50;
+            this.selectionBox.y = -50;
+            this.selectionBox.w = 10;
+            this.selectionBox.h = 10;
+    
+            this.selectionBoxX = mouseX;
+            this.selectionBoxY = mouseY;
+        }
+    
+        if (mouse.presses()) {
+            this.selectionBoxX = mouseX;
+            this.selectionBoxY = mouseY;
+        }
+    
+        if (mouse.released()) {
+            for (let i = 0; i < data.playerShip.ships.length; i++) {
+                let selectedShip = data.playerShip.ships[i];
+                if (this.selectionBox.overlapping(selectedShip)) {
+                    selectedShip.selected = true;
+                }
             }
         }
     }

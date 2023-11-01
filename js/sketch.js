@@ -51,8 +51,6 @@ let mothership1, mothership2;
 let ui;
 
 let selectionBox;
-let selectionBoxX = 0;
-let selectionBoxY = 0;
 
 //TODO Functions lost in refactoring
 //Asteroid:
@@ -87,6 +85,7 @@ function drawInitialGameState() {
     data.setupGame();
 
     ui = new userInterface;
+    ui.setupSelectionBox();
 
     initialGameState = false;
 }
@@ -174,6 +173,7 @@ function drawGameScreen() {
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
+    ui.clickDrag();
 
     shipMovement();
     shipAction();
@@ -199,11 +199,6 @@ function preload() {
 
 function setup() {
     new Canvas(800, 800);
-
-    selectionBox = new Sprite();
-    selectionBox.overlapping(allSprites);
-    selectionBox.rotationLock = true;
-    selectionBox.visible = false;
 }
 
 function draw() {
@@ -221,52 +216,5 @@ function draw() {
             drawEndScreen();
             break;
     }
-
-    clickDrag();
 }
 
-function clickDrag() {
-    if (mouse.pressing()) {
-        if (mouseX > selectionBoxX) {
-            selectionBox.w = (mouseX - selectionBoxX) + 1;
-            selectionBox.x = (selectionBoxX + mouseX) / 2;
-        }
-        if (mouseY > selectionBoxY) {
-            selectionBox.h = (mouseY - selectionBoxY) + 1;
-            selectionBox.y = (selectionBoxY + mouseY) / 2;
-        }
-        if (mouseX < selectionBoxX) {
-            selectionBox.w = (selectionBoxX - mouseX) + 1;
-            selectionBox.x = mouseX + selectionBox.w / 2;
-        }
-        if (mouseY < selectionBoxY) {
-            selectionBox.h = (selectionBoxY - mouseY) + 1;
-            selectionBox.y = mouseY + selectionBox.h / 2;
-        }
-        selectionBox.visible = true;
-    }
-    else {
-        selectionBox.visible = false;
-        selectionBox.x = -50;
-        selectionBox.y = -50;
-        selectionBox.w = 10;
-        selectionBox.h = 10;
-
-        selectionBoxX = mouseX;
-        selectionBoxY = mouseY;
-    }
-
-    if (mouse.presses()) {
-        selectionBoxX = mouseX;
-        selectionBoxY = mouseY;
-    }
-
-    if (mouse.released()) {
-        for (let i = 0; i < data.playerShip.ships.length; i++) {
-            let thisShip = data.playerShip.ships[i];
-            if (selectionBox.overlapping(thisShip)) {
-                thisShip.selected = true;
-            }
-        }
-    }
-}
