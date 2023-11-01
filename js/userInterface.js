@@ -48,7 +48,7 @@ class userInterface {
             button.y = initialSelectorPositionY + offsetY;
             button.w = initialSelectorPositionWidth;
             button.h = initialSelectorPositionHeight;
-            button.textSize = 20;
+            button.textSize = 14;
             button.text = i + 1;
             button.collider = "k";
 
@@ -73,9 +73,10 @@ class userInterface {
         imageMode(CORNER);
 
         fill("white");
+        textFont(myfont)
         textAlign(CENTER, CENTER);
-        textSize(20);
-        text("Mothership Health", width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 1.25);
+        textSize(16);
+        text("Mothership Health", width * 0.85 + healthDigit1.w, this.#groupButtons[0].y - this.#groupButtons[0].h*1.25);
 
         // Next, draw a small bar beneath the numbers for added ~~flavour~~
         let mothership1HealthBarX = width * 0.85 - healthDigit1.w;
@@ -85,6 +86,7 @@ class userInterface {
         let mothership1HealthPercentage = mothership1.health / 500
         let mothership1HealthBarFill = mothership1HealthBarWidth * mothership1HealthPercentage; // Calculate % to fill bar
 
+        noStroke();
         fill("white");
         rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarWidth, mothership1HealthBarHeight);
         if (mothership1HealthPercentage > 0.75) {
@@ -112,7 +114,7 @@ class userInterface {
     #updateGroupButtonStates() {
 
         fill("white")
-        text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h);
+        text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h*1.25);
 
         for (let i = 0; i < this.#groupButtons.length; i++) {
             // Stroke

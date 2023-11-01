@@ -10,6 +10,7 @@ let asteroidArr = [];
 
 let myfont, myfontB;
 let mainMenuBgImage, gameBgImage;
+let motherShipImage, miningShipImage, destroyerShipImage, cruiserShipImage, corsairShipImage, battleShipImage; 
 let asteroid1
 let asteroidImgs = [];
 let numerals;
@@ -94,7 +95,7 @@ class asteroid {
         this.sprite.addAni('initial', 'assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1})
         this.sprite.addAni('explode', 'assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8})
         this.sprite.changeAni('initial');
-        this.sprite.debug = true;
+        //this.sprite.debug = true;
         this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
 
         asteroidArr.push(this)
@@ -123,8 +124,8 @@ class spawnedShip {
         this.sprite.y = y;
         this.sprite.health = 100;
         this.sprite.damage = 20;
-        this.sprite.w = 15;
-        this.sprite.h = 15;
+        this.sprite.w = 30;
+        this.sprite.h = 30;
         //Default attributes match the Corsair ship type
 
         this.timer = 0;
@@ -166,6 +167,8 @@ class spawnedShip {
 class corsairShip extends spawnedShip { // Fighter drone
     constructor(x, y) {
         super(x, y);
+        this.sprite.img = corsairShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 }
 
@@ -174,8 +177,10 @@ class miningShip extends spawnedShip { // Mining drone
         super(x, y);
         this.sprite.health = 50;
         this.sprite.damage = 10;
-        this.sprite.w = 10;
-        this.sprite.h = 10;
+        this.sprite.w = 20;
+        this.sprite.h = 20;
+        this.sprite.img = miningShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
         this.sprite.resources = 0;
     }
 
@@ -204,8 +209,10 @@ class destroyerShip extends spawnedShip {   // Medium-Fighter Drone
         super(x, y);
         this.sprite.health = 150;
         this.sprite.damage = 25;
-        this.sprite.w = 15;
-        this.sprite.h = 20;
+        this.sprite.w = 40;
+        this.sprite.h = 40;
+        this.sprite.img = destroyerShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 }
 
@@ -214,8 +221,10 @@ class cruiserShip extends spawnedShip { // Heavy-Fighter Drone
         super(x, y);
         this.sprite.health = 200;
         this.sprite.damage = 35;
-        this.sprite.w = 20;
-        this.sprite.h = 35;
+        this.sprite.w = 45;
+        this.sprite.h = 45;
+        this.sprite.img = cruiserShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 }
 
@@ -224,16 +233,18 @@ class battleshipShip extends spawnedShip {  //Super-Fighter Drone
         super(x, y);
         this.sprite.health = 300;
         this.sprite.damage = 75;
-        this.sprite.w = 35;
+        this.sprite.w = 50;
         this.sprite.h = 50;
+        this.sprite.img = battleShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 }
 class mothership {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.w = 75;
-        this.h = 75;
+        this.w = 80;
+        this.h = 80;
         this.health = 500;
         this.shipType = ["mining", "corsair", "destroyer", "cruiser", "battleship"]; //Should hold the types of ship the MS can create - needs to be filled
 
@@ -248,6 +259,8 @@ class mothership {
         this.shipGroup = [];
 
         this.sprite = new Sprite(this.x, this.y, this.w, this.h, "k"); //creates the mothership sprite
+        this.sprite.img = motherShipImage.get()
+        this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 
     //Creates the child units - needs to be fed the argument for unit type
@@ -431,6 +444,13 @@ function preload() {
     mainMenuBgImage = loadImage("assets/images/myassets/background/mainMenu.png")
     gameBgImage = loadImage("assets/images/myassets/background/game.png")
 
+    //Ships img
+    battleShipImage = loadImage("assets/images/myassets/ships/battleship.png")
+    corsairShipImage = loadImage("assets/images/myassets/ships/corsairship.png")
+    cruiserShipImage = loadImage("assets/images/myassets/ships/cruisership.png")
+    destroyerShipImage = loadImage("assets/images/myassets/ships/destroyership.png")
+    miningShipImage = loadImage("assets/images/myassets/ships/miningship.png")
+    motherShipImage = loadImage("assets/images/myassets/ships/mothership.png")
 
     //Asteroid img (option1)
     loadImage("assets/images/myassets/asteroids/asteroid1.png", asset => asteroidImgs.push(asset));
