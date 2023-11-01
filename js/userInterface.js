@@ -100,6 +100,13 @@ class userInterface {
     }
 
     /**
+     * Draws the amount of resources the user has on the right side of the screen
+     */
+    #drawResources() {
+        
+    }
+
+    /**
      * Updates the state of the group selection buttons by adjusting the appearance of the stroke and internal colour depending on hover/selection
      */
     #updateGroupButtonStates() {
