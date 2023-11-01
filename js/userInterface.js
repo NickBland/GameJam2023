@@ -18,6 +18,7 @@ class userInterface {
         this.#groupButtons = this.#setupGroupSelector();
 
         this.selectionBox;
+        this.setupSelectionBox();
     }
 
     setupSelectionBox() {

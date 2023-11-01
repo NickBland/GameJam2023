@@ -85,7 +85,6 @@ function drawInitialGameState() {
     data.setupGame();
 
     ui = new userInterface;
-    ui.setupSelectionBox();
 
     initialGameState = false;
 }
