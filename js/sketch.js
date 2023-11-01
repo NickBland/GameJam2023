@@ -299,14 +299,14 @@ function shipMovement() {
     if (mouse.pressing("right")) {
         switch (ui.selectedGroup) {
             case 0:
-                for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
-                    let thisShip = mothership1.ownedShips.corsairShipsArr[i];
+                for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.miningShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
             case 1:
-                for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
-                    let thisShip = mothership1.ownedShips.miningShipsArr[i];
+                for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.corsairShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
