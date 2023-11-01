@@ -3,7 +3,7 @@ class spriteFactory {
 
     }
 
-    createObject(x, y) {
+    createObject(x, y, d) {
         let object = new Sprite(x, y);
         return object;
     }
@@ -11,6 +11,12 @@ class spriteFactory {
     createShip(x, y, group) {
         let ship = this.createObject(x, y);
         ship.group = group;
+        ship.origin = {x:x, y:y};
+        ship.target = null;
+        ship.destinationX = 0;
+        ship.destinationY = 0;
+        ship.selected = false;
+        ship.moveTimer = 0;
         return ship;
     }
 
@@ -19,17 +25,13 @@ class spriteFactory {
         mothership.w = 75;
         mothership.h = 75;
         mothership.health = 500;
+        mothership.collider = "s";
 
         return mothership;
     }
 
     createDrone(x, y) {
         let drone = this.createShip(x, y, "drone");
-        drone.origin = {x: x, y: y};
-        drone.target = null;
-        drone.selected = false;
-        drone.moveTimer = 0;
-
 
         drone.resources = 0;
         drone.health = 50;
@@ -43,12 +45,11 @@ class spriteFactory {
 
     createCorsair(x, y, owner) {
         let corsair = this.createShip(x, y, "corsair");
-        corsair.origin = {x: x, y: y};
-        corsair.selected = false;
+
         // corsair.image = 
 
-        // corsair.health = 100;
-        // corsair.damage = 20;
+        corsair.health = 100;
+        corsair.damage = 20;
 
         corsair.w = 15;
         corsair.h = 15;
@@ -58,8 +59,7 @@ class spriteFactory {
 
     createDestroyer(x, y, owner) {
         let destroyer = this.createShip(x, y, "destroyer");
-        destroyer.origin = {x: x, y: y};
-        destroyer.selected = false;
+
         // destroyer.image = ;
 
         destroyer.health = 150;
@@ -73,8 +73,7 @@ class spriteFactory {
 
     createCruiser(x, y, owner) {
         let cruiser = this.createShip(x, y, "cruiser");
-        cruiser.origin = {x: x, y: y};
-        cruiser.selected = false;
+
         // cruiser.image = ;
 
         cruiser.health = 200;
@@ -89,8 +88,7 @@ class spriteFactory {
 
     createBattleship(x, y, owner) {
         let battleship = this.createShip(x, y, "battleship");
-        battleship.origin = {x: x, y: y};
-        battleship.selected = false;
+
         // battleship.image = ;
 
         battleship.health = 300;
@@ -98,5 +96,42 @@ class spriteFactory {
 
         battleship.w = 35;
         battleship.h = 50;
+
+        return battleship;
+    }
+
+    createAsteroid(){
+        randomSeed(Date.now()); // Set the current seed to the epoch time
+
+        let d = Math.floor(random(25, 70));
+        let x = random(d, width - d);
+        let y = random(d, height - d);
+
+        let asteroid = this.createObject(x, y);
+
+        asteroid.resources = floor(d*1.5);
+
+        /*let index = Math.floor(random(0, 1000)) % asteroidImages.length;
+        asteroid.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
+        asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact*/
+
+        //Option1 asteroid 
+        /*let index = Math.floor(random(0, 1000)) % asteroidImgs.length;
+        this.sprite.img = asteroidImg[index].get();
+        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
+        this.sprite.rotation = random(0, 360);*/
+
+        //Option2 asteroid
+        asteroid.addAni('initial', 'assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1})
+        asteroid.addAni('explode', 'assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8})
+        asteroid.changeAni('initial');
+        //this.sprite.debug = true;
+
+        //asteroid1.sprite.ani.scale = asteroid1.d/45;
+        
+        asteroid.d = d;
+        asteroid.collider = "k";
+        asteroid.group = "asteroid";
+        return asteroid;
     }
 }
