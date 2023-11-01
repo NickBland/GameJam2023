@@ -99,5 +99,4 @@ class spriteFactory {
         battleship.w = 35;
         battleship.h = 50;
     }
-
 }

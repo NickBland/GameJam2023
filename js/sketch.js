@@ -9,6 +9,7 @@
 let asteroidArr = [];
 
 let myfont, myfontB;
+let asteroid1;
 let mainMenuBgImage, gameBgImage;
 let motherShipImage, miningShipImage, destroyerShipImage, cruiserShipImage, corsairShipImage, battleShipImage; 
 //let asteroid1
@@ -323,7 +324,7 @@ class mothershipTwo {
 function drawInitialGameState() {
     // ui = new userInterface;
     // usableHeight = height - ui.container.h;
-    let asteroid1 = new asteroid;
+    asteroid1 = new asteroid;
     asteroid1.sprite.ani.scale = asteroid1.d/45;
     // mothership1 = new mothership(100, 100);
     // mothership2 = new mothership(width - 100, usableHeight - 100);
@@ -477,7 +478,6 @@ function preload() {
 }
 
 function setup() {
-    1
     new Canvas(800, 800);
 
 }
