@@ -13,9 +13,26 @@ class userInterface {
         }
 
         this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
-        this.selectedGroup;
+        this.selectedGroup = this.groupTypes.indexOf("none"); // Ensure to set starting selection as none (was null before user clicked anything previously)
 
         this.#groupButtons = this.#setupGroupSelector();
+
+        this.selectionBox;
+        this.setupSelectionBox();
+    }
+
+    setupSelectionBox() {
+        this.selectionBox = new Sprite();
+        this.selectionBox.colour = "white";
+        this.selectionBox.color.setAlpha(30); // Reduce alpha to something smaller so you can see through it
+        this.selectionBox.stroke = "black";
+        this.selectionBox.strokeWeight = 3;
+        this.selectionBox.overlapping(allSprites);
+        this.selectionBox.rotationLock = true;
+        this.selectionBox.visible = false;
+
+        this.selectionBoxX = 0;
+        this.selectionBoxY = 0;
     }
 
     /**
@@ -140,7 +157,7 @@ class userInterface {
      * Updates the state of the group selection buttons by adjusting the appearance of the stroke and internal colour depending on hover/selection
      */
     #updateGroupButtonStates() {
-
+        textAlign(CENTER, CENTER);
         fill("white")
         text("Selected Group", this.#groupButtons[0].x + this.#groupButtons[0].w * 1.75, this.#groupButtons[0].y - this.#groupButtons[0].h);
 
@@ -171,34 +188,35 @@ class userInterface {
     groupSelection() {
         if (kb.presses("1")) {
             this.selectedGroup = this.groupTypes.indexOf("drone");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("2")) {
             this.selectedGroup = this.groupTypes.indexOf("corsair");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("3")) {
             this.selectedGroup = this.groupTypes.indexOf("destroyer");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("4")) {
             this.selectedGroup = this.groupTypes.indexOf("cruiser");
-            this.updateSelection()
+            this.updateSelection();
         }
         if (kb.presses("5")) {
             this.selectedGroup = this.groupTypes.indexOf("battleship");
-            this.updateSelection()
+            this.updateSelection();
         }
 
         // Now handle the mouse!
         if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
+            this.updateSelection();
         }
 
         for (let i = 0; i < this.#groupButtons.length; i++) {
             if (this.#groupButtons[i].mouse.hovering() && mouse.presses("left")) {
                 this.selectedGroup = i;
-                this.updateSelection()
+                this.updateSelection();
             }
         }
     }
@@ -208,9 +226,63 @@ class userInterface {
             let thisShip = data.playerShip.ships[i];
             if(thisShip.group == this.groupTypes[this.selectedGroup]){
                 thisShip.selected = true;
-            }
-            else{
+                thisShip.stroke = "white"
+                thisShip.strokeWeight = 2;
+            } else{
                 thisShip.selected = false;
+                thisShip.stroke = "black";
+                thisShip.strokeWeight = 1;
+            }
+        }
+    }
+
+    /**
+     * Defines usage of the click-to-drag selection mechanism
+     */
+    clickDrag() {
+        if (mouse.pressing()) {
+            if (mouseX > this.selectionBoxX) {
+                this.selectionBox.w = (mouseX - this.selectionBoxX) + 1;
+                this.selectionBox.x = (this.selectionBoxX + mouseX) / 2;
+            }
+            if (mouseY > this.selectionBoxY) {
+                this.selectionBox.h = (mouseY - this.selectionBoxY) + 1;
+                this.selectionBox.y = (this.selectionBoxY + mouseY) / 2;
+            }
+            if (mouseX < this.selectionBoxX) {
+                this.selectionBox.w = (this.selectionBoxX - mouseX) + 1;
+                this.selectionBox.x = mouseX + this.selectionBox.w / 2;
+            }
+            if (mouseY < this.selectionBoxY) {
+                this.selectionBox.h = (this.selectionBoxY - mouseY) + 1;
+                this.selectionBox.y = mouseY + this.selectionBox.h / 2;
+            }
+            this.selectionBox.visible = true;
+        }
+        else {
+            this.selectionBox.visible = false;
+            this.selectionBox.x = -50;
+            this.selectionBox.y = -50;
+            this.selectionBox.w = 10;
+            this.selectionBox.h = 10;
+    
+            this.selectionBoxX = mouseX;
+            this.selectionBoxY = mouseY;
+        }
+    
+        if (mouse.presses()) {
+            this.selectionBoxX = mouseX;
+            this.selectionBoxY = mouseY;
+        }
+    
+        if (mouse.released()) {
+            for (let i = 0; i < data.playerShip.ships.length; i++) {
+                let selectedShip = data.playerShip.ships[i];
+                if (this.selectionBox.overlapping(selectedShip)) {
+                    selectedShip.selected = true;
+                    selectedShip.stroke = "white"
+                    selectedShip.strokeWeight = 2;
+                }
             }
         }
     }
