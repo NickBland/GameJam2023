@@ -1,6 +1,7 @@
 /**
  * @class User Interface class deals with elements at the bottom of the gameplay screen.
  */
+
 class userInterface {
     #groupButtons; // Private buttons so they can't be accessed outside the UI
     constructor() {
@@ -63,9 +64,9 @@ class userInterface {
     #drawHealth() {
         // This next block determines what each digit is using modulus. The digits will be 0 if it is less than its number (eg. third digit at 99 will be 0)
         let healthDigit1, healthDigit2, healthDigit3;
-        healthDigit3 = numerals[Math.floor(mothership1.health % 10)];
-        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
-        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
+        healthDigit3 = numerals[Math.floor(data.playerMothership.health % 10)];
+        healthDigit2 = numerals[Math.floor((data.playerMothership.health / 10) % 10)];
+        healthDigit1 = numerals[Math.floor((data.playerMothership.health / 100) % 10)];
         imageMode(CENTER);
         image(healthDigit1, width * 0.85, this.container.y + healthDigit1.h * 2.5);
         image(healthDigit2, width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 2.5);
@@ -82,7 +83,7 @@ class userInterface {
         let mothership1HealthBarY = this.container.y + healthDigit1.h * 3.5;
         let mothership1HealthBarWidth = healthDigit1.w * 4;
         let mothership1HealthBarHeight = 10;
-        let mothership1HealthPercentage = mothership1.health / 500
+        let mothership1HealthPercentage = data.playerMothership.health / 500
         let mothership1HealthBarFill = mothership1HealthBarWidth * mothership1HealthPercentage; // Calculate % to fill bar
 
         fill("white");
