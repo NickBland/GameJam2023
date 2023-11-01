@@ -11,7 +11,7 @@ let asteroidArr = [];
 let myfont, myfontB;
 let mainMenuBgImage, gameBgImage;
 let motherShipImage, miningShipImage, destroyerShipImage, cruiserShipImage, corsairShipImage, battleShipImage; 
-let asteroid1
+//let asteroid1
 let asteroidImgs = [];
 let numerals;
 
@@ -64,6 +64,8 @@ function drawMainMenuScreen() {
 // ================================================================================================
 
 let initialGameState = true;
+
+let data;
 
 let mothership1, mothership2;
 
@@ -239,7 +241,7 @@ class battleshipShip extends spawnedShip {  //Super-Fighter Drone
         this.sprite.img.resize(this.sprite.w, this.sprite.h)
     }
 }
-class mothership {
+class mothershipTwo {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -319,21 +321,27 @@ class mothership {
 }
 
 function drawInitialGameState() {
-    ui = new userInterface;
-    usableHeight = height - ui.container.h;
-    asteroid1 = new asteroid;
+    // ui = new userInterface;
+    // usableHeight = height - ui.container.h;
+    let asteroid1 = new asteroid;
     asteroid1.sprite.ani.scale = asteroid1.d/45;
-    mothership1 = new mothership(100, 100);
-    mothership2 = new mothership(width - 100, usableHeight - 100);
-    initialGameState = false;
+    // mothership1 = new mothership(100, 100);
+    // mothership2 = new mothership(width - 100, usableHeight - 100);
+    
 
-    //Temporary - this spawns one of eac htype on startup for testing
-    for (let i = 0; i < mothership1.shipType.length; i++) {
-        mothership1.createUnit(mothership1.shipType[i])
-    }
-    for (let i = 0; i < mothership2.shipType.length; i++) {
-        mothership2.createUnit(mothership2.shipType[i])
-    }
+    // //Temporary - this spawns one of eac htype on startup for testing
+    // for (let i = 0; i < mothership1.shipType.length; i++) {
+    //     mothership1.createUnit(mothership1.shipType[i])
+    // }
+    // for (let i = 0; i < mothership2.shipType.length; i++) {
+    //     mothership2.createUnit(mothership2.shipType[i])
+    // }
+
+    data = new gameData();
+    data.setupGame();
+
+    
+    initialGameState = false;
 }
 
 function shipMovement() {
@@ -422,13 +430,13 @@ function drawGameScreen() {
         drawInitialGameState();
     }
 
-    ui.drawInterface();
-    ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
+    // ui.drawInterface();
+    // ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
 
-    shipMovement();
-    shipCombat();
+    // shipMovement();
+    // shipCombat();
 
-    resourceCollection();
+    // resourceCollection();
 }
 
 function drawEndScreen() {
