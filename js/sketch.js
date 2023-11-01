@@ -49,6 +49,8 @@ function drawMainMenuScreen() {
 
 let initialGameState = true;
 
+let data;
+
 let mothership1, mothership2;
 
 let usableHeight;
@@ -200,7 +202,7 @@ class battleshipShip extends spawnedShip {  //Super-Fighter Drone
         this.sprite.h = 50;
     }
 }
-class mothership {
+class mothershipTwo {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -278,20 +280,26 @@ class mothership {
 }
 
 function drawInitialGameState() {
-    ui = new userInterface;
-    usableHeight = height - ui.container.h;
+    // ui = new userInterface;
+    // usableHeight = height - ui.container.h;
     let asteroid1 = new asteroid;
-    mothership1 = new mothership(100, 100);
-    mothership2 = new mothership(width - 100, usableHeight - 100);
-    initialGameState = false;
+    // mothership1 = new mothership(100, 100);
+    // mothership2 = new mothership(width - 100, usableHeight - 100);
+    
 
-    //Temporary - this spawns one of eac htype on startup for testing
-    for (let i = 0; i < mothership1.shipType.length; i++) {
-        mothership1.createUnit(mothership1.shipType[i])
-    }
-    for (let i = 0; i < mothership2.shipType.length; i++) {
-        mothership2.createUnit(mothership2.shipType[i])
-    }
+    // //Temporary - this spawns one of eac htype on startup for testing
+    // for (let i = 0; i < mothership1.shipType.length; i++) {
+    //     mothership1.createUnit(mothership1.shipType[i])
+    // }
+    // for (let i = 0; i < mothership2.shipType.length; i++) {
+    //     mothership2.createUnit(mothership2.shipType[i])
+    // }
+
+    data = new gameData();
+    data.setupGame();
+
+    
+    initialGameState = false;
 }
 
 function shipMovement() {
@@ -378,13 +386,13 @@ function drawGameScreen() {
         drawInitialGameState();
     }
 
-    ui.drawInterface();
-    ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
+    // ui.drawInterface();
+    // ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
 
-    shipMovement();
-    shipCombat();
+    // shipMovement();
+    // shipCombat();
 
-    resourceCollection();
+    // resourceCollection();
 }
 
 function drawEndScreen() {
