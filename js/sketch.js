@@ -6,11 +6,13 @@
 ]*/
 //let asteroidImages = [];
 
+let asteroidArr = [];
+
 let myfont, myfontB;
 let mainMenuBgImage, gameBgImage;
 let asteroid1
 let asteroidImgs = [];
-let numerals = [];
+let numerals;
 
 
 
@@ -66,36 +68,7 @@ let mothership1, mothership2;
 
 let usableHeight;
 
-let shop
-
-let selectedType = "none";
-
-class userInterface {
-    constructor() {
-        // Draw a container on the bottom of the screen, with a lighter opacity so that the player can see through it
-        this.container = {
-            w: width,
-            h: 100,
-            x: 0,
-            y: height - 100,
-        }
-    }
-
-
-    drawInterface() {
-        fill(255, 255, 255, 100);
-        rect(this.container.x, this.container.y, this.container.w, this.container.h);
-        noFill();
-
-        // Draw in the health of the mothership at the bottom right
-        let healthDigit1, healthDigit2, healthDigit3;
-        healthDigit3 = numerals[Math.floor(mothership1.heath % 10)];
-        healthDigit2 = numerals[Math.floor((mothership1.health / 10) % 10)];
-        healthDigit1 = numerals[Math.floor((mothership1.health / 100) % 10)];
-
-        image(healthDigit1, width * 0.9, this.h / 2);
-    }
-}
+let ui;
 
 
 class asteroid {
@@ -123,6 +96,8 @@ class asteroid {
         this.sprite.changeAni('initial');
         this.sprite.debug = true;
         this.resources = this.d * 1.5; // set the starting resources of the asteroid preportional to its diameter (bigger = more)
+
+        asteroidArr.push(this)
     }
 
     consumeResource() {
@@ -179,14 +154,12 @@ class spawnedShip {
     }
 
     attack(thisEnemy) {
-        //createProjectile(thisEnemy);
-
-        this.sprite.attractTo(thisEnemy.sprite, -25);
+        //createProjectile(thisEnemy, this.damage);
+        console.log("Pow")
     }
 
-    takeDamage() {
-        //subtract health when hit by enemy projectiles
-        //logic to die when 0 health
+    takeDamage(damage) {
+        this.health -= damage;
     }
 }
 
@@ -206,8 +179,23 @@ class miningShip extends spawnedShip { // Mining drone
         this.sprite.resources = 0;
     }
 
-    attack() {
-        return;
+    attack(thisEnemy) {
+        this.sprite.attractTo(thisEnemy.sprite, -20);
+    }
+
+    harvestResources(thisAsteroid) {
+        //createProjectile(thisAsteroid);
+        console.log("Kerpow");
+        if (this.sprite.resources < 5) {
+            if (frameCount % 10 == 0) {
+                this.sprite.resources++;
+            }
+        }
+        else {
+            this.setDestination(mothership1.x, mothership1.y);
+            this.timer = (mothership1.x, mothership1.y, this.sprite.x, this.sprite.y);
+
+        }
     }
 }
 
@@ -257,6 +245,8 @@ class mothership {
             battleshipShipsArr: [],
         };
 
+        this.shipGroup = [];
+
         this.sprite = new Sprite(this.x, this.y, this.w, this.h, "k"); //creates the mothership sprite
     }
 
@@ -267,26 +257,31 @@ class mothership {
             case "mining":
                 unit = new miningShip(this.x, this.y);
                 this.ownedShips.miningShipsArr.push(unit);
+                this.shipGroup.push(unit);
                 break;
 
             case "corsair":
                 unit = new corsairShip(this.x, this.y);
                 this.ownedShips.corsairShipsArr.push(unit);
+                this.shipGroup.push(unit);
                 break;
 
             case "destroyer":
                 unit = new destroyerShip(this.x, this.y);
                 this.ownedShips.destroyerShipsArr.push(unit);
+                this.shipGroup.push(unit);
                 break;
 
             case "cruiser":
                 unit = new cruiserShip(this.x, this.y);
                 this.ownedShips.cruiserShipsArr.push(unit);
+                this.shipGroup.push(unit);
                 break;
 
             case "battleship":
                 unit = new battleshipShip(this.x, this.y);
                 this.ownedShips.battleshipShipsArr.push(unit);
+                this.shipGroup.push(unit);
                 break;
             default:
         }
@@ -311,8 +306,8 @@ class mothership {
 }
 
 function drawInitialGameState() {
-    shop = new userInterface;
-    usableHeight = height - shop.container.h;
+    ui = new userInterface;
+    usableHeight = height - ui.container.h;
     asteroid1 = new asteroid;
     asteroid1.sprite.ani.scale = asteroid1.d/45;
     mothership1 = new mothership(100, 100);
@@ -323,58 +318,40 @@ function drawInitialGameState() {
     for (let i = 0; i < mothership1.shipType.length; i++) {
         mothership1.createUnit(mothership1.shipType[i])
     }
-}
-
-function shipSelection() {
-    if (kb.presses("1")) {
-        selectedType = "mining";
-    }
-    if (kb.presses("2")) {
-        selectedType = "corsair";
-    }
-    if (kb.presses("3")) {
-        selectedType = "destroyer";
-    }
-    if (kb.presses("4")) {
-        selectedType = "cruiser";
-    }
-    if (kb.presses("5")) {
-        selectedType = "battleship";
-    }
-    if (mouse.presses("left")) {
-        selectedType = "none";
+    for (let i = 0; i < mothership2.shipType.length; i++) {
+        mothership2.createUnit(mothership2.shipType[i])
     }
 }
 
 function shipMovement() {
     // Handle player input for ship movement
     if (mouse.pressing("right")) {
-        switch (selectedType) {
-            case "corsair":
-                for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
-                    let thisShip = mothership1.ownedShips.corsairShipsArr[i];
-                    thisShip.movementLogic(thisShip);
-                }
-                break;
-            case "mining":
+        switch (ui.selectedGroup) {
+            case 0:
                 for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.miningShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "destroyer":
+            case 1:
+                for (let i = 0; i < mothership1.ownedShips.corsairShipsArr.length; i++) {
+                    let thisShip = mothership1.ownedShips.corsairShipsArr[i];
+                    thisShip.movementLogic(thisShip);
+                }
+                break;
+            case 2:
                 for (let i = 0; i < mothership1.ownedShips.destroyerShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.destroyerShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "cruiser":
+            case 3:
                 for (let i = 0; i < mothership1.ownedShips.cruiserShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.cruiserShipsArr[i];
                     thisShip.movementLogic(thisShip);
                 }
                 break;
-            case "battleship":
+            case 4:
                 for (let i = 0; i < mothership1.ownedShips.battleshipShipsArr.length; i++) {
                     let thisShip = mothership1.ownedShips.battleshipShipsArr[i];
                     thisShip.movementLogic(thisShip);
@@ -400,19 +377,25 @@ function shipMovement() {
     }
 }
 
-function shipCombat(){
-    let ownedShipsKeys = Object.keys(mothership1.ownedShips);   //Turns the ownedShip Object into an array to access it using index not.
-    for (let j = 0; j < Object.keys(mothership1.ownedShips).length; j++) {  //Iterates through each type of ship
-        for (let i = 0; i < mothership1.ownedShips[ownedShipsKeys[j]].length; i++) {    //Iterates through each ship in a type
-            let thisShip = mothership1.ownedShips[ownedShipsKeys[j]][i];
-            let enemyShipsKeys = Object.keys(mothership2.ownedShips);
-            for (let k = 0; k < Object.keys(mothership2.ownedShips).length; k++) {  //Iterates through each type of ship
-                for (let l = 0; l < mothership2.ownedShips[enemyShipsKeys[k]].length; l++) {    //Iterates through each ship in a type
-                    let thisEnemy = mothership2.ownedShips[enemyShipsKeys[k]][l];
-                    if(dist(thisShip.sprite.x,thisShip.sprite.y,thisEnemy.sprite.x,thisEnemy.sprite.y)<=50){
-                        thisShip.attack(thisEnemy);
-                    }
-                }
+function shipCombat() {
+    for (let i = 0; i < mothership1.shipGroup.length; i++) {
+        let thisShip = mothership1.shipGroup[i];
+        for (let j = 0; j < mothership2.shipGroup.length; j++) {
+            let thisEnemy = mothership2.shipGroup[j];
+            if (dist(thisShip.sprite.x, thisShip.sprite.y, thisEnemy.sprite.x, thisEnemy.sprite.y) <= 50) {
+                thisShip.attack(thisEnemy);
+            }
+        }
+    }
+}
+
+function resourceCollection() {
+    for (let i = 0; i < mothership1.ownedShips.miningShipsArr.length; i++) {
+        let thisShip = mothership1.ownedShips.miningShipsArr[i];
+        for (let j = 0; j < asteroidArr.length; j++) {
+            let thisAsteroid = asteroidArr[j];
+            if (dist(thisShip.sprite.x, thisShip.sprite.y, thisAsteroid.sprite.x, thisAsteroid.sprite.y) < 50) {
+                thisShip.harvestResources(thisAsteroid);
             }
         }
     }
@@ -426,11 +409,13 @@ function drawGameScreen() {
         drawInitialGameState();
     }
 
-    shop.drawInterface()
+    ui.drawInterface();
+    ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
 
-    shipSelection();
     shipMovement();
     shipCombat();
+
+    resourceCollection();
 }
 
 function drawEndScreen() {
@@ -459,13 +444,12 @@ function preload() {
         }
     }*/
 
-    for (let i = 0; i < 10; i++) {
-        let assetName = "numeral" + i + ".png";
-        loadImage("assets/images/typography/" + assetName, asset => numerals.push(asset));
-    }
+    numerals = loadAnimation("assets/images/typography/numeral0.png", 9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
+    // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
 
 function setup() {
+    1
     new Canvas(800, 800);
 
 }
