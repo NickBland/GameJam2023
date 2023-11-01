@@ -1,7 +1,6 @@
 /**
  * @class User Interface class deals with elements at the bottom of the gameplay screen.
  */
-
 class userInterface {
     #groupButtons; // Private buttons so they can't be accessed outside the UI
     constructor() {
@@ -28,7 +27,7 @@ class userInterface {
 
         let initialSelectorPositionWidth = 25;
         let initialSelectorPositionHeight = initialSelectorPositionWidth;
-        let initialSelectorPositionX = initialSelectorPositionWidth*1.5;
+        let initialSelectorPositionX = initialSelectorPositionWidth * 1.5;
         let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight * 1.75;
 
         // To be used as an index of which button is currently selected by the user.
@@ -43,7 +42,7 @@ class userInterface {
             }
 
             button.color = 128; // Set unselected colour to something you can see on top of the overlay
-            
+
 
             button.x = initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75);
             button.y = initialSelectorPositionY + offsetY;
@@ -59,29 +58,46 @@ class userInterface {
     }
 
     /**
+     * Determines the length of digits, given an integer
+     * @param {int} integer The integer who's digits need to be counted! 
+     */
+    #determingDigitCount(integer) {
+        let count = 0;
+        if (integer >= 1) {
+            ++count; // Preincrement the count before the next step
+        } else {
+            return 1;
+        }
+        while (integer / 10 >= 1) {
+            integer /= 10;
+            ++count; // Preincrement before next while step.
+        }
+        return count;
+    }
+
+    /**
      * Draws the health of the mothership at the bottom right of the interface
      */
     #drawHealth() {
-        // This next block determines what each digit is using modulus. The digits will be 0 if it is less than its number (eg. third digit at 99 will be 0)
-        let healthDigit1, healthDigit2, healthDigit3;
-        healthDigit3 = numerals[Math.floor(data.playerMothership.health % 10)];
-        healthDigit2 = numerals[Math.floor((data.playerMothership.health / 10) % 10)];
-        healthDigit1 = numerals[Math.floor((data.playerMothership.health / 100) % 10)];
-        imageMode(CENTER);
-        image(healthDigit1, width * 0.85, this.container.y + healthDigit1.h * 2.5);
-        image(healthDigit2, width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 2.5);
-        image(healthDigit3, width * 0.85 + healthDigit1.w * 2, this.container.y + healthDigit1.h * 2.5);
-        imageMode(CORNER);
-
+        let initialDigitX = width * 0.85 - numerals[0].w;
+        let initialDigitY = this.container.y + numerals[0].h * 2.5;
+        let digitCount = this.#determingDigitCount(data.playerMothership.health);
         fill("white");
         textAlign(CENTER, CENTER);
         textSize(20);
-        text("Mothership Health", width * 0.85 + healthDigit1.w, this.container.y + healthDigit1.h * 1.25);
+        text("Health", width * 0.85 + numerals[0].w, this.container.y + numerals[0].h * 1.25);
+
+        imageMode(CENTER);
+        for (let i = digitCount; i > 0; i--) {
+            let digit = numerals[Math.floor((data.playerMothership.health / (10 ** (digitCount - i))) % 10)];
+            image(digit, initialDigitX + (digit.w * i), initialDigitY);
+        }
+        imageMode(CORNER);
 
         // Next, draw a small bar beneath the numbers for added ~~flavour~~
-        let mothership1HealthBarX = width * 0.85 - healthDigit1.w;
-        let mothership1HealthBarY = this.container.y + healthDigit1.h * 3.5;
-        let mothership1HealthBarWidth = healthDigit1.w * 4;
+        let mothership1HealthBarX = width * 0.85 - numerals[0].w;
+        let mothership1HealthBarY = this.container.y + numerals[0].h * 3.5;
+        let mothership1HealthBarWidth = numerals[0].w * 4;
         let mothership1HealthBarHeight = 10;
         let mothership1HealthPercentage = data.playerMothership.health / 500
         let mothership1HealthBarFill = mothership1HealthBarWidth * mothership1HealthPercentage; // Calculate % to fill bar
@@ -104,7 +120,20 @@ class userInterface {
      * Draws the amount of resources the user has on the right side of the screen
      */
     #drawResources() {
-        
+        let initialDigitX = width * 0.75;
+        let initialDigitY = this.container.y + numerals[0].h * 2.5;
+        let digitCount = this.#determingDigitCount(data.playerShip.resources);
+        fill("white");
+        textAlign(RIGHT, CENTER);
+        textSize(20);
+        text("Minerals", initialDigitX + numerals[0].w, initialDigitY - numerals[0].w * 1.25)
+
+        imageMode(CENTER);
+        for (let i = 0; i < digitCount; i++) {
+            let digit = numerals[Math.floor((data.playerShip.resources / (10 ** (i))) % 10)];
+            image(digit, initialDigitX - digit.w * i, initialDigitY);
+        }
+        imageMode(CORNER);
     }
 
     /**
@@ -124,7 +153,7 @@ class userInterface {
                 this.#groupButtons[i].strokeWeight = 1;
                 this.#groupButtons[i].stroke = "black"
             }
-            
+
             // Internal Colour
             if (i === this.selectedGroup) {
                 this.#groupButtons[i].color = "red";
@@ -190,6 +219,7 @@ class userInterface {
         // In the future, the camera.off() function should be invoked here, as these elements are to be STATIC at the bottom of the screen.
 
         this.#drawHealth();
+        this.#drawResources();
         this.#updateGroupButtonStates();
 
         // In addition, the camera.on() function should be invoked here, after all static elements have been drawn on screen.
