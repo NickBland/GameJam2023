@@ -18,7 +18,7 @@ class gameData {
         this.playerMothership = this.factory.createMothership(100,100);
         this.playerShip.ships.push(this.playerMothership);
 
-        this.createUnit("mining", this.playerShip, this.playerMothership)
+        this.createUnit("drone", this.playerShip, this.playerMothership)
         this.createUnit("corsair", this.playerShip, this.playerMothership)
         this.createUnit("destroyer", this.playerShip, this.playerMothership)
         this.createUnit("cruiser", this.playerShip, this.playerMothership)
@@ -27,7 +27,7 @@ class gameData {
         this.enemyMothership = this.factory.createMothership(width - 100, height - 200);
         this.enemyShip.ships.push(this.enemyMothership);
 
-        this.createUnit("mining", this.enemyShip, this.enemyMothership)
+        this.createUnit("drone", this.enemyShip, this.enemyMothership)
         this.createUnit("corsair", this.enemyShip, this.enemyMothership)
         this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
         this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
@@ -38,7 +38,7 @@ class gameData {
 
     createUnit(type, team, teamMotherShip) {
         switch (type) {
-            case "mining":
+            case "drone":
                 team.drones.push(this.factory.createDrone(teamMotherShip.x, teamMotherShip.y));
                 break;
 

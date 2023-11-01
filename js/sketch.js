@@ -103,7 +103,7 @@ function shipMovement() {
     }
 
     //Unselects all ships when mouse is clicked
-    if (mouse.presses()) {
+    if (mouse.presses() && mouseY <height-100) {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             data.playerShip.ships[i].selected = false;
         }
@@ -265,7 +265,6 @@ function clickDrag() {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
             if (selectionBox.overlapping(thisShip)) {
-                console.log(thisShip);
                 thisShip.selected = true;
             }
         }

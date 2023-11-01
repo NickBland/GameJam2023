@@ -12,7 +12,7 @@ class userInterface {
             y: height - 100,
         }
 
-        this.groupTypes = ["mining", "corsair", "destroyer", "cruiser", "battleship", "none"];
+        this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
         this.selectedGroup;
 
         this.#groupButtons = this.#setupGroupSelector();
@@ -165,45 +165,52 @@ class userInterface {
 
     /**
      * Handles selection of a group of ships from the user's input
-     * Keyboard numbers 1-5 correspond to "mining", "corsair", "destroyer", "cruiser", and "battleship" groups
+     * Keyboard numbers 1-5 correspond to "drone", "corsair", "destroyer", "cruiser", and "battleship" groups
      * Left Mouse clicks correspond to no group selected, unless the user is hovering over one of the button on the UI
      */
     groupSelection() {
         if (kb.presses("1")) {
-            this.selectedGroup = this.groupTypes.indexOf("mining");
-            data.playerShip.ships.selected = false;
-            data.playerShip.drones.selected = true;
+            this.selectedGroup = this.groupTypes.indexOf("drone");
+            this.updateSelection()
         }
         if (kb.presses("2")) {
             this.selectedGroup = this.groupTypes.indexOf("corsair");
-            data.playerShip.ships.selected = false;
-            data.playerShip.corsairs.selected = true;
+            this.updateSelection()
         }
         if (kb.presses("3")) {
             this.selectedGroup = this.groupTypes.indexOf("destroyer");
-            data.playerShip.ships.selected = false;
-            data.playerShip.destroyers.selected = true;
+            this.updateSelection()
         }
         if (kb.presses("4")) {
             this.selectedGroup = this.groupTypes.indexOf("cruiser");
-            data.playerShip.ships.selected = false;
-            data.playerShip.cruisers.selected = true;
+            this.updateSelection()
         }
         if (kb.presses("5")) {
             this.selectedGroup = this.groupTypes.indexOf("battleship");
-            data.playerShip.ships.selected = false;
-            data.playerShip.battleships.selected = true;
+            this.updateSelection()
         }
 
         // Now handle the mouse!
         if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
-            data.playerShip.ships.selected = false;
         }
 
         for (let i = 0; i < this.#groupButtons.length; i++) {
             if (this.#groupButtons[i].mouse.hovering() && mouse.presses("left")) {
                 this.selectedGroup = i;
+                this.updateSelection()
+            }
+        }
+    }
+
+    updateSelection(){
+        for(let i = 0; i<data.playerShip.ships.length; i++){
+            let thisShip = data.playerShip.ships[i];
+            if(thisShip.group == this.groupTypes[this.selectedGroup]){
+                thisShip.selected = true;
+            }
+            else{
+                thisShip.selected = false;
             }
         }
     }
