@@ -205,7 +205,7 @@ function preload() {
 
     //Background img
     mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu.png")
-    gameBgImg = loadImage("assets/images/myassets/background/game1.png")
+    gameBgImg = loadImage("assets/images/myassets/background/game2.png")
 
     //Ships img
     battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
