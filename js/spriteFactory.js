@@ -132,13 +132,14 @@ class spriteFactory {
         asteroid.addAni('initial', asteroidInitial);
         asteroid.addAni('explode', asteroidExplode);
         asteroid.changeAni('initial');
-        asteroid.debug = true;
+        // asteroid.debug = true;
 
         asteroid.ani.scale = d/45;
 
         asteroid.d = d;
         asteroid.collider = "k";
         asteroid.rotation = random(0, 360);
+        asteroid.rotationSpeed = random(-0.3,0.3); // Add some spin :)
         asteroid.group = "asteroid";
         return asteroid;
     }

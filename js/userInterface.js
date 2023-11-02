@@ -263,12 +263,32 @@ class userInterface {
             let thisShip = data.playerShip.ships[i];
             if(thisShip.group == this.groupTypes[this.selectedGroup]){
                 thisShip.selected = true;
-                thisShip.stroke = "white"
-                thisShip.strokeWeight = 2;
             } else{
                 thisShip.selected = false;
-                thisShip.stroke = "black";
-                thisShip.strokeWeight = 1;
+            }
+        }
+    }
+
+    drawSelectedCircles() {
+        for (let ship of data.playerShip.ships) {
+            if (ship.selected) {
+                fill(255, 128); // Set fill to white with a 50% opacity
+                noStroke(); // And of course, no stroke
+                circle(ship.x, ship.y, ship.h*1.25); // Draw a translucent circle around selected ships
+                
+                // Now draw a dotted line for their path
+                stroke(255);
+                drawingContext.setLineDash([10, 20]); // Length of line, Spacing
+                drawingContext.lineDashOffset = 5;
+                line(ship.x, ship.y, ship.destinationX, ship.destinationY);
+                fill(255);
+                circle(ship.destinationX, ship.destinationY, 7.5);
+
+                // Reset the styling back to nothing.
+                drawingContext.setLineDash([]);
+                drawingContext.lineDashOffset = 0;
+                noFill();
+                stroke(0);
             }
         }
     }

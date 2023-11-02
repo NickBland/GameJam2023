@@ -136,7 +136,7 @@ function shipAction() {
         //Checks if a drone can harvest resources
         for (let i = 0; i < data.asteroids.length; i++) {
             let thisAsteroid = data.asteroids[i];
-            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < 50 && thisShip.group == "drone") {
+            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius+20) && thisShip.group == "drone") {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }
@@ -187,6 +187,7 @@ function drawGameScreen() {
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
     ui.clickDrag();
+    ui.drawSelectedCircles();
 
     shipMovement();
     shipAction();
