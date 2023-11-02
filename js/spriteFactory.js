@@ -22,10 +22,12 @@ class spriteFactory {
 
     createMothership(x, y) {
         let mothership = this.createShip(x, y, "mothership");
-        mothership.w = 75;
-        mothership.h = 75;
+        mothership.w = 80;
+        mothership.h = 80;
         mothership.health = 500;
         mothership.collider = "s";
+        motherShipImg.resize(mothership.w, mothership.h);
+        mothership.img = motherShipImg;
 
         return mothership;
     }
@@ -37,22 +39,24 @@ class spriteFactory {
         drone.health = 50;
         drone.damage = 10;
         
-        // drone.image = 
-        drone.w = 10;
-        drone.h = 10;
+        drone.w = 45;
+        drone.h = 45;
+        droneShipImg.resize(drone.w, drone.h);
+        drone.img = droneShipImg;
+
         return drone;
     }
 
     createCorsair(x, y, owner) {
         let corsair = this.createShip(x, y, "corsair");
 
-        // corsair.image = 
-
         corsair.health = 100;
         corsair.damage = 20;
 
-        corsair.w = 15;
-        corsair.h = 15;
+        corsair.w = 45;
+        corsair.h = 45;
+        corsairShipImg.resize(corsair.w, corsair.h);
+        corsair.img = corsairShipImg;
 
         return corsair;
     }
@@ -60,13 +64,13 @@ class spriteFactory {
     createDestroyer(x, y, owner) {
         let destroyer = this.createShip(x, y, "destroyer");
 
-        // destroyer.image = ;
-
         destroyer.health = 150;
         destroyer.damage = 25;
 
-        destroyer.w = 15;
-        destroyer.h = 20;
+        destroyer.w = 50;
+        destroyer.h = 50;
+        destroyerShipImg.resize(destroyer.w, destroyer.h);
+        destroyer.img = destroyerShipImg;
 
         return destroyer;
     }
@@ -74,13 +78,13 @@ class spriteFactory {
     createCruiser(x, y, owner) {
         let cruiser = this.createShip(x, y, "cruiser");
 
-        // cruiser.image = ;
-
         cruiser.health = 200;
         cruiser.damage = 35;
 
-        cruiser.w = 20;
-        cruiser.h = 35;
+        cruiser.w = 50;
+        cruiser.h = 50;
+        cruiserShipImg.resize(cruiser.w, cruiser.h)
+        cruiser.img = cruiserShipImg;
 
         return cruiser;
 
@@ -94,8 +98,10 @@ class spriteFactory {
         battleship.health = 300;
         battleship.damage = 75;
 
-        battleship.w = 35;
-        battleship.h = 50;
+        battleship.w = 65;
+        battleship.h = 65;
+        battleShipImg.resize(battleship.w, battleship.h)
+        battleship.img = battleShipImg;
 
         return battleship;
     }
@@ -122,13 +128,13 @@ class spriteFactory {
         this.sprite.rotation = random(0, 360);*/
 
         //Option2 asteroid
-        asteroid.addAni('initial', 'assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1})
-        asteroid.addAni('explode', 'assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8})
+        asteroid.addAni('initial', asteroidInitial);
+        asteroid.addAni('explode', asteroidExplode);
         asteroid.changeAni('initial');
-        //this.sprite.debug = true;
+        asteroid.debug = true;
 
-        //asteroid1.sprite.ani.scale = asteroid1.d/45;
-        
+        asteroid.ani.scale = d/45;
+
         asteroid.d = d;
         asteroid.collider = "k";
         asteroid.group = "asteroid";

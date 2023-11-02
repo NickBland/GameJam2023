@@ -1,17 +1,10 @@
 "use strict";
 
-
-let asteroidTypes = [
-    ["big", 4],
-]
-let asteroidImages = [];
-
 let myfont, myfontB;
-let asteroid1;
-let mainMenuBgImage, gameBgImage;
-let motherShipImage, miningShipImage, destroyerShipImage, cruiserShipImage, corsairShipImage, battleShipImage; 
-//let asteroid1
-let asteroidImgs = [];
+let mainMenuBgImg, gameBgImg;
+let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
+let asteroidInitial, asteroidExplode, mineralImg;
+let health = [];
 let numerals;
 
 let gameState = {
@@ -44,8 +37,8 @@ function drawLoadingScreen() {
 }
 
 function drawMainMenuScreen() {
-    mainMenuBgImage.resize(width, height);
-    image(mainMenuBgImage, 0, 0);
+    mainMenuBgImg.resize(width, height);
+    image(mainMenuBgImg, 0, 0);
 
     stroke('#d19f5a')
     strokeWeight(5)
@@ -196,8 +189,8 @@ function shipTarget() {
 
 function drawGameScreen() {
     //background("red");
-    gameBgImage.resize(width, height);
-    image(gameBgImage, 0, 0);
+    gameBgImg.resize(width, height);
+    image(gameBgImg, 0, 0);
     if (initialGameState) {
         drawInitialGameState();
     }
@@ -221,28 +214,23 @@ function preload() {
     myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf')
 
     //Background img
-    mainMenuBgImage = loadImage("assets/images/myassets/background/mainMenu.png")
-    gameBgImage = loadImage("assets/images/myassets/background/game.png")
+    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu.png")
+    gameBgImg = loadImage("assets/images/myassets/background/game.png")
 
     //Ships img
-    battleShipImage = loadImage("assets/images/myassets/ships/battleship.png")
-    corsairShipImage = loadImage("assets/images/myassets/ships/corsairship.png")
-    cruiserShipImage = loadImage("assets/images/myassets/ships/cruisership.png")
-    destroyerShipImage = loadImage("assets/images/myassets/ships/destroyership.png")
-    miningShipImage = loadImage("assets/images/myassets/ships/miningship.png")
-    motherShipImage = loadImage("assets/images/myassets/ships/mothership.png")
+    battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
+    corsairShipImg = loadImage("assets/images/myassets/ships/corsairship.png")
+    cruiserShipImg = loadImage("assets/images/myassets/ships/cruisership.png")
+    destroyerShipImg = loadImage("assets/images/myassets/ships/destroyership.png")
+    droneShipImg = loadImage("assets/images/myassets/ships/droneship.png")
+    motherShipImg = loadImage("assets/images/myassets/ships/mothership.png")
 
-    //Asteroid img (option1)
-    loadImage("assets/images/myassets/asteroids/asteroid1.png", asset => asteroidImgs.push(asset));
-    loadImage("assets/images/myassets/asteroids/asteroid2.png", asset => asteroidImgs.push(asset));
-    //Asteroid img (option2 - addAni)
-    //Asteroid img (option3)
-    /*for (let i = 0; i < asteroidTypes.length; i++) {
-        for (let j = 1; j < asteroidTypes[i][1] + 1; j++) {
-            let assetName = asteroidTypes[i][0] + j + ".png";
-            loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
-        }
-    }*/
+    //Asteroid img
+    asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1});
+    asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8});
+    mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
+
+    health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
 
     numerals = loadAnimation("assets/images/typography/numeral0.png", 9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
