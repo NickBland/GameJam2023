@@ -3,7 +3,7 @@
 let myfont, myfontB;
 let mainMenuBgImg, gameBgImg;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
-let asteroidInitial, asteroidExplode, mineralImg;
+let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
 let health;
 
 let gameState = {
@@ -145,7 +145,9 @@ function shipAction() {
         if(thisShip.group == "drone"){
             if(dist(thisShip.x,thisShip.y,data.playerMothership.x,data.playerMothership.y)<65){
                 data.playerShip.resources += thisShip.resources;
+                data.playerShip.specialResources += thisShip.specialResources;
                 thisShip.resources = 0;
+                thisShip.specialResources = 0;
                 if(thisShip.target != null){
                     data.playerShip.setDestination(thisShip.target.x,thisShip.target.y,thisShip);
                     thisShip.timer = dist((thisShip.target.x,thisShip.target.y,thisShip.x,thisShip.y));
@@ -221,10 +223,10 @@ function preload() {
     asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1});
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8});
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
+    specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
 
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
-
-    numerals = loadAnimation("assets/images/typography/numeral0.png", 9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
+    // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
 

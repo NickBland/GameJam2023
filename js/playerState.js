@@ -1,6 +1,7 @@
 class playerState {
     constructor() {
         this.resources = 0;
+        this.specialResources = 0;
 
         this.ships; // ALL SHIPS owned by player
         this.drones;
@@ -63,6 +64,8 @@ class playerState {
         if(frameCount%10 == 0){
             thisShip.resources++;
             thisAsteroid.resources--;
+        } if(frameCount%120 == 0 && random(0, 1) < 0.35){
+            thisShip.specialResources++;
         }
         if(thisAsteroid.resources<=0){
             this.setDestination(this.ships[0].x,this.ships[0].y, thisShip);

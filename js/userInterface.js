@@ -176,8 +176,10 @@ class userInterface {
         fill('#d19f5a');
         textFont(myfontB)
         text(data.playerShip.resources, initialDigitX, initialDigitY)
+        text(data.playerShip.specialResources, initialDigitX, this.#groupButtons[1].y)
         imageMode(CENTER);
         image(mineralImg, initialDigitX*0.85, initialDigitY)
+        image(specialmineralImg, initialDigitX*0.85, this.#groupButtons[1].y)
 
         /*imageMode(CENTER);
         for (let i = 0; i < digitCount; i++) {
