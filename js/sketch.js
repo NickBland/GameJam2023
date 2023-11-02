@@ -62,22 +62,6 @@ let selectionBox;
 //     //Needs movement and spin i reckon
 //     //we'd need to consider collisions if we did this
 
-//MotherShip:
-// takeDamage() {
-//     //subtract health upon fire from enemies
-//     //Needs logic for when health hits zero - Game Over
-// }
-
-// move() {
-//     //only for if mothership will need to move
-//     //will need to move to the location specified by the user
-// }
-
-// attack() {
-//     //only for if the mothership can defend itself
-//     //needs logic to detect enemies and deal damage/create projectiles
-// }
-
 function drawInitialGameState() {
     data = new gameData();
     data.setupGame();

@@ -26,6 +26,7 @@ class spriteFactory {
         mothership.h = 75;
         mothership.health = 500;
         mothership.collider = "s";
+        mothership.damage = 10;
 
         return mothership;
     }

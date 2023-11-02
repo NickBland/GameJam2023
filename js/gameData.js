@@ -82,6 +82,7 @@ class gameData {
                 }
             }
         }
+        
         for(let i = 0; i<this.enemyShip.projectiles.length; i++){
             let thisProj = this.enemyShip.projectiles[i];
             if(thisProj.overlapping(this.playerShip.ships)){
