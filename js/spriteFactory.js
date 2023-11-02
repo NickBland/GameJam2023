@@ -37,6 +37,7 @@ class spriteFactory {
         let drone = this.createShip(x, y, "drone");
 
         drone.resources = 0;
+        drone.specialResources = 0;
         drone.health = 50;
         drone.damage = 10;
         
