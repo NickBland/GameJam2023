@@ -108,7 +108,8 @@ class userInterface {
         text("Health", initialDigitX, initialDigitY*0.95);
         textSize(16)
         textFont(myfontB)
-        fill("#8b4049")
+        fill("#8c2d38")
+        stroke('black')
         text(data.playerMothership.health, initialDigitX, initialDigitY)
 
         for (let i=0; i<5; i++) {

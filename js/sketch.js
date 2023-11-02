@@ -4,8 +4,7 @@ let myfont, myfontB;
 let mainMenuBgImg, gameBgImg;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
 let asteroidInitial, asteroidExplode, mineralImg;
-let health = [];
-let numerals;
+let health;
 
 let gameState = {
     loading: false,
@@ -206,7 +205,7 @@ function preload() {
 
     //Background img
     mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu.png")
-    gameBgImg = loadImage("assets/images/myassets/background/game.png")
+    gameBgImg = loadImage("assets/images/myassets/background/game1.png")
 
     //Ships img
     battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
