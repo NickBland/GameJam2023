@@ -71,7 +71,12 @@ class gameData {
             if(thisProj.overlapping(this.enemyShip.ships)){
                 for(let j = 0; j<this.enemyShip.ships.length;j++){
                     if(thisProj.colliding(this.enemyShip.ships[j])){
-                        this.enemyShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
+                        if(j != 0){
+                            this.enemyShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
+                        }
+                        else{
+                            this.enemyMothership.health -= thisProj.damage;
+                        }
                         thisProj.remove();
                     }
                 }
@@ -82,7 +87,13 @@ class gameData {
             if(thisProj.overlapping(this.playerShip.ships)){
                 for(let j = 0; j<this.playerShip.ships.length;j++){
                     if(thisProj.colliding(this.playerShip.ships[j])){
-                        this.playerShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
+                        if(j != 0){
+                            this.playerShip.takeDamage(thisProj.damage,this.playerShip.ships[j]);
+                        }
+                        else{
+                            this.playerMothership.health -= thisProj.damage;
+                        }
+                        
                         thisProj.remove();
                     }
                 }
