@@ -190,7 +190,7 @@ function shipTarget() {
 function drawGameScreen() {
     //background("red");
     gameBgImg.resize(width, height);
-    image(gameBgImg, 0, 0);
+    image(gameBgImg, width/2, height/2);
     if (initialGameState) {
         drawInitialGameState();
     }
@@ -242,6 +242,7 @@ function setup() {
 }
 
 function draw() {
+    clear();
     switch (true) {
         case gameState.loading:
             drawLoadingScreen();
