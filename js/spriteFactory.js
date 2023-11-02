@@ -26,6 +26,7 @@ class spriteFactory {
         mothership.h = 80;
         mothership.health = 500;
         mothership.collider = "s";
+        mothership.damage = 10;
         motherShipImg.resize(mothership.w, mothership.h);
         mothership.img = motherShipImg;
 
@@ -139,5 +140,13 @@ class spriteFactory {
         asteroid.collider = "k";
         asteroid.group = "asteroid";
         return asteroid;
+    }
+
+    createProjectile(x, y){
+        let projectile = this.createObject(x,y);
+        projectile.w = 5;
+        projectile.h = 10;
+        projectile.life = 100
+        return(projectile);
     }
 }
