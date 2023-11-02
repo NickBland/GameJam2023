@@ -116,6 +116,11 @@ function shipMovement() {
         } else if (thisShip.moveTimer < 0) {
             thisShip.moveTimer = 0;
         }
+        for(let j = 0; j<playerShips.length; j++){
+            if(dist(playerShips[j].x, playerShips[j].y, thisShip.x, thisShip.y)<50 && playerShips[j] != thisShip){
+                playerShips[j].attractTo(thisShip,-2);
+            }
+        }
     }
 }
 
