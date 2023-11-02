@@ -73,22 +73,6 @@ let selectionBox;
 //     //Needs movement and spin i reckon
 //     //we'd need to consider collisions if we did this
 
-//MotherShip:
-// takeDamage() {
-//     //subtract health upon fire from enemies
-//     //Needs logic for when health hits zero - Game Over
-// }
-
-// move() {
-//     //only for if mothership will need to move
-//     //will need to move to the location specified by the user
-// }
-
-// attack() {
-//     //only for if the mothership can defend itself
-//     //needs logic to detect enemies and deal damage/create projectiles
-// }
-
 function drawInitialGameState() {
     data = new gameData();
     data.setupGame();
@@ -127,6 +111,11 @@ function shipMovement() {
         } else if (thisShip.moveTimer < 0) {
             thisShip.moveTimer = 0;
         }
+        for(let j = 0; j<playerShips.length; j++){
+            if(dist(playerShips[j].x, playerShips[j].y, thisShip.x, thisShip.y)<50 && playerShips[j] != thisShip){
+                playerShips[j].attractTo(thisShip,-2);
+            }
+        }
     }
 }
 
@@ -138,7 +127,7 @@ function shipAction() {
         //Checks if a ship can attack
         for (let j = 0; j < data.enemyShip.ships.length; j++) {
             let thisEnemy = data.enemyShip.ships[j];
-            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= 50) {
+            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= 150) {
                 data.playerShip.attack(thisShip, thisEnemy);
                 data.enemyShip.attack(thisEnemy, thisShip);
             }
@@ -202,6 +191,8 @@ function drawGameScreen() {
     shipMovement();
     shipAction();
     shipTarget();
+
+    data.combatHandling();
 }
 
 function drawEndScreen() {
@@ -236,7 +227,6 @@ function preload() {
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
 
-
 function setup() {
     new Canvas(800, 800);
 }
@@ -257,4 +247,3 @@ function draw() {
             break;
     }
 }
-
