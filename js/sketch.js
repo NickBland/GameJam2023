@@ -1,11 +1,10 @@
 "use strict";
 
-let asteroidTypes = [
-    ["big", 4],
-]
-let asteroidImages = [];
-
-let numerals;
+let myfont, myfontB;
+let mainMenuBgImg, gameBgImg;
+let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
+let asteroidInitial, asteroidExplode, mineralImg;
+let health;
 
 let gameState = {
     loading: false,
@@ -37,7 +36,18 @@ function drawLoadingScreen() {
 }
 
 function drawMainMenuScreen() {
-    background("blue");
+    mainMenuBgImg.resize(width, height);
+    image(mainMenuBgImg, 0, 0);
+
+    stroke('#d19f5a')
+    strokeWeight(5)
+    noFill()
+    rect(0.2*canvas.w, 0.3*canvas.h, 0.6*canvas.w, 0.11*canvas.h, 20);
+    fill('#ffe7d6')
+    stroke('#8b4049')
+    textAlign(CENTER, CENTER)
+    textFont(myfontB, 40)
+    text("Game Title", canvas.w/2, 0.35*canvas.h)
 }
 
 // ================================================================================================
@@ -167,7 +177,9 @@ function shipTarget() {
 }
 
 function drawGameScreen() {
-    background("green");
+    //background("red");
+    gameBgImg.resize(width, height);
+    image(gameBgImg, width/2, height/2);
     if (initialGameState) {
         drawInitialGameState();
     }
@@ -188,12 +200,28 @@ function drawEndScreen() {
 }
 
 function preload() {
-    for (let i = 0; i < asteroidTypes.length; i++) {
-        for (let j = 1; j < asteroidTypes[i][1] + 1; j++) {
-            let assetName = asteroidTypes[i][0] + j + ".png";
-            loadImage("assets/images/asteroids/" + assetName, asset => asteroidImages.push(asset));
-        }
-    }
+    //font
+    myfont = loadFont('assets/font/PixeloidMono.ttf')
+    myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf')
+
+    //Background img
+    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu.png")
+    gameBgImg = loadImage("assets/images/myassets/background/game2.png")
+
+    //Ships img
+    battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
+    corsairShipImg = loadImage("assets/images/myassets/ships/corsairship.png")
+    cruiserShipImg = loadImage("assets/images/myassets/ships/cruisership.png")
+    destroyerShipImg = loadImage("assets/images/myassets/ships/destroyership.png")
+    droneShipImg = loadImage("assets/images/myassets/ships/droneship.png")
+    motherShipImg = loadImage("assets/images/myassets/ships/mothership.png")
+
+    //Asteroid img
+    asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1});
+    asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8});
+    mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
+
+    health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
 
     numerals = loadAnimation("assets/images/typography/numeral0.png", 9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
@@ -204,6 +232,7 @@ function setup() {
 }
 
 function draw() {
+    clear();
     switch (true) {
         case gameState.loading:
             drawLoadingScreen();

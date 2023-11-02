@@ -22,11 +22,13 @@ class spriteFactory {
 
     createMothership(x, y) {
         let mothership = this.createShip(x, y, "mothership");
-        mothership.w = 75;
-        mothership.h = 75;
+        mothership.w = 50;
+        mothership.h = 60;
         mothership.health = 500;
         mothership.collider = "s";
         mothership.damage = 10;
+        motherShipImg.resize(mothership.w + 20, mothership.h + 20);
+        mothership.img = motherShipImg;
 
         return mothership;
     }
@@ -38,22 +40,24 @@ class spriteFactory {
         drone.health = 50;
         drone.damage = 10;
         
-        // drone.image = 
-        drone.w = 10;
-        drone.h = 10;
+        drone.w = 25;
+        drone.h = 25;
+        droneShipImg.resize(drone.w + 20, drone.h + 20);
+        drone.img = droneShipImg;
+
         return drone;
     }
 
     createCorsair(x, y, owner) {
         let corsair = this.createShip(x, y, "corsair");
 
-        // corsair.image = 
-
         corsair.health = 100;
         corsair.damage = 20;
 
-        corsair.w = 15;
-        corsair.h = 15;
+        corsair.w = 25;
+        corsair.h = 25;
+        corsairShipImg.resize(corsair.w + 20, corsair.h + 20);
+        corsair.img = corsairShipImg;
 
         return corsair;
     }
@@ -61,13 +65,13 @@ class spriteFactory {
     createDestroyer(x, y, owner) {
         let destroyer = this.createShip(x, y, "destroyer");
 
-        // destroyer.image = ;
-
         destroyer.health = 150;
         destroyer.damage = 25;
 
-        destroyer.w = 15;
-        destroyer.h = 20;
+        destroyer.w = 30;
+        destroyer.h = 30;
+        destroyerShipImg.resize(destroyer.w + 20, destroyer.h + 20);
+        destroyer.img = destroyerShipImg;
 
         return destroyer;
     }
@@ -75,13 +79,13 @@ class spriteFactory {
     createCruiser(x, y, owner) {
         let cruiser = this.createShip(x, y, "cruiser");
 
-        // cruiser.image = ;
-
         cruiser.health = 200;
         cruiser.damage = 35;
 
-        cruiser.w = 20;
-        cruiser.h = 35;
+        cruiser.w = 30;
+        cruiser.h = 30;
+        cruiserShipImg.resize(cruiser.w + 20, cruiser.h + 20)
+        cruiser.img = cruiserShipImg;
 
         return cruiser;
 
@@ -95,8 +99,10 @@ class spriteFactory {
         battleship.health = 300;
         battleship.damage = 75;
 
-        battleship.w = 35;
-        battleship.h = 50;
+        battleship.w = 45;
+        battleship.h = 45;
+        battleShipImg.resize(battleship.w + 20, battleship.h + 20)
+        battleship.img = battleShipImg;
 
         return battleship;
     }
@@ -106,18 +112,33 @@ class spriteFactory {
 
         let d = Math.floor(random(25, 70));
         let x = random(d, width - d);
-        let y = random(d, height - d);
+        let y = random(d, height - d - 120);
 
         let asteroid = this.createObject(x, y);
 
         asteroid.resources = floor(d*1.5);
 
-        let index = Math.floor(random(0, 1000)) % asteroidImages.length;
+        /*let index = Math.floor(random(0, 1000)) % asteroidImages.length;
         asteroid.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
-        asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact
+        asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact*/
+
+        //Option1 asteroid 
+        /*let index = Math.floor(random(0, 1000)) % asteroidImgs.length;
+        this.sprite.img = asteroidImg[index].get();
+        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
+        this.sprite.rotation = random(0, 360);*/
+
+        //Option2 asteroid
+        asteroid.addAni('initial', asteroidInitial);
+        asteroid.addAni('explode', asteroidExplode);
+        asteroid.changeAni('initial');
+        asteroid.debug = true;
+
+        asteroid.ani.scale = d/45;
 
         asteroid.d = d;
         asteroid.collider = "k";
+        asteroid.rotation = random(0, 360);
         asteroid.group = "asteroid";
         return asteroid;
     }

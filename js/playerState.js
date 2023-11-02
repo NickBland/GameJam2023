@@ -63,9 +63,10 @@ class playerState {
         if(frameCount%10 == 0){
             thisShip.resources++;
             thisAsteroid.resources--;
-            if(thisAsteroid.resources<=0){
-                return(data.destroyAsteroid(thisAsteroid));
-            }
+        }
+        if(thisAsteroid.resources<=0){
+            this.setDestination(this.ships[0].x,this.ships[0].y, thisShip);
+            return(data.destroyAsteroid(thisAsteroid));
         }
         if(thisShip.resources>= 10){
             this.setDestination(this.ships[0].x,this.ships[0].y, thisShip);

@@ -63,6 +63,8 @@ class gameData {
 
     destroyAsteroid(thisAsteroid){
         console.log("Kabloom");
+        thisAsteroid.changeAni('explode');
+        thisAsteroid.life = 28;
     }
 
     combatHandling(){
