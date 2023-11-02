@@ -42,12 +42,21 @@ class playerState {
     }
 
     attack(thisShip, thisEnemy) {
-        //createProjectile(thisEnemy, thisShip.damage);
-        console.log("Pow");
+        if(frameCount%10 == 0){
+            let projectile = data.factory.createProjectile(thisShip.x,thisShip.y);
+            this.projectiles.push(projectile);
+            projectile.damage = thisShip.damage;
+            projectile.target = thisEnemy;
+            projectile.overlaps(allSprites);
+            projectile.moveTowards(thisEnemy,0.1);
+        }
     }
 
-    takeDamage(thisShip, damage) {
+    takeDamage(damage, thisShip) {
         thisShip.health -= damage;
+        if(thisShip.health <= 0){
+            console.log("Very Dead");
+        }
     }
 
     harvestResources(thisShip, thisAsteroid){

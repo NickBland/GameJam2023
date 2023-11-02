@@ -64,4 +64,29 @@ class gameData {
     destroyAsteroid(thisAsteroid){
         console.log("Kabloom");
     }
+
+    combatHandling(){
+        for(let i = 0; i<this.playerShip.projectiles.length; i++){
+            let thisProj = this.playerShip.projectiles[i];
+            if(thisProj.overlapping(this.enemyShip.ships)){
+                for(let j = 0; j<this.enemyShip.ships.length;j++){
+                    if(thisProj.colliding(this.enemyShip.ships[j])){
+                        this.enemyShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
+                        thisProj.remove();
+                    }
+                }
+            }
+        }
+        for(let i = 0; i<this.enemyShip.projectiles.length; i++){
+            let thisProj = this.enemyShip.projectiles[i];
+            if(thisProj.overlapping(this.playerShip.ships)){
+                for(let j = 0; j<this.playerShip.ships.length;j++){
+                    if(thisProj.colliding(this.playerShip.ships[j])){
+                        this.playerShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
+                        thisProj.remove();
+                    }
+                }
+            }
+        }
+    }
 }

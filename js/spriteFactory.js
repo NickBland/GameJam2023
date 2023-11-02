@@ -120,4 +120,12 @@ class spriteFactory {
         asteroid.group = "asteroid";
         return asteroid;
     }
+
+    createProjectile(x, y){
+        let projectile = this.createObject(x,y);
+        projectile.w = 5;
+        projectile.h = 10;
+        projectile.life = 100
+        return(projectile);
+    }
 }

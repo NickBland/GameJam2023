@@ -127,7 +127,7 @@ function shipAction() {
         //Checks if a ship can attack
         for (let j = 0; j < data.enemyShip.ships.length; j++) {
             let thisEnemy = data.enemyShip.ships[j];
-            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= 50) {
+            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= 150) {
                 data.playerShip.attack(thisShip, thisEnemy);
                 data.enemyShip.attack(thisEnemy, thisShip);
             }
@@ -189,6 +189,8 @@ function drawGameScreen() {
     shipMovement();
     shipAction();
     shipTarget();
+
+    data.combatHandling();
 }
 
 function drawEndScreen() {
@@ -206,7 +208,6 @@ function preload() {
     numerals = loadAnimation("assets/images/typography/numeral0.png", 9); // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
 }
-
 
 function setup() {
     new Canvas(800, 800);
@@ -228,4 +229,3 @@ function draw() {
             break;
     }
 }
-
