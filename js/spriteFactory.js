@@ -13,8 +13,8 @@ class spriteFactory {
         ship.group = group;
         ship.origin = {x:x, y:y};
         ship.target = null;
-        ship.destinationX = 0;
-        ship.destinationY = 0;
+        ship.destinationX = ship.origin.x;
+        ship.destinationY = ship.origin.y;
         ship.selected = false;
         ship.moveTimer = 0;
         return ship;

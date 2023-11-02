@@ -97,6 +97,7 @@ function shipMovement() {
             thisShip.moveTimer--;
         } else if (thisShip.moveTimer === 0) {
             thisShip.speed = 0;
+            thisShip.rotationSpeed = 0;
         } else if (thisShip.moveTimer < 0) {
             thisShip.moveTimer = 0;
         }
