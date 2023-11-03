@@ -281,13 +281,15 @@ class userInterface {
                 noStroke(); // And of course, no stroke
                 circle(thisShip.x, thisShip.y, thisShip.h*1.25); // Draw a translucent circle around selected ship
                 
-                // Now draw a dotted line for their path
-                stroke(255);
-                drawingContext.setLineDash([10, 20]); // Length of line, Spacing
-                drawingContext.lineDashOffset = 5;
-                line(thisShip.x, thisShip.y, thisShip.destinationX, thisShip.destinationY);
-                fill(255);
-                circle(thisShip.destinationX, thisShip.destinationY, 7.5);
+                if (thisShip.moveTimer !== 0) {
+                    // Now draw a dotted line for their path
+                    stroke(255);
+                    drawingContext.setLineDash([10, 20]); // Length of line, Spacing
+                    drawingContext.lineDashOffset = 5;
+                    line(thisShip.x, thisShip.y, thisShip.destinationX, thisShip.destinationY);
+                    fill(255);
+                    circle(thisShip.destinationX, thisShip.destinationY, 7.5);
+                }
 
                 // Reset the styling back to nothing.
                 drawingContext.setLineDash([]);
