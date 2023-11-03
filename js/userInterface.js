@@ -382,19 +382,22 @@ class userInterface {
      * Handles the camera Movement
      */
     moveCamera() {
+
+        let percentage = (this.zoom - 2) / (0.5 - 2);
+        let lerpValue = lerp(-1200, 0, percentage);
+
         if ((kb.pressing("arrowUp") || mouse.y < 20&&cameraY<800)) {
             this.moveGame(0, 5);
         }
-        if ((kb.pressing("arrowDown") || mouse.y > height - 20)){
+        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > lerpValue){
             this.moveGame(0, -5);
         }
         if ((kb.pressing("arrowLeft") || mouse.x < 20)) {
             this.moveGame(5, 0);
         }
-        if ((kb.pressing("arrowRight") || mouse.x > width - 20)){
+        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > lerpValue){
             this.moveGame(-5, 0);
         }
-        console.log()
     }
 
     /**
