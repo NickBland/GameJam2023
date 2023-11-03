@@ -2,6 +2,7 @@
 
 let myfont, myfontB;
 let mainMenuBgImg, gameBgImg;
+let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
 let health;
@@ -35,10 +36,87 @@ function drawLoadingScreen() {
     background("red");
 }
 
-function drawMainMenuScreen() {
-    mainMenuBgImg.resize(width, height);
-    image(mainMenuBgImg, 0, 0);
+// ========================================= MAIN MENU =======================================================
 
+let initialMainMenuScreen = true;
+let tutorialShow = false;
+let creditsShow = false;
+let playButton, tutorialButton, creditsButton;
+
+function adjustMenuButtonStyle(Button) {
+    Button.style("border-radius: 15px");
+    Button.style("background: #d19f5a");
+    Button.style("color: #ffe7d6");
+    Button.style("font-family: myFont");
+    Button.style("font-size: 22px");
+    Button.mouseOver(over)
+    Button.mouseOut(out)
+}
+function over(){
+    this.style("transform: scale(1.2, 1.2)");
+    this.style("background: #8b4049");
+}
+function out(){
+    this.style("transform: none")
+    this.style("background: #d19f5a");
+}
+
+function drawInitialMainMenuScreen() {
+    playButton = createButton('Play Game');
+    playButton.mouseClicked(playButtonClicked);
+    playButton.size(0.3*width, 0.06*height);
+    playButton.position((width-playButton.size().width)/2, (0.55)*canvas.h)
+    adjustMenuButtonStyle(playButton);
+
+    tutorialButton = createButton('Tutorial');
+    tutorialButton.size(0.3*width, 0.06*height);
+    tutorialButton.position((width-playButton.size().width)/2, (0.65)*canvas.h)
+    adjustMenuButtonStyle(tutorialButton)
+    tutorialButton.mouseClicked(tutorialButtonClicked);
+
+    creditsButton = createButton('Credits');
+    creditsButton.size(0.3*width, 0.06*height);
+    creditsButton.position((width-playButton.size().width)/2, (0.75)*canvas.h)
+    adjustMenuButtonStyle(creditsButton)
+    creditsButton.mouseClicked(creditsButtonClicked)
+
+    initialMainMenuScreen = false;
+}
+
+function showMenuButton() {
+    playButton.show()
+    tutorialButton.show()
+    creditsButton.show()
+}
+function hideMenuButton() {
+    playButton.hide()
+    tutorialButton.hide()
+    creditsButton.hide()
+}
+
+function playButtonClicked() {
+    hideMenuButton();
+    gameState.mainMenu = false;
+    gameState.game = true;
+}
+function tutorialButtonClicked() {
+    hideMenuButton();
+    tutorialShow = true;  
+}
+function creditsButtonClicked() {
+    hideMenuButton()
+    creditsShow = true;
+}
+
+function drawMainMenuScreen() {
+    mainMenuBgImg.resize(0, height);
+    //image(mainMenuBgImg, 0, 0);
+    image(mainMenuBgImg, offset_menuX, 0)
+    image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
+    offset_menuX-=1
+    if (offset_menuX <= -mainMenuBgImg.width){
+        offset_menuX = 0;	
+    }
     stroke('#d19f5a')
     strokeWeight(5)
     noFill()
@@ -48,6 +126,24 @@ function drawMainMenuScreen() {
     textAlign(CENTER, CENTER)
     textFont(myfontB, 40)
     text("Game Title", canvas.w/2, 0.35*canvas.h)
+    strokeWeight(1);
+
+    if (initialMainMenuScreen) {
+        drawInitialMainMenuScreen();
+    }
+    if (tutorialShow || creditsShow) {
+        image(mainMenuBgImg, offset_menuX, 0)
+        image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
+
+        noStroke();
+        fill(0, 150);
+        rect(width/20, height/20, 0.9*width, 0.9*height);
+        if (kb.presses("escape")){
+            tutorialShow = false;
+            creditsShow = false;
+            showMenuButton();
+        }
+    }
 }
 
 // ================================================================================================
@@ -60,7 +156,6 @@ let ui;
 
 let selectionBox;
 
-let zoom;
 let cameraX;
 let cameraY;
 
@@ -82,9 +177,8 @@ function drawInitialGameState() {
 
     ui = new userInterface;
 
-    cameraX = width/2;
-    cameraY = height/2;
-    zoom = 1;
+    cameraX = 0;
+    cameraY = 0;
 
     initialGameState = false;
 }
@@ -188,18 +282,18 @@ function shipTarget() {
 
 function drawGameScreen() {
     //background("red");
-    gameBgImg.resize(width, height);
-    image(gameBgImg, cameraX*zoom, cameraY*zoom, width*4*zoom, height*4*zoom);
     if (initialGameState) {
         drawInitialGameState();
     }
+    image(gameBgImg, width/2, height/2, width, height, cameraX, cameraY, width/ui.zoom*2,height/ui.zoom*2);    
 
-    data.factory.gameSprites.scale = zoom;
+    data.factory.gameSprites.scale = ui.zoom;
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
     ui.clickDrag();
     ui.drawSelectedCircles();
+    ui.moveCamera();
 
     shipMovement();
     shipAction();
@@ -218,7 +312,7 @@ function preload() {
     myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf')
 
     //Background img
-    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu.png")
+    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu1.png")
     gameBgImg = loadImage("assets/images/myassets/background/game2.png")
 
     //Ships img
@@ -261,7 +355,6 @@ function draw() {
             break;
     }
 
-    ui.moveCamera();
 }
 /**
  * This calls every time the mouse wheel is scrolled
@@ -270,12 +363,12 @@ function draw() {
  * @returns 
  */
 function mouseWheel(scroll){
-    if(scroll.delta > 0 && zoom < 2){
-        zoom += 0.05;
+    if(scroll.delta < 0 && ui.zoom < 2){
+        ui.zoom += 0.05;
         ui.gameZoom(1.05);
     }
-    if(scroll.delta < 0 && zoom > 0.5){
-        zoom -= 0.05;
+    if(scroll.delta > 0 && ui.zoom > 0.5){
+        ui.zoom -= 0.05;
         ui.gameZoom(0.95);
     }
     
