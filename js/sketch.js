@@ -285,17 +285,15 @@ function drawGameScreen() {
     if (initialGameState) {
         drawInitialGameState();
     }
-    //image(gameBgImg, width/2, height/2, width, height, cameraX, cameraY, width/ui.zoom*2,height/ui.zoom*2);    
 
     gameBgImg.resize(width, height); 
-    image(gameBgImg, cameraX*ui.zoom, cameraY*ui.zoom, width*4*ui.zoom, height*4*ui.zoom); 
-
-    data.factory.gameSprites.scale = ui.zoom;
+    image(gameBgImg, cameraX, cameraY, width*4, height*4); 
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
     ui.clickDrag();
     ui.drawSelectedCircles();
+    ui.drawTeamCircles();
     ui.moveCamera();
 
     shipMovement();
@@ -357,47 +355,6 @@ function draw() {
             drawEndScreen();
             break;
     }
-
-}
-
-
-/**
- * This calls every time the mouse wheel is scrolled
- * Then calls the UI's zoom function
- * @param {event} scroll 
- * @returns 
- */
-function mouseWheel(scroll){
-
-    // if(scroll.delta < 0 && ui.zoom < 2){
-    //     ui.zoom += 0.05;
-    //     ui.gameZoom(1.05);
-
-    //     // let percentage = (ui.zoom - 2) / (0.5 - 2);
-    //     // let lerpValue = lerp(-1200, 0, percentage);
-    //     // if (cameraX > lerpValue) {
-    //     //     cameraX = lerpValue;
-    //     // }
-    //     // if (cameraY < lerpValue) {
-    //     //     cameraY = lerpValue
-    //     // }
-    // }
-    // if(scroll.delta > 0 && ui.zoom > 0.5){
-    //     ui.zoom -= 0.05;
-    //     ui.gameZoom(0.95);
-
-
-    //     // let percentage = (ui.zoom - 2) / (0.5 - 2);
-    //     // let lerpValue = lerp(-1200, 0, percentage);
-    //     // if (cameraX > lerpValue) {
-    //     //     cameraX = lerpValue;
-    //     // }
-    //     // if (cameraY < lerpValue) {
-    //     //     cameraY = lerpValue
-    //     // }
-    // }
-    
-    return false;
 }
 
 

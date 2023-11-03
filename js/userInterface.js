@@ -12,8 +12,6 @@ class userInterface {
             y: height - 125,
         }
 
-        this.zoom = 1;
-
         this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
         this.selectedGroup = this.groupTypes.indexOf("none"); // Ensure to set starting selection as none (was null before user clicked anything previously)
 
@@ -278,6 +276,7 @@ class userInterface {
         //Draws circles around all non-mothership ships + Travel lines
         for (let i = 1; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
+
             if (thisShip.selected) {
                 fill(255, 128); // Set fill to white with a 50% opacity
                 noStroke(); // And of course, no stroke
@@ -307,6 +306,26 @@ class userInterface {
             noStroke(); // And of course, no stroke
             circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
         }
+    }
+
+    drawTeamCircles(){
+        for(let i = 0; i<data.playerShip.ships.length; i++){
+            let thisShip = data.playerShip.ships[i];
+            noFill();
+            stroke("green");
+            strokeWeight(3);
+            circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
+        }
+        for(let i = 0; i<data.enemyShip.ships.length; i++){
+            let thisShip = data.enemyShip.ships[i];
+            noFill();
+            stroke("red");
+            strokeWeight(3);
+            circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
+        }
+
+        noFill();
+                stroke(0);
     }
 
     /**
@@ -383,19 +402,16 @@ class userInterface {
      */
     moveCamera() {
 
-        let percentage = (this.zoom - 2) / (0.5 - 2);
-        let lerpValue = lerp(-1200, 0, percentage);
-
-        if ((kb.pressing("arrowUp") || mouse.y < 20&&cameraY<800)) {
+        if ((kb.pressing("arrowUp") || mouse.y < 20)&&cameraY<1600) {
             this.moveGame(0, 5);
         }
-        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > lerpValue){
+        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > -800){
             this.moveGame(0, -5);
         }
-        if ((kb.pressing("arrowLeft") || mouse.x < 20)) {
+        if ((kb.pressing("arrowLeft") || mouse.x < 20)&&cameraX<1600) {
             this.moveGame(5, 0);
         }
-        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > lerpValue){
+        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > -800){
             this.moveGame(-5, 0);
         }
     }
@@ -417,14 +433,4 @@ class userInterface {
             }
         }
     }
-
-    gameZoom(z) {
-        for (let sprite of data.factory.gameSprites) {
-            sprite.x *= z;
-            sprite.y *= z;
-            sprite.destinationX *= z;
-            sprite.destinationY *= z;
-        }
-    }
-
 }
