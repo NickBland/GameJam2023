@@ -153,4 +153,11 @@ class spriteFactory {
         projectile.life = 100
         return(projectile);
     }
+
+    createBg(x,y){
+        let background = this.createObject(x,y);
+        background.img = gameBgImg;
+        background.collider = "n";
+        return(background);
+    }
 }

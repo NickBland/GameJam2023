@@ -14,6 +14,7 @@ class gameData {
         this.playerShip.setupData();
         this.enemyShip.setupData();
 
+        //this.background = this.factory.createBg(100,100);
 
         this.playerMothership = this.factory.createMothership(100,100);
         this.playerShip.ships.push(this.playerMothership);

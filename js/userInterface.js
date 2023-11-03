@@ -382,16 +382,16 @@ class userInterface {
      * Handles the camera Movement
      */
     moveCamera() {
-        if ((kb.pressing("arrowUp") || mouse.y < 20) && cameraY < 1600) {
+        if ((kb.pressing("arrowUp") || mouse.y < 20&&cameraY<800)) {
             this.moveGame(0, 5);
         }
-        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > ((this.zoom - 2) / (0.5 - 2)) * (0 - -1200) + -1200) {
+        if ((kb.pressing("arrowDown") || mouse.y > height - 20)){
             this.moveGame(0, -5);
         }
-        if ((kb.pressing("arrowLeft") || mouse.x < 20) && cameraX < 1600) {
+        if ((kb.pressing("arrowLeft") || mouse.x < 20)) {
             this.moveGame(5, 0);
         }
-        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > ((this.zoom - 2) / (0.5 - 2)) * (0 - -1200) + -1200) {
+        if ((kb.pressing("arrowRight") || mouse.x > width - 20)){
             this.moveGame(-5, 0);
         }
         console.log()

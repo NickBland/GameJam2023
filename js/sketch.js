@@ -81,8 +81,8 @@ function drawInitialGameState() {
 
     ui = new userInterface;
 
-    cameraX = width/2;
-    cameraY = height/2;
+    cameraX = 0;
+    cameraY = 0;
 
     initialGameState = false;
 }
@@ -189,9 +189,7 @@ function drawGameScreen() {
     if (initialGameState) {
         drawInitialGameState();
     }
-    gameBgImg.resize(width, height);
-    image(gameBgImg, cameraX*ui.zoom, cameraY*ui.zoom, width*4*ui.zoom, height*4*ui.zoom);
-    
+    image(gameBgImg, width/2, height/2, width, height, cameraX, cameraY, width/ui.zoom*2,height/ui.zoom*2);    
 
     data.factory.gameSprites.scale = ui.zoom;
 
