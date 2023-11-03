@@ -172,6 +172,7 @@ class userInterface {
         fill("#ffe7d6");
         textAlign(RIGHT, CENTER);
         textSize(18);
+        textFont(myfont)
         text("Minerals", initialDigitX, initialDigitY*0.95)
         fill('#d19f5a');
         textFont(myfontB)
