@@ -60,7 +60,6 @@ let ui;
 
 let selectionBox;
 
-let zoom;
 let cameraX;
 let cameraY;
 
@@ -84,7 +83,6 @@ function drawInitialGameState() {
 
     cameraX = width/2;
     cameraY = height/2;
-    zoom = 1;
 
     initialGameState = false;
 }
@@ -188,13 +186,14 @@ function shipTarget() {
 
 function drawGameScreen() {
     //background("red");
-    gameBgImg.resize(width, height);
-    image(gameBgImg, cameraX*zoom, cameraY*zoom, width*4*zoom, height*4*zoom);
     if (initialGameState) {
         drawInitialGameState();
     }
+    gameBgImg.resize(width, height);
+    image(gameBgImg, cameraX*ui.zoom, cameraY*ui.zoom, width*4*ui.zoom, height*4*ui.zoom);
+    
 
-    data.factory.gameSprites.scale = zoom;
+    data.factory.gameSprites.scale = ui.zoom;
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
@@ -270,12 +269,12 @@ function draw() {
  * @returns 
  */
 function mouseWheel(scroll){
-    if(scroll.delta > 0 && zoom < 2){
-        zoom += 0.05;
+    if(scroll.delta < 0 && ui.zoom < 2){
+        ui.zoom += 0.05;
         ui.gameZoom(1.05);
     }
-    if(scroll.delta < 0 && zoom > 0.5){
-        zoom -= 0.05;
+    if(scroll.delta > 0 && ui.zoom > 0.5){
+        ui.zoom -= 0.05;
         ui.gameZoom(0.95);
     }
     

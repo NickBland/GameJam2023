@@ -12,6 +12,8 @@ class userInterface {
             y: height - 125,
         }
 
+        this.zoom = 1;
+
         this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
         this.selectedGroup = this.groupTypes.indexOf("none"); // Ensure to set starting selection as none (was null before user clicked anything previously)
 
@@ -44,8 +46,8 @@ class userInterface {
 
         let initialSelectorPositionWidth = 25;
         let initialSelectorPositionHeight = initialSelectorPositionWidth;
-        let initialSelectorPositionX = initialSelectorPositionWidth*2.5;
-        let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight*2.25;
+        let initialSelectorPositionX = initialSelectorPositionWidth * 2.5;
+        let initialSelectorPositionY = this.container.y + initialSelectorPositionHeight * 2.25;
 
         // To be used as an index of which button is currently selected by the user.
 
@@ -67,11 +69,11 @@ class userInterface {
             button.stroke = 'black'
             button.textColor = '#ffe7d6'
             button.textSize = 14
-            button.text = i+1
+            button.text = i + 1
             button.collider = "k";
 
             buttonArray.push(button);
-            
+
         }
         return buttonArray;
     }
@@ -98,37 +100,37 @@ class userInterface {
      * Draws the health of the mothership at the bottom right of the interface
      */
     #drawHealth() {
-        let initialDigitX = width*0.9;
+        let initialDigitX = width * 0.9;
         let initialDigitY = this.#groupButtons[2].y;
         //let digitCount = this.#determingDigitCount(data.playerMothership.health);
         fill("#ffe7d6");
         textFont(myfont)
         textAlign(CENTER, CENTER);
         textSize(18);
-        text("Health", initialDigitX, initialDigitY*0.95);
+        text("Health", initialDigitX, initialDigitY * 0.95);
         textSize(16)
         textFont(myfontB)
         fill("#8c2d38")
         stroke('black')
         text(data.playerMothership.health, initialDigitX, initialDigitY)
 
-        for (let i=0; i<5; i++) {
-            let healthIcon = 100*i
+        for (let i = 0; i < 5; i++) {
+            let healthIcon = 100 * i
             let healthValue
-            if (data.playerMothership.health>= 100*(i+1)) {
+            if (data.playerMothership.health >= 100 * (i + 1)) {
                 healthValue = 0
             } else {
-                if ((data.playerMothership.health-healthIcon) == 75) {
+                if ((data.playerMothership.health - healthIcon) == 75) {
                     healthValue = 1
-                } else if ((data.playerMothership.health-healthIcon) == 50) {
+                } else if ((data.playerMothership.health - healthIcon) == 50) {
                     healthValue = 2
-                } else if ((data.playerMothership.health-healthIcon) == 25) {
+                } else if ((data.playerMothership.health - healthIcon) == 25) {
                     healthValue = 3
                 } else {
                     healthValue = 4
                 }
-            } 
-            image(health[healthValue], width*(0.84 + 0.03*i), this.#groupButtons[1].y)
+            }
+            image(health[healthValue], width * (0.84 + 0.03 * i), this.#groupButtons[1].y)
         }
 
 
@@ -172,14 +174,14 @@ class userInterface {
         fill("#ffe7d6");
         textAlign(RIGHT, CENTER);
         textSize(18);
-        text("Minerals", initialDigitX, initialDigitY*0.95)
+        text("Minerals", initialDigitX, initialDigitY * 0.95)
         fill('#d19f5a');
         textFont(myfontB)
         text(data.playerShip.resources, initialDigitX, initialDigitY)
         text(data.playerShip.specialResources, initialDigitX, this.#groupButtons[1].y)
         imageMode(CENTER);
-        image(mineralImg, initialDigitX*0.85, initialDigitY)
-        image(specialmineralImg, initialDigitX*0.85, this.#groupButtons[1].y)
+        image(mineralImg, initialDigitX * 0.85, initialDigitY)
+        image(specialmineralImg, initialDigitX * 0.85, this.#groupButtons[1].y)
 
         /*imageMode(CENTER);
         for (let i = 0; i < digitCount; i++) {
@@ -196,7 +198,7 @@ class userInterface {
         textFont(myfont)
         textAlign(CENTER, CENTER);
         fill("#ffe7d6")
-        text("Selected Group", this.#groupButtons[2].x, this.#groupButtons[2].y*0.95);
+        text("Selected Group", this.#groupButtons[2].x, this.#groupButtons[2].y * 0.95);
 
         for (let i = 0; i < this.#groupButtons.length; i++) {
             // Stroke
@@ -260,12 +262,12 @@ class userInterface {
         }
     }
 
-    updateSelection(){
-        for(let i = 0; i<data.playerShip.ships.length; i++){
+    updateSelection() {
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
-            if(thisShip.group == this.groupTypes[this.selectedGroup]){
+            if (thisShip.group == this.groupTypes[this.selectedGroup]) {
                 thisShip.selected = true;
-            } else{
+            } else {
                 thisShip.selected = false;
             }
         }
@@ -273,13 +275,13 @@ class userInterface {
 
     drawSelectedCircles() {
         //Draws circles around all non-mothership ships + Travel lines
-        for (let i = 1; i<data.playerShip.ships.length;i++) {
+        for (let i = 1; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
             if (thisShip.selected) {
                 fill(255, 128); // Set fill to white with a 50% opacity
                 noStroke(); // And of course, no stroke
-                circle(thisShip.x, thisShip.y, thisShip.h*1.25); // Draw a translucent circle around selected ship
-                
+                circle(thisShip.x, thisShip.y, thisShip.h * 1.25); // Draw a translucent circle around selected ship
+
                 // Now draw a dotted line for their path
                 stroke(255);
                 drawingContext.setLineDash([10, 20]); // Length of line, Spacing
@@ -300,7 +302,7 @@ class userInterface {
             let thisShip = data.playerShip.ships[0];
             fill(255, 128); // Set fill to white with a 50% opacity
             noStroke(); // And of course, no stroke
-            circle(thisShip.x, thisShip.y, thisShip.h*1.25);
+            circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
         }
     }
 
@@ -333,16 +335,16 @@ class userInterface {
             this.selectionBox.y = -50;
             this.selectionBox.w = 10;
             this.selectionBox.h = 10;
-    
+
             this.selectionBoxX = mouseX;
             this.selectionBoxY = mouseY;
         }
-    
+
         if (mouse.presses()) {
             this.selectionBoxX = mouseX;
             this.selectionBoxY = mouseY;
         }
-    
+
         if (mouse.released()) {
             for (let i = 0; i < data.playerShip.ships.length; i++) {
                 let selectedShip = data.playerShip.ships[i];
@@ -376,46 +378,47 @@ class userInterface {
     /**
      * Handles the camera Movement
      */
-    moveCamera(){
-        if((kb.pressing("arrowUp")||mouse.y < 20) &&cameraY<1600){
-            this.moveGame(0,5);
+    moveCamera() {
+        if ((kb.pressing("arrowUp") || mouse.y < 20) && cameraY < 1600) {
+            this.moveGame(0, 5);
         }
-        if((kb.pressing("arrowDown")||mouse.y > height-20)&&cameraY>-800){
-            this.moveGame(0,-5);
+        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > ((this.zoom - 2) / (0.5 - 2)) * (0 - -1200) + -1200) {
+            this.moveGame(0, -5);
         }
-        if((kb.pressing("arrowLeft")||mouse.x < 20)&&cameraX<1600){
-            this.moveGame(5,0);
+        if ((kb.pressing("arrowLeft") || mouse.x < 20) && cameraX < 1600) {
+            this.moveGame(5, 0);
         }
-        if((kb.pressing("arrowRight")||mouse.x > width-20)&&cameraX>-800){
-            this.moveGame(-5,0);
+        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > ((this.zoom - 2) / (0.5 - 2)) * (0 - -1200) + -1200) {
+            this.moveGame(-5, 0);
         }
+        console.log()
     }
 
     /**
      * Handles the sprite's positioning
      * @param {int} x //X movement
      * @param {int} y //Y movement
-     */    
-    moveGame(x,y){
-        cameraX+=x;
-        cameraY+=y;
-        for(let sprite of data.factory.gameSprites){
-            sprite.x+=x;
-            sprite.y+=y;
-            if(sprite.group){
-                sprite.destinationX+=x;
-                sprite.destinationY+=y;
+     */
+    moveGame(x, y) {
+        cameraX += x;
+        cameraY += y;
+        for (let sprite of data.factory.gameSprites) {
+            sprite.x += x;
+            sprite.y += y;
+            if (sprite.group) {
+                sprite.destinationX += x;
+                sprite.destinationY += y;
             }
         }
-    }   
-    
-    gameZoom(z){
-        for(let sprite of data.factory.gameSprites){
-            sprite.x*=z;
-            sprite.y*=z;
-            sprite.destinationX*=z;
-            sprite.destinationY*=z;
+    }
+
+    gameZoom(z) {
+        for (let sprite of data.factory.gameSprites) {
+            sprite.x *= z;
+            sprite.y *= z;
+            sprite.destinationX *= z;
+            sprite.destinationY *= z;
         }
     }
-    
+
 }

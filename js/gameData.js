@@ -72,6 +72,8 @@ class gameData {
             let thisProj = this.playerShip.projectiles[i];
             if(thisProj.collides(this.enemyShip.ships)){
                 for(let j = 0; j<this.enemyShip.ships.length;j++){
+                    let thisShip = this.enemyShip.ships[j];
+                    if(thisShip.collides(thisProj)){
                         if(j != 0){
                             this.enemyShip.takeDamage(thisProj.damage,this.enemyShip.ships[j]);
                         }
@@ -79,6 +81,7 @@ class gameData {
                             this.enemyMothership.health -= thisProj.damage;
                         }
                         thisProj.remove();
+                    }
                 }
             }
         }
@@ -87,6 +90,8 @@ class gameData {
             let thisProj = this.enemyShip.projectiles[i];
             if(thisProj.collides(this.playerShip.ships)){
                 for(let j = 0; j<this.playerShip.ships.length;j++){
+                    let thisShip = this.playerShip.ships[j];
+                    if(thisShip.collides(thisProj)){
                         if(j != 0){
                             this.playerShip.takeDamage(thisProj.damage,this.playerShip.ships[j]);
                         }
@@ -95,6 +100,7 @@ class gameData {
                         }
                         
                         thisProj.remove();
+                    }
                 }
             }
         }
