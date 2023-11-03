@@ -270,11 +270,11 @@ function draw() {
  * @returns 
  */
 function mouseWheel(scroll){
-    if(scroll.delta < 0 && zoom < 2){
+    if(scroll.delta > 0 && zoom < 2){
         zoom += 0.05;
         ui.gameZoom(1.05);
     }
-    if(scroll.delta > 0 && zoom > 0.5){
+    if(scroll.delta < 0 && zoom > 0.5){
         zoom -= 0.05;
         ui.gameZoom(0.95);
     }

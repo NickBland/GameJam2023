@@ -69,7 +69,7 @@ class userInterface {
             button.textSize = 14
             button.text = i+1
             button.collider = "k";
-
+            button.overlaps(data.playerShip.ships)
             buttonArray.push(button);
             
         }
