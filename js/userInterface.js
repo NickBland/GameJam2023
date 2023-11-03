@@ -272,19 +272,21 @@ class userInterface {
     }
 
     drawSelectedCircles() {
-        for (let ship of data.playerShip.ships) {
-            if (ship.selected) {
+        //Draws circles around all non-mothership ships + Travel lines
+        for (let i = 1; i<data.playerShip.ships.length;i++) {
+            let thisShip = data.playerShip.ships[i];
+            if (thisShip.selected) {
                 fill(255, 128); // Set fill to white with a 50% opacity
                 noStroke(); // And of course, no stroke
-                circle(ship.x, ship.y, ship.h*1.25); // Draw a translucent circle around selected ships
+                circle(thisShip.x, thisShip.y, thisShip.h*1.25); // Draw a translucent circle around selected ship
                 
                 // Now draw a dotted line for their path
                 stroke(255);
                 drawingContext.setLineDash([10, 20]); // Length of line, Spacing
                 drawingContext.lineDashOffset = 5;
-                line(ship.x, ship.y, ship.destinationX, ship.destinationY);
+                line(thisShip.x, thisShip.y, thisShip.destinationX, thisShip.destinationY);
                 fill(255);
-                circle(ship.destinationX, ship.destinationY, 7.5);
+                circle(thisShip.destinationX, thisShip.destinationY, 7.5);
 
                 // Reset the styling back to nothing.
                 drawingContext.setLineDash([]);
@@ -292,6 +294,13 @@ class userInterface {
                 noFill();
                 stroke(0);
             }
+        }
+        //Draws the circle around the mothership
+        if (data.playerShip.ships[0].selected) {
+            let thisShip = data.playerShip.ships[0];
+            fill(255, 128); // Set fill to white with a 50% opacity
+            noStroke(); // And of course, no stroke
+            circle(thisShip.x, thisShip.y, thisShip.h*1.25);
         }
     }
 
@@ -363,4 +372,50 @@ class userInterface {
         // In addition, the camera.on() function should be invoked here, after all static elements have been drawn on screen.
 
     }
+
+    /**
+     * Handles the camera Movement
+     */
+    moveCamera(){
+        if((kb.pressing("arrowUp")||mouse.y < 20) &&cameraY<1600){
+            this.moveGame(0,5);
+        }
+        if((kb.pressing("arrowDown")||mouse.y > height-20)&&cameraY>-800){
+            this.moveGame(0,-5);
+        }
+        if((kb.pressing("arrowLeft")||mouse.x < 20)&&cameraX<1600){
+            this.moveGame(5,0);
+        }
+        if((kb.pressing("arrowRight")||mouse.x > width-20)&&cameraX>-800){
+            this.moveGame(-5,0);
+        }
+    }
+
+    /**
+     * Handles the sprite's positioning
+     * @param {int} x //X movement
+     * @param {int} y //Y movement
+     */    
+    moveGame(x,y){
+        cameraX+=x;
+        cameraY+=y;
+        for(let sprite of data.factory.gameSprites){
+            sprite.x+=x;
+            sprite.y+=y;
+            if(sprite.group){
+                sprite.destinationX+=x;
+                sprite.destinationY+=y;
+            }
+        }
+    }   
+    
+    gameZoom(z){
+        for(let sprite of data.factory.gameSprites){
+            sprite.x*=z;
+            sprite.y*=z;
+            sprite.destinationX*=z;
+            sprite.destinationY*=z;
+        }
+    }
+    
 }

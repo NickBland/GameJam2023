@@ -1,10 +1,11 @@
 class spriteFactory {
     constructor() {
-
+        this.gameSprites = new Group();
     }
 
     createObject(x, y, d) {
         let object = new Sprite(x, y);
+        this.gameSprites.push(object);
         return object;
     }
 
