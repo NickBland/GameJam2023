@@ -60,6 +60,10 @@ let ui;
 
 let selectionBox;
 
+let zoom;
+let cameraX;
+let cameraY;
+
 //TODO Functions lost in refactoring
 //Asteroid:
 // consumeResource() {
@@ -77,6 +81,10 @@ function drawInitialGameState() {
     data.setupGame();
 
     ui = new userInterface;
+
+    cameraX = width/2;
+    cameraY = height/2;
+    zoom = 1;
 
     initialGameState = false;
 }
@@ -181,10 +189,12 @@ function shipTarget() {
 function drawGameScreen() {
     //background("red");
     gameBgImg.resize(width, height);
-    image(gameBgImg, width/2, height/2);
+    image(gameBgImg, cameraX*zoom, cameraY*zoom, width*4*zoom, height*4*zoom);
     if (initialGameState) {
         drawInitialGameState();
     }
+
+    data.factory.gameSprites.scale = zoom;
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
@@ -227,7 +237,7 @@ function preload() {
 
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
     // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
-    // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name...
+    // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name..
 }
 
 function setup() {
@@ -250,4 +260,26 @@ function draw() {
             drawEndScreen();
             break;
     }
+
+    ui.moveCamera();
 }
+/**
+ * This calls every time the mouse wheel is scrolled
+ * Then calls the UI's zoom function
+ * @param {event} scroll 
+ * @returns 
+ */
+function mouseWheel(scroll){
+    if(scroll.delta > 0 && zoom < 2){
+        zoom += 0.05;
+        ui.gameZoom(1.05);
+    }
+    if(scroll.delta < 0 && zoom > 0.5){
+        zoom -= 0.05;
+        ui.gameZoom(0.95);
+    }
+    
+    return false;
+}
+
+
