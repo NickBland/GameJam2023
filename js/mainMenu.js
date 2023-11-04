@@ -1,3 +1,6 @@
+/**
+ * @Class Class to hold main menu sprites and data.
+ */
 class mainMenu {
     
     constructor() {
@@ -8,6 +11,9 @@ class mainMenu {
         this.drawInitialMainMenuScreen();
     }
     
+    /**
+     * Sets up the main menu screen to display the sprites for buttons
+     */
     drawInitialMainMenuScreen() {
         this.playButton = new Sprite();
         this.playButton.w = 0.3 * width;
@@ -44,18 +50,27 @@ class mainMenu {
 
     }
     
+    /**
+     * Show all sprite-buttons on the screen
+     */
     showMenuButton() {
         this.playButton.visible = true;
         this.tutorialButton.visible = true;
         this.creditsButton.visible = true;
     }
 
+    /**
+     * Hide all the sprite-buttons from the screen
+     */
     hideMenuButton() {
         this.playButton.visible = false;
         this.tutorialButton.visible = false;
         this.creditsButton.visible = false;
     }
     
+    /**
+     * Hide all the sprite-buttons, and then destroy them. Changes game state to game
+     */
     playButtonClicked() {
         this.hideMenuButton();
 
@@ -67,16 +82,27 @@ class mainMenu {
         gameState.game = true;
     }
 
+    /**
+     * Opens up the tutorial pane
+     */
     tutorialButtonClicked() {
         this.hideMenuButton();
         this.tutorialShow = true;
     }
 
+    /**
+     * Opens the credits pane
+     */
     creditsButtonClicked() {
         this.hideMenuButton()
         this.creditsShow = true;
     }
 
+    /**
+     * Checks for player interactivity with the sprite-buttons
+     * Determines first if hovering over a button, changing the background and size of the sprite.
+     * Then, if the user clicks the mouse while hovering, opens the corresponding pane.
+     */
     checkMouseOnButtons() {
         if (this.playButton.mouse.hovering()) {
             this.playButton.scale = 1.2;
@@ -112,6 +138,10 @@ class mainMenu {
         }
     }
     
+    /**
+     * Draw non p5play elements on the screen with each draw cycle -- Text at top, etc.
+     * Additionally, handles scrolling background.
+     */
     drawMainMenuScreen() {
         textFont(myfont)
         mainMenuBgImg.resize(0, height);
