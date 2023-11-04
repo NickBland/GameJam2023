@@ -156,8 +156,8 @@ let ui;
 
 let selectionBox;
 
-let cameraX;
-let cameraY;
+let camera;
+
 
 function drawInitialGameState() {
     data = new gameData();
@@ -165,10 +165,11 @@ function drawInitialGameState() {
 
     ui = new userInterface;
 
-    cameraX = 0;
-    cameraY = 0;
+    camera = new customCamera;
+
+    
     for (let i = 0; i < 16; i++) {
-        ui.moveGame(100, 100)
+        camera.moveGame(100, 100)
     }
 
     initialGameState = false;
@@ -288,14 +289,16 @@ function drawGameScreen() {
         ui.miniMap();
     }
 
-    image(gameBgImg, cameraX, cameraY, width * 4, height * 4);
+    gameBgImg.resize(width, height);
+    image(gameBgImg, camera.cameraX, camera.cameraY, width * 4, height * 4);
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
     ui.clickDrag();
     ui.drawSelectedCircles();
     ui.drawTeamCircles();
-    ui.moveCamera();
+
+    camera.moveCamera();
     ui.miniMapUpdate();
 
     data.fogOfWar();
