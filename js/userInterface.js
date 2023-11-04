@@ -308,15 +308,15 @@ class userInterface {
         }
     }
 
-    drawTeamCircles(){
-        for(let i = 0; i<data.playerShip.ships.length; i++){
+    drawTeamCircles() {
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
             noFill();
             stroke("green");
             strokeWeight(3);
             circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
         }
-        for(let i = 0; i<data.enemyShip.ships.length; i++){
+        for (let i = 0; i < data.enemyShip.ships.length; i++) {
             let thisShip = data.enemyShip.ships[i];
             noFill();
             stroke("red");
@@ -325,7 +325,7 @@ class userInterface {
         }
 
         noFill();
-                stroke(0);
+        stroke(0);
     }
 
     /**
@@ -402,16 +402,16 @@ class userInterface {
      */
     moveCamera() {
 
-        if ((kb.pressing("arrowUp") || mouse.y < 20)&&cameraY<1600) {
+        if ((kb.pressing("arrowUp") || mouse.y < 20) && cameraY < 1600) {
             this.moveGame(0, 5);
         }
-        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > -800){
+        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > -800) {
             this.moveGame(0, -5);
         }
-        if ((kb.pressing("arrowLeft") || mouse.x < 20)&&cameraX<1600) {
+        if ((kb.pressing("arrowLeft") || mouse.x < 20) && cameraX < 1600) {
             this.moveGame(5, 0);
         }
-        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > -800){
+        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > -800) {
             this.moveGame(-5, 0);
         }
     }

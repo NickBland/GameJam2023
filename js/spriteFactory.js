@@ -9,10 +9,11 @@ class spriteFactory {
         return object;
     }
 
-    createShip(x, y, group) {
+    createShip(x, y, group, team) {
         let ship = this.createObject(x, y);
         ship.group = group;
-        ship.origin = {x:x, y:y};
+        ship.team = team;
+        ship.origin = { x: x, y: y };
         ship.target = null;
         ship.destinationX = ship.origin.x;
         ship.destinationY = ship.origin.y;
@@ -21,8 +22,8 @@ class spriteFactory {
         return ship;
     }
 
-    createMothership(x, y) {
-        let mothership = this.createShip(x, y, "mothership");
+    createMothership(x, y, team) {
+        let mothership = this.createShip(x, y, "mothership", team);
         mothership.w = 50;
         mothership.h = 60;
         mothership.health = 500;
@@ -34,14 +35,14 @@ class spriteFactory {
         return mothership;
     }
 
-    createDrone(x, y) {
-        let drone = this.createShip(x, y, "drone");
+    createDrone(x, y, team) {
+        let drone = this.createShip(x, y, "drone", team);
 
         drone.resources = 0;
         drone.specialResources = 0;
         drone.health = 50;
         drone.damage = 10;
-        
+
         drone.w = 25;
         drone.h = 25;
         droneShipImg.resize(drone.w + 20, drone.h + 20);
@@ -50,8 +51,8 @@ class spriteFactory {
         return drone;
     }
 
-    createCorsair(x, y, owner) {
-        let corsair = this.createShip(x, y, "corsair");
+    createCorsair(x, y, team) {
+        let corsair = this.createShip(x, y, "corsair", team);
 
         corsair.health = 100;
         corsair.damage = 20;
@@ -64,8 +65,8 @@ class spriteFactory {
         return corsair;
     }
 
-    createDestroyer(x, y, owner) {
-        let destroyer = this.createShip(x, y, "destroyer");
+    createDestroyer(x, y, team) {
+        let destroyer = this.createShip(x, y, "destroyer", team);
 
         destroyer.health = 150;
         destroyer.damage = 25;
@@ -78,8 +79,8 @@ class spriteFactory {
         return destroyer;
     }
 
-    createCruiser(x, y, owner) {
-        let cruiser = this.createShip(x, y, "cruiser");
+    createCruiser(x, y, team) {
+        let cruiser = this.createShip(x, y, "cruiser", team);
 
         cruiser.health = 200;
         cruiser.damage = 35;
@@ -93,10 +94,8 @@ class spriteFactory {
 
     }
 
-    createBattleship(x, y, owner) {
-        let battleship = this.createShip(x, y, "battleship");
-
-        // battleship.image = ;
+    createBattleship(x, y, team) {
+        let battleship = this.createShip(x, y, "battleship", team);
 
         battleship.health = 300;
         battleship.damage = 75;
@@ -109,16 +108,14 @@ class spriteFactory {
         return battleship;
     }
 
-    createAsteroid(){
-        randomSeed(Date.now()); // Set the current seed to the epoch time
-
+    createAsteroid() {
         let d = Math.floor(random(25, 70));
-        let x = random(d, width - d);
-        let y = random(d, height - d - 120);
+        let x = random(d - 1300, 1400 - d);
+        let y = random(d - 1300, 1400 - d);
 
         let asteroid = this.createObject(x, y);
 
-        asteroid.resources = floor(d*1.5);
+        asteroid.resources = floor(d * 1.5);
 
         /*let index = Math.floor(random(0, 1000)) % asteroidImages.length;
         asteroid.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
@@ -136,28 +133,21 @@ class spriteFactory {
         asteroid.changeAni('initial');
         // asteroid.debug = true;
 
-        asteroid.ani.scale = d/45;
+        asteroid.ani.scale = d / 45;
 
         asteroid.d = d;
         asteroid.collider = "k";
         asteroid.rotation = random(0, 360);
-        asteroid.rotationSpeed = random(-0.3,0.3); // Add some spin :)
+        asteroid.rotationSpeed = random(-0.3, 0.3); // Add some spin :)
         asteroid.group = "asteroid";
         return asteroid;
     }
 
-    createProjectile(x, y){
-        let projectile = this.createObject(x,y);
+    createProjectile(x, y) {
+        let projectile = this.createObject(x, y);
         projectile.w = 5;
         projectile.h = 10;
         projectile.life = 100
-        return(projectile);
-    }
-
-    createBg(x,y){
-        let background = this.createObject(x,y);
-        background.img = gameBgImg;
-        background.collider = "n";
-        return(background);
+        return (projectile);
     }
 }

@@ -3,7 +3,7 @@
 let myfont, myfontB;
 let mainMenuBgImg, gameBgImg;
 let offset_menuX = 0;
-let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg; 
+let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
 let health;
 
@@ -52,11 +52,11 @@ function adjustMenuButtonStyle(Button) {
     Button.mouseOver(over)
     Button.mouseOut(out)
 }
-function over(){
+function over() {
     this.style("transform: scale(1.2, 1.2)");
     this.style("background: #8b4049");
 }
-function out(){
+function out() {
     this.style("transform: none")
     this.style("background: #d19f5a");
 }
@@ -64,19 +64,19 @@ function out(){
 function drawInitialMainMenuScreen() {
     playButton = createButton('Play Game');
     playButton.mouseClicked(playButtonClicked);
-    playButton.size(0.3*width, 0.06*height);
-    playButton.position((width-playButton.size().width)/2, (0.55)*canvas.h)
+    playButton.size(0.3 * width, 0.06 * height);
+    playButton.position((width - playButton.size().width) / 2, (0.55) * canvas.h)
     adjustMenuButtonStyle(playButton);
 
     tutorialButton = createButton('Tutorial');
-    tutorialButton.size(0.3*width, 0.06*height);
-    tutorialButton.position((width-playButton.size().width)/2, (0.65)*canvas.h)
+    tutorialButton.size(0.3 * width, 0.06 * height);
+    tutorialButton.position((width - playButton.size().width) / 2, (0.65) * canvas.h)
     adjustMenuButtonStyle(tutorialButton)
     tutorialButton.mouseClicked(tutorialButtonClicked);
 
     creditsButton = createButton('Credits');
-    creditsButton.size(0.3*width, 0.06*height);
-    creditsButton.position((width-playButton.size().width)/2, (0.75)*canvas.h)
+    creditsButton.size(0.3 * width, 0.06 * height);
+    creditsButton.position((width - playButton.size().width) / 2, (0.75) * canvas.h)
     adjustMenuButtonStyle(creditsButton)
     creditsButton.mouseClicked(creditsButtonClicked)
 
@@ -101,7 +101,7 @@ function playButtonClicked() {
 }
 function tutorialButtonClicked() {
     hideMenuButton();
-    tutorialShow = true;  
+    tutorialShow = true;
 }
 function creditsButtonClicked() {
     hideMenuButton()
@@ -113,19 +113,19 @@ function drawMainMenuScreen() {
     //image(mainMenuBgImg, 0, 0);
     image(mainMenuBgImg, offset_menuX, 0)
     image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-    offset_menuX-=1
-    if (offset_menuX <= -mainMenuBgImg.width){
-        offset_menuX = 0;	
+    offset_menuX -= 1
+    if (offset_menuX <= -mainMenuBgImg.width) {
+        offset_menuX = 0;
     }
     stroke('#d19f5a')
     strokeWeight(5)
     noFill()
-    rect(0.2*canvas.w, 0.3*canvas.h, 0.6*canvas.w, 0.11*canvas.h, 20);
+    rect(0.2 * canvas.w, 0.3 * canvas.h, 0.6 * canvas.w, 0.11 * canvas.h, 20);
     fill('#ffe7d6')
     stroke('#8b4049')
     textAlign(CENTER, CENTER)
     textFont(myfontB, 40)
-    text("Game Title", canvas.w/2, 0.35*canvas.h)
+    text("Game Title", canvas.w / 2, 0.35 * canvas.h)
     strokeWeight(1);
 
     if (initialMainMenuScreen) {
@@ -137,8 +137,8 @@ function drawMainMenuScreen() {
 
         noStroke();
         fill(0, 150);
-        rect(width/20, height/20, 0.9*width, 0.9*height);
-        if (kb.presses("escape")){
+        rect(width / 20, height / 20, 0.9 * width, 0.9 * height);
+        if (kb.presses("escape")) {
             tutorialShow = false;
             creditsShow = false;
             showMenuButton();
@@ -179,6 +179,9 @@ function drawInitialGameState() {
 
     cameraX = 0;
     cameraY = 0;
+    for (let i = 0; i < 16; i++) {
+        ui.moveGame(100, 100)
+    }
 
     initialGameState = false;
 }
@@ -195,7 +198,7 @@ function shipMovement() {
     }
 
     //Unselects all ships when mouse is clicked
-    if (mouse.presses() && mouseY <height-100) {
+    if (mouse.presses() && mouseY < height - 100) {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             data.playerShip.ships[i].selected = false;
         }
@@ -213,10 +216,13 @@ function shipMovement() {
         } else if (thisShip.moveTimer < 0) {
             thisShip.moveTimer = 0;
         }
-        for(let j = 0; j<playerShips.length; j++){
-            if(dist(playerShips[j].x, playerShips[j].y, thisShip.x, thisShip.y)<50 && playerShips[j] != thisShip){
-                playerShips[j].attractTo(thisShip,-2);
+        for (let j = 0; j < playerShips.length; j++) {
+            if (dist(playerShips[j].x, playerShips[j].y, thisShip.x, thisShip.y) < 50 && playerShips[j] != thisShip) {
+                playerShips[j].attractTo(thisShip, -2);
             }
+        }
+        if (thisShip.target != null) {
+            thisShip.moveTimer = 10;
         }
     }
 }
@@ -238,21 +244,20 @@ function shipAction() {
         //Checks if a drone can harvest resources
         for (let i = 0; i < data.asteroids.length; i++) {
             let thisAsteroid = data.asteroids[i];
-            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius+20) && thisShip.group == "drone") {
+            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone") {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }
 
         //Handles Resource Harvesting
-        if(thisShip.group == "drone"){
-            if(dist(thisShip.x,thisShip.y,data.playerMothership.x,data.playerMothership.y)<65){
+        if (thisShip.group == "drone") {
+            if (dist(thisShip.x, thisShip.y, data.playerMothership.x, data.playerMothership.y) < 65) {
                 data.playerShip.resources += thisShip.resources;
                 data.playerShip.specialResources += thisShip.specialResources;
                 thisShip.resources = 0;
                 thisShip.specialResources = 0;
-                if(thisShip.target != null){
-                    data.playerShip.setDestination(thisShip.target.x,thisShip.target.y,thisShip);
-                    thisShip.timer = dist((thisShip.target.x,thisShip.target.y,thisShip.x,thisShip.y));
+                if (thisShip.target != null) {
+                    data.playerShip.setDestination(thisShip.target.x, thisShip.target.y, thisShip);
                 }
             }
         }
@@ -262,7 +267,7 @@ function shipAction() {
 function shipTarget() {
     for (let i = 0; i < data.playerShip.ships.length; i++) {
         let thisShip = data.playerShip.ships[i];
-        if(thisShip.selected&&mouse.presses("right")){
+        if (thisShip.selected && mouse.presses("right")) {
             thisShip.target = null;
         }
         for (let j = 0; j < data.enemyShip.ships.length; j++) {
@@ -286,8 +291,8 @@ function drawGameScreen() {
         drawInitialGameState();
     }
 
-    gameBgImg.resize(width, height); 
-    image(gameBgImg, cameraX, cameraY, width*4, height*4); 
+    gameBgImg.resize(width, height);
+    image(gameBgImg, cameraX, cameraY, width * 4, height * 4);
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
@@ -301,6 +306,11 @@ function drawGameScreen() {
     shipTarget();
 
     data.combatHandling();
+
+    //Respawning asteroid mechanics
+    if (data.asteroids.length < 100) {
+        data.createAsteroid();
+    }
 }
 
 function drawEndScreen() {
@@ -325,8 +335,8 @@ function preload() {
     motherShipImg = loadImage("assets/images/myassets/ships/mothership.png")
 
     //Asteroid img
-    asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', {frameSize: [96, 96], frames: 1});
-    asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', {frameSize: [96, 96], frames: 8});
+    asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
+    asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
     specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
 
