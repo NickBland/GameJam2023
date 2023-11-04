@@ -13,12 +13,10 @@ class mainMenu {
         this.playButton.w = 0.3 * width;
         this.playButton.h = 0.06 * height;
         this.playButton.y = 0.55 * height;
-        this.playButton.color = "#d19f5a";
 
         this.playButton.textColor = "#ffe7d6";
         this.playButton.textSize = 22;
-        this.playButton.textFont = myfont;
-        this.playButton.text = "Play Game"
+        this.playButton.text = "Play Game";
 
         this.playButton.collider = "k";
 
@@ -26,11 +24,9 @@ class mainMenu {
         this.tutorialButton.w = this.playButton.w;
         this.tutorialButton.h = this.playButton.h;
         this.tutorialButton.y = 0.65 * height;
-        this.tutorialButton.color = "#d19f5a";
 
         this.tutorialButton.textColor = "#ffe7d6";
         this.tutorialButton.textSize = 22;
-        this.tutorialButton.textFont = myfont;
         this.tutorialButton.text = "Tutorial";
 
         this.playButton.collider = "k";
@@ -39,11 +35,9 @@ class mainMenu {
         this.creditsButton.w = this.playButton.w;
         this.creditsButton.h = this.playButton.h;
         this.creditsButton.y = 0.75 * height;
-        this.creditsButton.color = "#d19f5a";
 
         this.creditsButton.textColor = "#ffe7d6";
         this.creditsButton.textSize = 22;
-        this.creditsButton.textFont = myfont;
         this.creditsButton.text = "Credits";
 
         this.playButton.collider = "k";
@@ -119,6 +113,7 @@ class mainMenu {
     }
     
     drawMainMenuScreen() {
+        textFont(myfont)
         mainMenuBgImg.resize(0, height);
         image(mainMenuBgImg, offset_menuX, 0)
         image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
@@ -136,6 +131,7 @@ class mainMenu {
         textFont(myfontB, 40)
         text("Xeno Hunters", canvas.w / 2, 0.35 * canvas.h)
         strokeWeight(1);
+        textFont(myfont);
     
         if (this.tutorialShow || this.creditsShow) {
             image(mainMenuBgImg, offset_menuX, 0)
