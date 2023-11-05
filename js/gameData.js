@@ -1,6 +1,7 @@
 class gameData {
     constructor() {
         this.factory = new spriteFactory();
+        this.combat = new combatHandler();
 
         this.asteroids; // ALL asteroids on the map
 
@@ -16,7 +17,7 @@ class gameData {
         this.playerShip.setupData();
         this.enemyShip.setupData();
 
-        this.playerMothership = this.factory.createMothership(-1400, -1400);
+        this.playerMothership = this.factory.createMothership(-1400, -1400, this.playerShip);
         this.playerShip.ships.push(this.playerMothership);
 
         this.createUnit("drone", this.playerShip, this.playerMothership)
@@ -25,7 +26,7 @@ class gameData {
         this.createUnit("cruiser", this.playerShip, this.playerMothership)
         this.createUnit("battleship", this.playerShip, this.playerMothership)
 
-        this.enemyMothership = this.factory.createMothership(width + 600, height + 500);
+        this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
         this.createUnit("drone", this.enemyShip, this.enemyMothership)

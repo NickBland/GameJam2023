@@ -43,14 +43,7 @@ class playerState {
     }
 
     attack(thisShip, thisEnemy) {
-        if (frameCount % 10 == 0) {
-            let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
-            this.projectiles.push(projectile);
-            projectile.damage = thisShip.damage;
-            projectile.target = thisEnemy;
-            projectile.overlaps(allSprites);
-            projectile.moveTowards(thisEnemy, 0.1);
-        }
+        data.combat.determineWeapon(thisShip, thisEnemy);
     }
 
     takeDamage(damage, thisShip) {
@@ -60,6 +53,7 @@ class playerState {
             //YOU WILL NEED TO GET THE INDEX OF THE SHIP DYING IN
             //this.ships AND USE THAT INDEX TO ALSO REMOVE THE MINIMAP DOT
             //IN THE ui.miniMapSprites.dots GROUP
+            //p.s make it so it only does that for the player ships
             console.log("Very Dead");
         }
     }
