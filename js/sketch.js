@@ -159,18 +159,6 @@ let selectionBox;
 let cameraX;
 let cameraY;
 
-//TODO Functions lost in refactoring
-//Asteroid:
-// consumeResource() {
-//     // Subtract after set amount of time of drone touching, or whatever
-//     // Needs logic to destroy asteroid when it hits 0
-// }
-
-// drift() {
-//     //Only if we want the asteroids to have a slight drift to them
-//     //Needs movement and spin i reckon
-//     //we'd need to consider collisions if we did this
-
 function drawInitialGameState() {
     data = new gameData();
     data.setupGame();
@@ -225,6 +213,11 @@ function shipMovement() {
             thisShip.moveTimer = 10;
         }
     }
+
+    //VERY TEMPORARY, JUST BEFORE THE ENEMY GETS ITS AI
+    for(let i = 0; i<data.enemyShip.ships.length; i++){
+        data.enemyShip.ships[i].speed = 0;
+    }
 }
 
 //Handles ship combat call and resource collection calls
@@ -244,7 +237,7 @@ function shipAction() {
         //Checks if a drone can harvest resources
         for (let i = 0; i < data.asteroids.length; i++) {
             let thisAsteroid = data.asteroids[i];
-            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone") {
+            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources<10) {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }
@@ -289,9 +282,9 @@ function drawGameScreen() {
     //background("red");
     if (initialGameState) {
         drawInitialGameState();
+        ui.miniMap();
     }
 
-    gameBgImg.resize(width, height);
     image(gameBgImg, cameraX, cameraY, width * 4, height * 4);
 
     ui.drawInterface();
@@ -300,6 +293,7 @@ function drawGameScreen() {
     ui.drawSelectedCircles();
     ui.drawTeamCircles();
     ui.moveCamera();
+    ui.miniMapUpdate();
 
     shipMovement();
     shipAction();

@@ -19,6 +19,9 @@ class userInterface {
 
         this.selectionBox;
         this.setupSelectionBox();
+
+        this.miniMapSprites = new Group();
+        this.miniMapSprites.dots = new Group();
     }
 
     setupSelectionBox() {
@@ -431,6 +434,47 @@ class userInterface {
                 sprite.destinationX += x;
                 sprite.destinationY += y;
             }
+        }
+    }
+
+    miniMap(){
+        let miniMapBorder = new Sprite();
+        miniMapBorder.collider = "n";
+        miniMapBorder.color = "#8b4049";
+        miniMapBorder.x=width-100
+        miniMapBorder.y = 100;
+        miniMapBorder.w = 180;
+        miniMapBorder.h = 180;
+        let miniMap = new Sprite();
+        miniMap.collider = "n";
+        miniMap.img= gameBgImg;
+        miniMap.scale = 0.2;
+        miniMap.x = width-100;
+        miniMap.y = 100;
+
+        for(let i = 0; i<data.playerShip.ships.length; i++){
+            this.miniMapSprites.dots.push(this.creatMiniMapSprite());
+        }
+    }
+
+    creatMiniMapSprite(){
+        let miniShip = new Sprite();
+        miniShip.collider = "n";
+        miniShip.d = 10;
+        miniShip.noStroke;
+        miniShip.color = "lime";
+        return(miniShip);
+    }
+
+    miniMapUpdate(){
+        for(let i = 0; i<this.miniMapSprites.dots.length; i++){
+            let thisDot = this.miniMapSprites.dots[i];
+            let thisShip = data.playerShip.ships[i];
+            let leperX = lerp(620, 780, (thisShip.x-cameraX+1600)/3200);
+            let leperY = lerp(20, 180, (thisShip.y-cameraY+1600)/3200);
+
+            thisDot.x = leperX;
+            thisDot.y = leperY;
         }
     }
 }
