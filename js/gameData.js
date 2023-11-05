@@ -113,15 +113,15 @@ class gameData {
     }
 
     fogOfWar(){
-        let badGuyVisible;
-        for(let badGuy of this.enemyShip.ships){
-            badGuyVisible = false;
+        let thisEnemyVisible;
+        for(let thisEnemy of this.enemyShip.ships){
+            thisEnemyVisible = false;
             for(let thisShip of this.playerShip.ships){
-                if(dist(thisShip.x, thisShip.y, badGuy.x, badGuy.y)<= thisShip.range){
-                    badGuyVisible = true;
+                if(dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y)<= thisShip.range){
+                    thisEnemyVisible = true;
                 }
             }
-            badGuy.visible = badGuyVisible;
+            thisEnemy.visible = thisEnemyVisible;
         }
     }
 }

@@ -228,9 +228,12 @@ function shipAction() {
         //Checks if a ship can attack
         for (let j = 0; j < data.enemyShip.ships.length; j++) {
             let thisEnemy = data.enemyShip.ships[j];
-            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= 150) {
+            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= thisShip.range) {
                 data.playerShip.attack(thisShip, thisEnemy);
+            }
+            if (dist(thisShip.x, thisShip.y, thisEnemy.x, thisEnemy.y) <= thisEnemy.range) {
                 data.enemyShip.attack(thisEnemy, thisShip);
+                thisEnemy.visible = true;
             }
         }
 
