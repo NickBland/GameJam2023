@@ -324,7 +324,9 @@ class userInterface {
             noFill();
             stroke("red");
             strokeWeight(3);
-            circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
+            if(thisShip.visible){
+                circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
+            }
         }
 
         noFill();
@@ -437,6 +439,7 @@ class userInterface {
         }
     }
 
+    //Initialises the miniMap
     miniMap(){
         let miniMapBorder = new Sprite();
         miniMapBorder.collider = "n";
@@ -445,6 +448,7 @@ class userInterface {
         miniMapBorder.y = 100;
         miniMapBorder.w = 180;
         miniMapBorder.h = 180;
+
         let miniMap = new Sprite();
         miniMap.collider = "n";
         miniMap.img= gameBgImg;
@@ -453,11 +457,12 @@ class userInterface {
         miniMap.y = 100;
 
         for(let i = 0; i<data.playerShip.ships.length; i++){
-            this.miniMapSprites.dots.push(this.creatMiniMapSprite());
+            this.miniMapSprites.dots.push(this.createMiniMapSprite());
         }
     }
 
-    creatMiniMapSprite(){
+    //Adds a new sprite to the miniMap, this should correspond to the appropriate ship
+    createMiniMapSprite(){
         let miniShip = new Sprite();
         miniShip.collider = "n";
         miniShip.d = 10;
@@ -466,6 +471,7 @@ class userInterface {
         return(miniShip);
     }
 
+    //Updates the minimap each draw frame
     miniMapUpdate(){
         for(let i = 0; i<this.miniMapSprites.dots.length; i++){
             let thisDot = this.miniMapSprites.dots[i];

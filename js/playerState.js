@@ -56,6 +56,10 @@ class playerState {
     takeDamage(damage, thisShip) {
         thisShip.health -= damage;
         if (thisShip.health <= 0) {
+            //IMPORTANT FOR WHOEVER MAKES THE SPRITES DIE
+            //YOU WILL NEED TO GET THE INDEX OF THE SHIP DYING IN
+            //this.ships AND USE THAT INDEX TO ALSO REMOVE THE MINIMAP DOT
+            //IN THE ui.miniMapSprites.dots GROUP
             console.log("Very Dead");
         }
     }

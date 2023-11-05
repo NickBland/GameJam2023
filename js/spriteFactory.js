@@ -19,6 +19,7 @@ class spriteFactory {
         ship.destinationY = ship.origin.y;
         ship.selected = false;
         ship.moveTimer = 0;
+
         return ship;
     }
 
@@ -31,6 +32,7 @@ class spriteFactory {
         mothership.damage = 10;
         motherShipImg.resize(mothership.w + 20, mothership.h + 20);
         mothership.img = motherShipImg;
+        mothership.range = 300;
 
         return mothership;
     }
@@ -42,6 +44,7 @@ class spriteFactory {
         drone.specialResources = 0;
         drone.health = 50;
         drone.damage = 10;
+        drone.range = 100;
 
         drone.w = 25;
         drone.h = 25;
@@ -56,6 +59,7 @@ class spriteFactory {
 
         corsair.health = 100;
         corsair.damage = 20;
+        corsair.range = 150;
 
         corsair.w = 25;
         corsair.h = 25;
@@ -70,6 +74,7 @@ class spriteFactory {
 
         destroyer.health = 150;
         destroyer.damage = 25;
+        destroyer.range = 175;
 
         destroyer.w = 30;
         destroyer.h = 30;
@@ -84,6 +89,7 @@ class spriteFactory {
 
         cruiser.health = 200;
         cruiser.damage = 35;
+        cruiser.range = 200;
 
         cruiser.w = 30;
         cruiser.h = 30;
@@ -99,6 +105,7 @@ class spriteFactory {
 
         battleship.health = 300;
         battleship.damage = 75;
+        battleship.range = 250;
 
         battleship.w = 45;
         battleship.h = 45;

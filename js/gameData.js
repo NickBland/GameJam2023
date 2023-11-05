@@ -111,4 +111,17 @@ class gameData {
             }
         }
     }
+
+    fogOfWar(){
+        let badGuyVisible;
+        for(let badGuy of this.enemyShip.ships){
+            badGuyVisible = false;
+            for(let thisShip of this.playerShip.ships){
+                if(dist(thisShip.x, thisShip.y, badGuy.x, badGuy.y)<= thisShip.range){
+                    badGuyVisible = true;
+                }
+            }
+            badGuy.visible = badGuyVisible;
+        }
+    }
 }

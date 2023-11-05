@@ -113,7 +113,7 @@ function drawMainMenuScreen() {
     //image(mainMenuBgImg, 0, 0);
     image(mainMenuBgImg, offset_menuX, 0)
     image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-    offset_menuX -= 1
+    offset_menuX -= 1;
     if (offset_menuX <= -mainMenuBgImg.width) {
         offset_menuX = 0;
     }
@@ -294,6 +294,8 @@ function drawGameScreen() {
     ui.drawTeamCircles();
     ui.moveCamera();
     ui.miniMapUpdate();
+
+    data.fogOfWar();
 
     shipMovement();
     shipAction();
