@@ -4,7 +4,8 @@ let myfont, myfontB;
 let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
-let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg, harvestImg;
+let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
+let harvestImg, upgradeImg;
 let health;
 
 let gameState = {
@@ -145,6 +146,9 @@ function shipAction() {
             let thisAsteroid = data.asteroids[i];
             if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources<10) {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
+                if (thisShip.specialResources >= 1) {
+                    ui.resourceNoti()
+                }
             }
         }
 
@@ -248,7 +252,11 @@ function preload() {
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
     specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
-    harvestImg = loadImage('assets/images/myassets/asteroids/harvestIcon.png');
+    
+
+    //Shop UI
+    harvestImg = loadImage('assets/images/myassets/shop/harvest.png');
+    upgradeImg = loadImage('assets/images/myassets/shop/upgrade.png')
 
     //Health status img
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);

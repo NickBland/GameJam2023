@@ -96,7 +96,7 @@ class userInterface {
         text("Health", initialDigitX, initialDigitY * 0.95);
         textSize(16)
         textFont(myfontB)
-        fill("white")
+        fill("#8ea091")
         stroke('black')
         text(data.playerMothership.health, initialDigitX, initialDigitY)
 
