@@ -89,11 +89,6 @@ class userInterface {
     #drawHealth() {
         let initialDigitX = width * 0.9;
         let initialDigitY = this.#groupButtons[2].y;
-        fill("#ffe7d6");
-        textFont(myfont)
-        textAlign(CENTER, CENTER);
-        textSize(18);
-        text("Health", initialDigitX, initialDigitY * 0.95);
         textSize(16)
         textFont(myfontB)
         fill("#8ea091")
@@ -126,11 +121,6 @@ class userInterface {
     #drawResources() {
         let initialDigitX = width * 0.75;
         let initialDigitY = this.#groupButtons[2].y;
-        fill("#ffe7d6");
-        textAlign(RIGHT, CENTER);
-        textSize(18);
-        textFont(myfont)
-        text("Minerals", initialDigitX, initialDigitY * 0.95)
         fill('#d19f5a');
         textFont(myfontB)
         text(data.playerShip.resources, initialDigitX, initialDigitY)
@@ -144,11 +134,6 @@ class userInterface {
      * Updates the state of the group selection buttons by adjusting the appearance of the stroke and internal colour depending on hover/selection
      */
     #updateGroupButtonStates() {
-        textFont(myfont)
-        textAlign(CENTER, CENTER);
-        fill("#ffe7d6")
-        text("Selected Group", this.#groupButtons[2].x, this.#groupButtons[2].y * 0.95);
-
         for (let i = 0; i < this.#groupButtons.length; i++) {
             // Stroke
             if (this.#groupButtons[i].mouse.hovering()) {
@@ -344,12 +329,31 @@ class userInterface {
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
 
-        this.#drawHealth();
-        this.#drawResources();
+        
         this.#updateGroupButtonStates();
 
         this.shopUI.checkHover();
-        this.shopUI.displayShopName();
+    }
+
+    drawPost() {
+        this.#drawHealth();
+        this.#drawResources();
+
+        textFont(myfont)
+        textAlign(CENTER, CENTER);
+        fill("#ffe7d6")
+        text("Selected Group", this.#groupButtons[2].x, this.#groupButtons[2].y * 0.95);
+
+        textAlign(RIGHT, CENTER);
+        textSize(18);
+        textFont(myfont);
+        text("Minerals", width * 0.75, this.#groupButtons[2].y * 0.95);
+
+        textAlign(CENTER, CENTER);
+        textSize(18);
+        text("Health", width * 0.9, this.#groupButtons[2].y * 0.95);
+
+        this.shopUI.displayShopName()
     }
 
 
