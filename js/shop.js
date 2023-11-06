@@ -11,6 +11,13 @@ class shop {
         this.gameData = data;
 
         this.setupShopButtons();
+
+        this.price = new Group();
+        this.displayFlavourText();
+
+        this.upgradeBoard;
+        this.setupUpgradeBoard();
+
     }
     
     /**
@@ -20,19 +27,17 @@ class shop {
         this.shopButtonBack = new this.shopButtons.Group();
         this.shopButtonImages = new this.shopButtons.Group();
 
-        let requiredAssets = [droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get(), mineralImg.get()];
+        let requiredAssets = [droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get(), upgradeImg.get()];
 
         let initialShopPositionWidth = 32;
-        let initialShopPositionHeight = initialShopPositionWidth * 2;
         let initialShopPositionX = width*0.275;
-        let initialShopPositionY = this.container.y + initialShopPositionHeight * 1.25;
+        let initialShopPositionY = this.container.y + initialShopPositionWidth * 2.5;
 
         for (let i = 0; i < 6; i++) {
             let button = new Sprite();
             button.x = initialShopPositionX + i * (initialShopPositionWidth * 1.5);
             button.y = initialShopPositionY;
             button.d = initialShopPositionWidth;
-            //button.h = initialShopPositionHeight;
             button.color = '#8ea091'
             button.strokeWeight = 2
             button.stroke = 'black'
@@ -52,12 +57,52 @@ class shop {
         }
     }
 
+    displayShopName() {
+        fill("#ffe7d6")
+        text("Assets", this.shopButtonBack[2].x + this.shopButtonBack[2].d, 731.25*0.95)
+    }
     /**
      * This function should display text above the shop interface on cost/flavour text for each unit
      * @param {Integer} index The index inside the shop buttons to display text for
      */
-    displayFlavourText(index) {
+    displayFlavourText() {
+        let buttonValue = ["20", "30", "40", "50", "60", "UPGRADE"];
+        for (let i = 0; i < this.shopButtonBack.length; i++) {
+            let priceBox = new Sprite(this.shopButtonBack[i].x, this.shopButtonBack[i].y-this.shopButtonBack[i].d);
+            priceBox.collider = "k";
+            priceBox.draw = () => {
+                fill('#ffe7d6');
+                strokeWeight(2);
+                rect(0, 0, 60, 20);
+                noStroke();
+                fill('black');
+                if (i < this.shopButtonBack.length-1) {
+                    textSize(12);
+                    textAlign(LEFT, CENTER);
+                    text(buttonValue[i], 5, 0);
+                    let icon = mineralImg.get();
+                    icon.resize(15,0);
+                    image(icon, 0-10, 0);
+                } else {
+                    textSize(10);
+                    textAlign(CENTER, CENTER);
+                    text(buttonValue[i], 0, 0);
+                }
+            }
+            priceBox.visible=false;
 
+            this.price.push(priceBox);
+        }
+    }
+
+    setupUpgradeBoard() {
+        this.upgradeBoard = new Sprite();
+        this.upgradeBoard.draw = () => {
+            fill(0, 150);
+            rect(0, 62.5, width*0.8, height*0.5);
+        }
+        this.upgradeBoard.collider = 'n';
+        this.upgradeBoard.visible = false;
     }
 
     checkHover() {
@@ -86,14 +131,24 @@ class shop {
             if (this.shopButtonBack[i].mouse.hovering() || this.shopButtonImages[i].mouse.hovering()) {
                 this.shopButtonBack[i].scale = 1.2;
                 this.shopButtonImages[i].rotationSpeed = 1;
-                if ((this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) && i !== this.shopButtonBack.length-1) {
-                    this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
-                    ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+                this.price[i].visible = true;
+                
+                if (this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) {
+                    if (i < this.shopButtonBack.length-1) {
+                        this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
+                        ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+                    } else {
+                        this.upgradeBoard.visible = true;
+                    }
                 }
             } else {
                 this.shopButtonBack[i].scale = 1;
                 this.shopButtonImages[i].rotationSpeed = 0;
                 this.shopButtonImages[i].rotation = -90;
+                this.price[i].visible = false;
+                if (kb.presses("escape")) {
+                    this.upgradeBoard.visible = false;
+                }
             }
         }
     }

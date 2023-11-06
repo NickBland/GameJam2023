@@ -349,7 +349,7 @@ class userInterface {
         this.#updateGroupButtonStates();
 
         this.shopUI.checkHover();
-
+        this.shopUI.displayShopName();
     }
 
 
