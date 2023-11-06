@@ -2,6 +2,7 @@ class gameData {
     constructor() {
         this.factory = new spriteFactory();
         this.combat = new combatHandler();
+        this.enemy = new enemyBehaviour();
 
         this.asteroids; // ALL asteroids on the map
 

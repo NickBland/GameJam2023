@@ -38,7 +38,7 @@ class playerState {
     }
 
     travel(thisShip) {  //Moves the ship to destination
-        thisShip.moveTo(thisShip.destinationX, thisShip.destinationY, 3);
+        thisShip.moveTo(thisShip.destinationX, thisShip.destinationY, thisShip.fastness);
         thisShip.rotation = thisShip.direction;
     }
 

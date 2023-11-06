@@ -70,6 +70,22 @@ class combatHandler{
     /**
      * Combat movements, Not sure how this'll work but they'll be here
      */
+    determineType(){
+        switch (thisShip.group){
+            case "corsair":
+                this.corsair(thisShip, thisEnemy);
+                break;
+                case "destroyer":
+                this.destroyer(thisShip, thisEnemy);
+                break;
+                case "cruiser":
+                this.cruiser(thisShip, thisEnemy);
+                break;
+                case "battleship":
+                this.battleship(thisShip, thisEnemy);
+                break;
+        }
+    }
 
     corsair(){
 

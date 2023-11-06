@@ -72,30 +72,14 @@ class userInterface {
             button.textSize = 14
             button.text = i + 1
             button.collider = "k";
-            button.overlaps(data.playerShip.ships)
+            button.overlaps(allSprites)
             buttonArray.push(button);
 
         }
         return buttonArray;
     }
 
-    /**
-     * Determines the length of digits, given an integer
-     * @param {int} integer The integer who's digits need to be counted! 
-     */
-    #determingDigitCount(integer) {
-        let count = 0;
-        if (integer >= 1) {
-            ++count; // Preincrement the count before the next step
-        } else {
-            return 1;
-        }
-        while (integer / 10 >= 1) {
-            integer /= 10;
-            ++count; // Preincrement before next while step.
-        }
-        return count;
-    }
+
 
     /**
      * Draws the health of the mothership at the bottom right of the interface
@@ -103,7 +87,6 @@ class userInterface {
     #drawHealth() {
         let initialDigitX = width * 0.9;
         let initialDigitY = this.#groupButtons[2].y;
-        //let digitCount = this.#determingDigitCount(data.playerMothership.health);
         fill("#ffe7d6");
         textFont(myfont)
         textAlign(CENTER, CENTER);
