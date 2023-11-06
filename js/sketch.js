@@ -9,8 +9,8 @@ let health;
 
 let gameState = {
     loading: false,
-    mainMenu: false,
-    game: true,
+    mainMenu: true,
+    game: false,
     endScreen: false,
 }
 
@@ -38,115 +38,23 @@ function drawLoadingScreen() {
 
 // ========================================= MAIN MENU =======================================================
 
-let initialMainMenuScreen = true;
-let tutorialShow = false;
-let creditsShow = false;
-let playButton, tutorialButton, creditsButton;
+let menuScreen;
+let initialMenuState = true;
 
-function adjustMenuButtonStyle(Button) {
-    Button.style("border-radius: 15px");
-    Button.style("background: #d19f5a");
-    Button.style("color: #ffe7d6");
-    Button.style("font-family: myFont");
-    Button.style("font-size: 22px");
-    Button.mouseOver(over)
-    Button.mouseOut(out)
-}
-function over() {
-    this.style("transform: scale(1.2, 1.2)");
-    this.style("background: #8b4049");
-}
-function out() {
-    this.style("transform: none")
-    this.style("background: #d19f5a");
-}
+function drawInitialMenuScreen() {
+    menuScreen = new mainMenu();
 
-function drawInitialMainMenuScreen() {
-    playButton = createButton('Play Game');
-    playButton.mouseClicked(playButtonClicked);
-    playButton.size(0.3 * width, 0.06 * height);
-    playButton.position((width - playButton.size().width) / 2, (0.55) * canvas.h)
-    adjustMenuButtonStyle(playButton);
-
-    tutorialButton = createButton('Tutorial');
-    tutorialButton.size(0.3 * width, 0.06 * height);
-    tutorialButton.position((width - playButton.size().width) / 2, (0.65) * canvas.h)
-    adjustMenuButtonStyle(tutorialButton)
-    tutorialButton.mouseClicked(tutorialButtonClicked);
-
-    creditsButton = createButton('Credits');
-    creditsButton.size(0.3 * width, 0.06 * height);
-    creditsButton.position((width - playButton.size().width) / 2, (0.75) * canvas.h)
-    adjustMenuButtonStyle(creditsButton)
-    creditsButton.mouseClicked(creditsButtonClicked)
-
-    initialMainMenuScreen = false;
-}
-
-function showMenuButton() {
-    playButton.show()
-    tutorialButton.show()
-    creditsButton.show()
-}
-function hideMenuButton() {
-    playButton.hide()
-    tutorialButton.hide()
-    creditsButton.hide()
-}
-
-function playButtonClicked() {
-    hideMenuButton();
-    gameState.mainMenu = false;
-    gameState.game = true;
-}
-function tutorialButtonClicked() {
-    hideMenuButton();
-    tutorialShow = true;
-}
-function creditsButtonClicked() {
-    hideMenuButton()
-    creditsShow = true;
+    initialMenuState = false;
 }
 
 function drawMainMenuScreen() {
-    mainMenuBgImg.resize(0, height);
-    //image(mainMenuBgImg, 0, 0);
-    image(mainMenuBgImg, offset_menuX, 0)
-    image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-    offset_menuX -= 1;
-    if (offset_menuX <= -mainMenuBgImg.width) {
-        offset_menuX = 0;
+    if (initialMenuState) {
+        drawInitialMenuScreen();
     }
-    stroke('#d19f5a')
-    strokeWeight(5)
-    noFill()
-    rect(0.2 * canvas.w, 0.3 * canvas.h, 0.6 * canvas.w, 0.11 * canvas.h, 20);
-    fill('#ffe7d6')
-    stroke('#8b4049')
-    textAlign(CENTER, CENTER)
-    textFont(myfontB, 40)
-    text("Game Title", canvas.w / 2, 0.35 * canvas.h)
-    strokeWeight(1);
-
-    if (initialMainMenuScreen) {
-        drawInitialMainMenuScreen();
-    }
-    if (tutorialShow || creditsShow) {
-        image(mainMenuBgImg, offset_menuX, 0)
-        image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-
-        noStroke();
-        fill(0, 150);
-        rect(width / 20, height / 20, 0.9 * width, 0.9 * height);
-        if (kb.presses("escape")) {
-            tutorialShow = false;
-            creditsShow = false;
-            showMenuButton();
-        }
-    }
+    menuScreen.drawMainMenuScreen();
 }
 
-// ================================================================================================
+// ============================================ GAME ========================================================
 
 let initialGameState = true;
 
@@ -156,8 +64,8 @@ let ui;
 
 let selectionBox;
 
-let cameraX;
-let cameraY;
+let camera;
+
 
 function drawInitialGameState() {
     data = new gameData();
@@ -165,10 +73,11 @@ function drawInitialGameState() {
 
     ui = new userInterface;
 
-    cameraX = 0;
-    cameraY = 0;
+    camera = new customCamera;
+
+    
     for (let i = 0; i < 16; i++) {
-        ui.moveGame(100, 100)
+        camera.moveGame(100, 100)
     }
 
     initialGameState = false;
@@ -282,14 +191,16 @@ function drawGameScreen() {
         ui.miniMap();
     }
 
-    image(gameBgImg, cameraX, cameraY, width * 4, height * 4);
+    gameBgImg.resize(width, height);
+    image(gameBgImg, camera.cameraX, camera.cameraY, width * 4, height * 4);
 
     ui.drawInterface();
     ui.groupSelection(); // Handle user interaction with group selected (keyboard or otherwise)
     ui.clickDrag();
     ui.drawSelectedCircles();
     ui.drawTeamCircles();
-    ui.moveCamera();
+
+    camera.moveCamera();
     ui.miniMapUpdate();
 
     data.fogOfWar();

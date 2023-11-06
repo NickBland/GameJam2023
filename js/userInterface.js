@@ -133,36 +133,6 @@ class userInterface {
             }
             image(health[healthValue], width * (0.84 + 0.03 * i), this.#groupButtons[1].y)
         }
-
-
-        /*imageMode(CENTER);
-        for (let i = digitCount; i > 0; i--) {
-            let digit = numerals[Math.floor((data.playerMothership.health / (10 ** (digitCount - i))) % 10)];
-            image(digit, initialDigitX + (digit.w * i), initialDigitY);
-        }
-        imageMode(CORNER);*/
-
-        // Next, draw a small bar beneath the numbers for added ~~flavour~~
-        /*let mothership1HealthBarX = width * 0.85 - numerals[0].w;
-        let mothership1HealthBarY = this.container.y + numerals[0].h * 3.5;
-        let mothership1HealthBarWidth = numerals[0].w * 4;
-        let mothership1HealthBarHeight = 10;
-        let mothership1HealthPercentage = data.playerMothership.health / 500
-        let mothership1HealthBarFill = mothership1HealthBarWidth * mothership1HealthPercentage; // Calculate % to fill bar
-
-        noStroke();
-        fill("white");
-        rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarWidth, mothership1HealthBarHeight);
-        if (mothership1HealthPercentage > 0.75) {
-            fill("green");
-        } else if (mothership1HealthPercentage > 0.5) {
-            fill("yellow");
-        } else if (mothership1HealthPercentage > 0.25) {
-            fill("orange");
-        } else {
-            fill("red");
-        }
-        rect(mothership1HealthBarX, mothership1HealthBarY, mothership1HealthBarFill, mothership1HealthBarHeight)*/
     }
 
     /**
@@ -171,7 +141,6 @@ class userInterface {
     #drawResources() {
         let initialDigitX = width * 0.75;
         let initialDigitY = this.#groupButtons[2].y;
-        //let digitCount = this.#determingDigitCount(data.playerShip.resources);
         fill("#ffe7d6");
         textAlign(RIGHT, CENTER);
         textSize(18);
@@ -184,13 +153,6 @@ class userInterface {
         imageMode(CENTER);
         image(mineralImg, initialDigitX * 0.85, initialDigitY)
         image(specialmineralImg, initialDigitX * 0.85, this.#groupButtons[1].y)
-
-        /*imageMode(CENTER);
-        for (let i = 0; i < digitCount; i++) {
-            let digit = numerals[Math.floor((data.playerShip.resources / (10 ** (i))) % 10)];
-            image(digit, initialDigitX - digit.w * i, initialDigitY);
-        }
-        imageMode(CORNER);*/
     }
 
     /**
@@ -392,50 +354,10 @@ class userInterface {
         rect(this.container.x, this.container.y, this.container.w, this.container.h);
         noFill();
 
-        // In the future, the camera.off() function should be invoked here, as these elements are to be STATIC at the bottom of the screen.
-
         this.#drawHealth();
         this.#drawResources();
         this.#updateGroupButtonStates();
 
-        // In addition, the camera.on() function should be invoked here, after all static elements have been drawn on screen.
-
-    }
-
-    /**
-     * Handles the camera Movement
-     */
-    moveCamera() {
-        if ((kb.pressing("arrowUp") || mouse.y < 20) && cameraY < 1600) {
-            this.moveGame(0, 5);
-        }
-        if ((kb.pressing("arrowDown") || mouse.y > height - 20) && cameraY > -800) {
-            this.moveGame(0, -5);
-        }
-        if ((kb.pressing("arrowLeft") || mouse.x < 20) && cameraX < 1600) {
-            this.moveGame(5, 0);
-        }
-        if ((kb.pressing("arrowRight") || mouse.x > width - 20) && cameraX > -800) {
-            this.moveGame(-5, 0);
-        }
-    }
-
-    /**
-     * Handles the sprite's positioning
-     * @param {int} x //X movement
-     * @param {int} y //Y movement
-     */
-    moveGame(x, y) {
-        cameraX += x;
-        cameraY += y;
-        for (let sprite of data.factory.gameSprites) {
-            sprite.x += x;
-            sprite.y += y;
-            if (sprite.group) {
-                sprite.destinationX += x;
-                sprite.destinationY += y;
-            }
-        }
     }
 
     //Initialises the miniMap
