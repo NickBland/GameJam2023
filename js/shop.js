@@ -36,7 +36,7 @@ class shop {
             button.strokeWeight = 2
             button.stroke = 'black'
             button.collider = "k";
-            button.overlaps(data.playerShip.ships)
+            button.overlaps(allSprites);
             this.shopButtonBack.push(button);
 
             let buttonImage = new Sprite();
@@ -46,7 +46,7 @@ class shop {
             requiredAssets[5].resize(25, 0);
             buttonImage.img = requiredAssets[i];
             buttonImage.collider = "k";
-            buttonImage.overlaps(data.playerShip.ships);
+            buttonImage.overlaps(allSprites);
             this.shopButtonImages.push(buttonImage);
         }
     }
