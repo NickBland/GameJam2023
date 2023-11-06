@@ -22,6 +22,8 @@ class userInterface {
 
         this.miniMapSprites = new Group();
         this.miniMapSprites.dots = new Group();
+
+        this.shopUI = new shop(this.container);
     }
 
     setupSelectionBox() {
@@ -40,10 +42,10 @@ class userInterface {
 
     /**
      * Function creates the sprites needed for the group selection buttons at the bottom of the screen
-     * @returns an array of the sprites correlating to the buttons at the bottom of the screen
+     * @returns a group containing all of the sprites correlating to the buttons at the bottom of the screen
      */
     #setupGroupSelector() {
-        let buttonArray = []
+        let buttonArray = new Group();
 
         let initialSelectorPositionWidth = 25;
         let initialSelectorPositionHeight = initialSelectorPositionWidth;
@@ -345,6 +347,8 @@ class userInterface {
         this.#drawHealth();
         this.#drawResources();
         this.#updateGroupButtonStates();
+
+        this.shopUI.checkHover();
 
     }
 
