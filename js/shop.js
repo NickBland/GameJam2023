@@ -50,8 +50,12 @@ class shop {
             this.shopButtonImages.push(buttonImage);
         }
     }
-    
-    drawShopButtons() {
+
+    /**
+     * TODO: This function should display text above the shop interface on cost/flavour text for each unit
+     * @param {Integer} index The index inside the shop buttons to display text for
+     */
+    displayFlavourText(index) {
 
     }
 
@@ -72,14 +76,14 @@ class shop {
             // TODO: add implementation
         }
 
-        for (let i = 0; i < this.shopButtons.length; i++) {
-            if (this.shopButtons[i].mouse.hovering()) {
+        for (let i = 0; i < this.shopButtonBack.length; i++) {
+            if (this.shopButtonBack[i].mouse.hovering() || this.shopButtonImages[i].mouse.hovering()) {
                 this.shopButtonBack[i].scale = 1.2;
-                this.shopbuttonImages[i].rotationSpeed = 1;
+                this.shopButtonImages[i].rotationSpeed = 1;
             } else {
                 this.shopButtonBack[i].scale = 1;
-                this.shopbuttonImages[i].rotationSpeed = 0;
-                this.shopbuttonImages[i].rotation = -90;
+                this.shopButtonImages[i].rotationSpeed = 0;
+                this.shopButtonImages[i].rotation = -90;
             }
         }
     }
