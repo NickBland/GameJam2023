@@ -201,7 +201,7 @@ function drawGameScreen() {
     ui.drawTeamCircles();
 
     camera.moveCamera();
-    ui.miniMapUpdate();
+    ui.miniMapUpdate(camera);
 
     data.fogOfWar();
 

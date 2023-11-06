@@ -402,16 +402,16 @@ class userInterface {
     }
 
     //Updates the minimap each draw frame
-    miniMapUpdate() {
-        let fovLerpX = lerp(764, 636, (cameraX + 800) / 2400);
-        let fovLerpY = lerp(164, 36, (cameraY + 800) / 2400);
+    miniMapUpdate(cameraObject) {
+        let fovLerpX = lerp(764, 636, (cameraObject.cameraX + 800) / 2400);
+        let fovLerpY = lerp(164, 36, (cameraObject.cameraY + 800) / 2400);
         this.miniMapSprites[2].x = fovLerpX;
         this.miniMapSprites[2].y = fovLerpY;
         for (let i = 0; i < this.miniMapSprites.dots.length; i++) {
             let thisDot = this.miniMapSprites.dots[i];
             let thisShip = data.playerShip.ships[i];
-            let dotLerpX = lerp(620, 780, (thisShip.x - cameraX + 1600) / 3200);
-            let dotLerpY = lerp(20, 180, (thisShip.y - cameraY + 1600) / 3200);
+            let dotLerpX = lerp(620, 780, (thisShip.x - cameraObject.cameraX + 1600) / 3200);
+            let dotLerpY = lerp(20, 180, (thisShip.y - cameraObject.cameraY + 1600) / 3200);
 
             thisDot.x = dotLerpX;
             thisDot.y = dotLerpY;
@@ -433,10 +433,10 @@ class userInterface {
             if (moveLerpY < -800) {
                 moveLerpY = -800;
             }
-            let x = -cameraX+moveLerpX;
-            let y = -cameraY+moveLerpY;
+            let x = -cameraObject.cameraX+moveLerpX;
+            let y = -cameraObject.cameraY+moveLerpY;
 
-            this.moveGame(x, y)
+            cameraObject.moveGame(x, y)
         }
 
         if (this.miniMapSprites[1].mouse.pressing("right")) {
@@ -445,8 +445,8 @@ class userInterface {
             for (let i = 0; i < data.playerShip.ships.length; i++) {
                 let thisShip = data.playerShip.ships[i];
                 if (thisShip.selected == true) {
-                    let x = -((-400 - cameraX)+(moveLerpX)) ;
-                    let y = -((-400 - cameraY)+(moveLerpY));
+                    let x = -((-400 - cameraObject.cameraX)+(moveLerpX)) ;
+                    let y = -((-400 - cameraObject.cameraY)+(moveLerpY));
 
                     if (thisShip.moveTimer === 0) {
                         thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / 3;
