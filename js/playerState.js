@@ -29,10 +29,10 @@ class playerState {
 
     movementLogic(thisShip) {
         if (thisShip.moveTimer === 0) {
-            thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, mouse.x, mouse.y)) / 3;
+            thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, mouse.x, mouse.y)) / thisShip.fastness;
             this.setDestination(mouse.x, mouse.y, thisShip);
         } else {
-            thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, mouse.x, mouse.y)) / 3;
+            thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, mouse.x, mouse.y)) / thisShip.fastness;
             this.setDestination(mouse.x, mouse.y, thisShip);
         }
     }

@@ -462,10 +462,10 @@ class userInterface {
                     let y = -((-400 - cameraObject.cameraY)+(moveLerpY));
 
                     if (thisShip.moveTimer === 0) {
-                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / 3;
+                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / thisShip.fastness;
                         data.playerShip.setDestination(x, y, thisShip);
                     } else {
-                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / 3;
+                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / thisShip.fastness;
                         data.playerShip.setDestination(x, y, thisShip);
                     }
                 }
