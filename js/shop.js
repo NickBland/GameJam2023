@@ -71,6 +71,7 @@ class shop {
         for (let i = 0; i < this.shopButtonBack.length; i++) {
             let priceBox = new Sprite(this.shopButtonBack[i].x, this.shopButtonBack[i].y-this.shopButtonBack[i].d);
             priceBox.collider = "k";
+            priceBox.overlaps(allSprites);
             priceBox.draw = () => {
                 fill('#ffe7d6');
                 strokeWeight(2);
