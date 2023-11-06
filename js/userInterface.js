@@ -402,6 +402,28 @@ class userInterface {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             this.miniMapSprites.dots.push(this.createMiniMapSprite());
         }
+
+        miniMap.update = () => {
+            stroke(255);
+            strokeWeight(0.75);
+            drawingContext.setLineDash([2, 10]); // Length of line, Spacing
+            drawingContext.lineDashOffset = 5;
+
+            for (let i = 0; i < data.playerShip.ships.length; i++) {
+                let thisShip = data.playerShip.ships[i];
+                let thisDot = this.miniMapSprites.dots[i];
+                if (thisShip.selected == true && thisShip.moveTimer !== 0) {
+                    line(thisDot.x, thisDot.y, lerp(620, 780, (thisShip.destinationX - camera.cameraX + 1600) / 3200), lerp(20, 180, (thisShip.destinationY - camera.cameraY + 1600) / 3200));
+                }
+            }
+
+            // Reset the styling back to nothing.
+            drawingContext.setLineDash([]);
+            drawingContext.lineDashOffset = 0;
+            noFill();
+            stroke(0);
+            strokeWeight(1);
+        }
     }
 
     //Adds a new sprite to the miniMap, this should correspond to the appropriate ship
