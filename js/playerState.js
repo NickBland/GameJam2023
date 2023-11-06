@@ -62,7 +62,7 @@ class playerState {
         if (frameCount % 10 == 0) {
             thisShip.resources++;
             thisAsteroid.resources--;
-        } if (frameCount % 120 == 0 && random(0, 1) <= 0.2) {
+        } if (frameCount % 70 == 0 && random(0, 1) <= 0.2) {
             thisShip.specialResources++;
         }
         if (thisAsteroid.resources <= 0) {
@@ -73,6 +73,9 @@ class playerState {
         if (thisShip.resources >= 10) {
             this.setDestination(this.ships[0].x, this.ships[0].y, thisShip);
             thisShip.moveTimer = dist(this.ships[0].x, this.ships[0].y, thisShip.x, thisShip.y);
+        }
+        if (thisShip.specialResources >= 1) {
+            ui.resourceNoti();
         }
     }
 

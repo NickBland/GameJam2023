@@ -4,13 +4,13 @@ let myfont, myfontB;
 let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
-let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
+let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg, harvestImg;
 let health;
 
 let gameState = {
     loading: false,
-    mainMenu: true,
-    game: false,
+    mainMenu: false,
+    game: true,
     endScreen: false,
 }
 
@@ -244,7 +244,9 @@ function preload() {
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
     specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
+    harvestImg = loadImage('assets/images/myassets/asteroids/harvestIcon.png');
 
+    //Health status img
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
     // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name..
