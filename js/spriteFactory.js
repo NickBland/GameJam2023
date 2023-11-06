@@ -30,6 +30,7 @@ class spriteFactory {
         mothership.health = 500;
         mothership.collider = "s";
         mothership.damage = 10;
+        mothership.fastness = 1;
         
         motherShipImg.resize(mothership.w + 20, mothership.h + 20);
         mothership.img = motherShipImg;
@@ -48,6 +49,7 @@ class spriteFactory {
         drone.damage = 10;
         drone.range = 100;
         drone.weaponType = "standard";
+        drone.fastness = 8;
 
         drone.w = 25;
         drone.h = 25;
@@ -64,6 +66,7 @@ class spriteFactory {
         corsair.damage = 20;
         corsair.range = 150;
         corsair.weaponType = "standard";
+        corsair.fastness = 7;
 
         corsair.w = 25;
         corsair.h = 25;
@@ -80,6 +83,7 @@ class spriteFactory {
         destroyer.damage = 25;
         destroyer.range = 175;
         destroyer.weaponType = "shotgun";
+        destroyer.fastness = 5;
 
         destroyer.w = 30;
         destroyer.h = 30;
@@ -96,6 +100,7 @@ class spriteFactory {
         cruiser.damage = 35;
         cruiser.range = 200;
         cruiser.weaponType = "heavy";
+        cruiser.fastness = 4;
 
         cruiser.w = 30;
         cruiser.h = 30;
@@ -113,6 +118,7 @@ class spriteFactory {
         battleship.damage = 75;
         battleship.range = 250;
         battleship.weaponType = "rapid";
+        battleship.fastness = 3;
 
         battleship.w = 45;
         battleship.h = 45;

@@ -209,6 +209,10 @@ function drawGameScreen() {
     shipAction();
     shipTarget();
 
+    data.enemy.collect();
+    data.enemy.move();
+    data.enemy.explore();
+
     data.combatHandling();
 
     //Respawning asteroid mechanics

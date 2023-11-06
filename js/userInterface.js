@@ -22,6 +22,8 @@ class userInterface {
 
         this.miniMapSprites = new Group();
         this.miniMapSprites.dots = new Group();
+
+        this.shopUI = new shop(this.container);
     }
 
     setupSelectionBox() {
@@ -40,10 +42,10 @@ class userInterface {
 
     /**
      * Function creates the sprites needed for the group selection buttons at the bottom of the screen
-     * @returns an array of the sprites correlating to the buttons at the bottom of the screen
+     * @returns a group containing all of the sprites correlating to the buttons at the bottom of the screen
      */
     #setupGroupSelector() {
-        let buttonArray = []
+        let buttonArray = new Group();
 
         let initialSelectorPositionWidth = 25;
         let initialSelectorPositionHeight = initialSelectorPositionWidth;
@@ -72,30 +74,14 @@ class userInterface {
             button.textSize = 14
             button.text = i + 1
             button.collider = "k";
-            button.overlaps(data.playerShip.ships)
+            button.overlaps(allSprites)
             buttonArray.push(button);
 
         }
         return buttonArray;
     }
 
-    /**
-     * Determines the length of digits, given an integer
-     * @param {int} integer The integer who's digits need to be counted! 
-     */
-    #determingDigitCount(integer) {
-        let count = 0;
-        if (integer >= 1) {
-            ++count; // Preincrement the count before the next step
-        } else {
-            return 1;
-        }
-        while (integer / 10 >= 1) {
-            integer /= 10;
-            ++count; // Preincrement before next while step.
-        }
-        return count;
-    }
+
 
     /**
      * Draws the health of the mothership at the bottom right of the interface
@@ -103,7 +89,6 @@ class userInterface {
     #drawHealth() {
         let initialDigitX = width * 0.9;
         let initialDigitY = this.#groupButtons[2].y;
-        //let digitCount = this.#determingDigitCount(data.playerMothership.health);
         fill("#ffe7d6");
         textFont(myfont)
         textAlign(CENTER, CENTER);
@@ -362,6 +347,8 @@ class userInterface {
         this.#drawHealth();
         this.#drawResources();
         this.#updateGroupButtonStates();
+
+        this.shopUI.checkHover();
 
     }
 
