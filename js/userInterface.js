@@ -241,11 +241,14 @@ class userInterface {
         //Draws circles around all non-mothership ships + Travel lines
         for (let i = 1; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
+            let miniMapDot = this.miniMapSprites.dots[i];
 
             if (thisShip.selected) {
                 fill(255, 128); // Set fill to white with a 50% opacity
                 noStroke(); // And of course, no stroke
                 circle(thisShip.x, thisShip.y, thisShip.h * 1.25); // Draw a translucent circle around selected ship
+
+                miniMapDot.color = "white";
 
                 if (thisShip.moveTimer !== 0) {
                     // Now draw a dotted line for their path
@@ -262,6 +265,8 @@ class userInterface {
                 drawingContext.lineDashOffset = 0;
                 noFill();
                 stroke(0);
+            } else {
+                miniMapDot.color = "lime";
             }
         }
         //Draws the circle around the mothership
