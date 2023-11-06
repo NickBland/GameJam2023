@@ -62,7 +62,7 @@ class playerState {
         if (frameCount % 10 == 0) {
             thisShip.resources++;
             thisAsteroid.resources--;
-        } if (frameCount % 120 == 0 && random(0, 1) <= 0.2) {
+        } if (frameCount % 70 == 0 && random(0, 1) <= 0.1) {
             thisShip.specialResources++;
         }
         if (thisAsteroid.resources <= 0) {

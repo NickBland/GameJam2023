@@ -96,7 +96,7 @@ class userInterface {
         text("Health", initialDigitX, initialDigitY * 0.95);
         textSize(16)
         textFont(myfontB)
-        fill("#8c2d38")
+        fill("#8ea091")
         stroke('black')
         text(data.playerMothership.health, initialDigitX, initialDigitY)
 
@@ -267,14 +267,14 @@ class userInterface {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
             noFill();
-            stroke("green");
+            stroke("#89a257");
             strokeWeight(3);
             circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
         }
         for (let i = 0; i < data.enemyShip.ships.length; i++) {
             let thisShip = data.enemyShip.ships[i];
             noFill();
-            stroke("red");
+            stroke("#941434");
             strokeWeight(3);
             if (thisShip.visible) {
                 circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
@@ -352,12 +352,33 @@ class userInterface {
 
     }
 
+
+    ///Notification for special resource
+    resourceNoti() {
+        let timer = 60;
+        timer --;
+        if (timer >= 0) {
+            fill('#ffe7d6')
+            rect(20, 20, 250, 50, 5)
+
+            image(harvestImg, 35, 35)
+            textFont("myFont", 14)
+            textAlign(LEFT, CENTER)
+            fill('#d19f5a')
+            text("MINERALS", 50, 35)
+            noStroke()
+            fill('black')
+            text("Special Resource Found!!!", 30, 55)
+        }
+    }
+
     //Initialises the miniMap
     miniMap() {
         let miniMapBorder = new Sprite();
         miniMapBorder.collider = "n";
         miniMapBorder.color = "#8b4049";
-        miniMapBorder.x = width - 100
+        miniMapBorder.stroke = 'black';
+        miniMapBorder.x = width - 100;
         miniMapBorder.y = 100;
         miniMapBorder.w = 180;
         miniMapBorder.h = 180;
@@ -387,8 +408,8 @@ class userInterface {
     createMiniMapSprite() {
         let miniShip = new Sprite();
         miniShip.collider = "n";
-        miniShip.d = 10;
-        miniShip.noStroke;
+        miniShip.d = 6;
+        miniShip.strokeWeight = 0;
         miniShip.color = "lime";
         return (miniShip);
     }

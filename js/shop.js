@@ -22,20 +22,20 @@ class shop {
 
         let requiredAssets = [droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get(), mineralImg.get()];
 
-        let initialShopPositionWidth = 30;
+        let initialShopPositionWidth = 32;
         let initialShopPositionHeight = initialShopPositionWidth * 2;
-        let initialShopPositionX = initialShopPositionWidth * 7.5;
+        let initialShopPositionX = width*0.275;
         let initialShopPositionY = this.container.y + initialShopPositionHeight * 1.25;
 
         for (let i = 0; i < 6; i++) {
             let button = new Sprite();
             button.x = initialShopPositionX + i * (initialShopPositionWidth * 1.5);
             button.y = initialShopPositionY;
-            button.w = initialShopPositionWidth;
-            button.h = initialShopPositionHeight;
-            button.color = '#d19f5a';
-            button.strokeWeight = 2;
-            button.stroke = 'black';
+            button.d = initialShopPositionWidth;
+            //button.h = initialShopPositionHeight;
+            button.color = '#8ea091'
+            button.strokeWeight = 2
+            button.stroke = 'black'
             button.collider = "k";
             button.overlaps(allSprites);
             this.shopButtonBack.push(button);
@@ -43,8 +43,8 @@ class shop {
             let buttonImage = new Sprite();
             buttonImage.x = initialShopPositionX + i * (initialShopPositionWidth * 1.5);
             buttonImage.y = initialShopPositionY;
-            buttonImage.rotation = -90;
-            requiredAssets[i].resize(initialShopPositionWidth, initialShopPositionWidth);
+            requiredAssets[i].resize(30, 0);
+            requiredAssets[5].resize(25, 0);
             buttonImage.img = requiredAssets[i];
             buttonImage.collider = "k";
             buttonImage.overlaps(allSprites);
