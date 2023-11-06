@@ -75,7 +75,7 @@ function drawInitialGameState() {
 
     camera = new customCamera;
 
-    
+
     for (let i = 0; i < 16; i++) {
         camera.moveGame(100, 100)
     }
@@ -118,7 +118,7 @@ function shipMovement() {
     }
 
     //VERY TEMPORARY, JUST BEFORE THE ENEMY GETS ITS AI
-    for(let i = 0; i<data.enemyShip.ships.length; i++){
+    for (let i = 0; i < data.enemyShip.ships.length; i++) {
         data.enemyShip.ships[i].speed = 0;
     }
 }
@@ -143,7 +143,7 @@ function shipAction() {
         //Checks if a drone can harvest resources
         for (let i = 0; i < data.asteroids.length; i++) {
             let thisAsteroid = data.asteroids[i];
-            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources<10) {
+            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources < 10) {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }

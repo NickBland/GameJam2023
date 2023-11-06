@@ -8,6 +8,7 @@ class shop {
         this.shopButtonBack;
         this.shopButtonImages;
 
+        this.gameData = data;
 
         this.setupShopButtons();
     }
@@ -19,7 +20,7 @@ class shop {
         this.shopButtonBack = new this.shopButtons.Group();
         this.shopButtonImages = new this.shopButtons.Group();
 
-        let requiredAssets = [droneShipImg, corsairShipImg, destroyerShipImg, cruiserShipImg, battleShipImg, mineralImg];
+        let requiredAssets = [droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get(), mineralImg.get()];
 
         let initialShopPositionWidth = 30;
         let initialShopPositionHeight = initialShopPositionWidth * 2;
@@ -52,7 +53,7 @@ class shop {
     }
 
     /**
-     * TODO: This function should display text above the shop interface on cost/flavour text for each unit
+     * This function should display text above the shop interface on cost/flavour text for each unit
      * @param {Integer} index The index inside the shop buttons to display text for
      */
     displayFlavourText(index) {
@@ -61,25 +62,34 @@ class shop {
 
     checkHover() {
         if (kb.presses("a")) {
-            // TODO: add implementation
+            this.gameData.createUnit("drone", this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
         }
         if (kb.presses("s")) {
-            // TODO: add implementation
+            this.gameData.createUnit("corsair", this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
         }
         if (kb.presses("d")) {
-            // TODO: add implementation
+            this.gameData.createUnit("destroyer", this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
         }
         if (kb.presses("f")) {
-            // TODO: add implementation
+            this.gameData.createUnit("cruiser", this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
         }
         if (kb.presses("g")) {
-            // TODO: add implementation
+            this.gameData.createUnit("battleship", this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
         }
 
         for (let i = 0; i < this.shopButtonBack.length; i++) {
             if (this.shopButtonBack[i].mouse.hovering() || this.shopButtonImages[i].mouse.hovering()) {
                 this.shopButtonBack[i].scale = 1.2;
                 this.shopButtonImages[i].rotationSpeed = 1;
+                if ((this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) && i !== this.shopButtonBack.length-1) {
+                    this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
+                    ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+                }
             } else {
                 this.shopButtonBack[i].scale = 1;
                 this.shopButtonImages[i].rotationSpeed = 0;
