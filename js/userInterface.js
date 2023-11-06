@@ -8,12 +8,15 @@ class userInterface {
         this.container = {
             w: width,
             h: 125,
-            x: 0,
+            x: width/2,
             y: height - 125,
         }
 
         this.groupTypes = ["drone", "corsair", "destroyer", "cruiser", "battleship", "none"];
         this.selectedGroup = this.groupTypes.indexOf("none"); // Ensure to set starting selection as none (was null before user clicked anything previously)
+
+        this.UIBar;
+        this.setupUIBar();
 
         this.#groupButtons = this.#setupGroupSelector();
 
@@ -26,9 +29,19 @@ class userInterface {
         this.shopUI = new shop(this.container);
     }
 
+    setupUIBar() {
+        this.UIBar = new Sprite(this.container.x, this.container.y + this.container.h/2, this.container.w, this.container.h);
+        this.UIBar.color = '#787878'
+        this.UIBar.stroke = 'black'
+        this.UIBar.strokeWeight = 2
+        this.UIBar.color.setAlpha(150);
+        this.UIBar.collider = 'n';
+        this.UIBar.overlaps(allSprites);
+    }
+
     setupSelectionBox() {
         this.selectionBox = new Sprite();
-        this.selectionBox.colour = "white";
+        this.selectionBox.color = "white";
         this.selectionBox.color.setAlpha(30); // Reduce alpha to something smaller so you can see through it
         this.selectionBox.stroke = "black";
         this.selectionBox.strokeWeight = 3;
@@ -325,13 +338,7 @@ class userInterface {
      * Handles drawing the user interface on to the screen.
      */
     drawInterface() {
-        fill(120, 120, 120, 150);
-        rect(this.container.x, this.container.y, this.container.w, this.container.h);
-        noFill();
-
-        
         this.#updateGroupButtonStates();
-
         this.shopUI.checkHover();
     }
 
@@ -359,21 +366,23 @@ class userInterface {
 
     ///Notification for special resource
     resourceNoti() {
-        let timer = 60;
-        timer --;
-        if (timer >= 0) {
-            fill('#ffe7d6')
-            rect(20, 20, 250, 50, 5)
+        let specialResourceNoti = new Sprite();
+        specialResourceNoti.collider = 'n';
+        specialResourceNoti.draw = () => {
+            strokeWeight(2);
+            fill('#ffe7d6');
+            rect(-width/2+145, -height/2+45, 250, 50, 5);
 
-            image(harvestImg, 35, 35)
-            textFont("myFont", 14)
-            textAlign(LEFT, CENTER)
-            fill('#d19f5a')
-            text("MINERALS", 50, 35)
-            noStroke()
-            fill('black')
-            text("Special Resource Found!!!", 30, 55)
+            image(harvestImg, -width/2+35, -height/2+35);
+            textFont("myFont", 14);
+            textAlign(LEFT, CENTER);
+            fill('#d19f5a');
+            text("MINERALS", -width/2 + 50, -height/2 + 35);
+            noStroke();
+            fill('black');
+            text("Special Resource Found!!!", -width/2 + 30, -height/2 + 55);
         }
+        specialResourceNoti.life = 45;  
     }
 
     //Initialises the miniMap

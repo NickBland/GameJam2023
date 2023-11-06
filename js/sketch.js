@@ -5,7 +5,7 @@ let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
-let harvestImg, upgradeImg;
+let harvestImg, upgradeImg, purchaseImg;
 let health;
 
 let gameState = {
@@ -146,9 +146,6 @@ function shipAction() {
             let thisAsteroid = data.asteroids[i];
             if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources < 10) {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
-                if (thisShip.specialResources >= 1) {
-                    ui.resourceNoti()
-                }
             }
         }
 
@@ -157,6 +154,10 @@ function shipAction() {
             if (dist(thisShip.x, thisShip.y, data.playerMothership.x, data.playerMothership.y) < 65) {
                 data.playerShip.resources += thisShip.resources;
                 data.playerShip.specialResources += thisShip.specialResources;
+                //Resource notification when receive special resources
+                if (thisShip.specialResources == 1) {
+                    ui.resourceNoti();
+                }
                 thisShip.resources = 0;
                 thisShip.specialResources = 0;
                 if (thisShip.target != null) {
@@ -256,7 +257,8 @@ function preload() {
 
     //Shop UI
     harvestImg = loadImage('assets/images/myassets/shop/harvest.png');
-    upgradeImg = loadImage('assets/images/myassets/shop/upgrade.png')
+    upgradeImg = loadImage('assets/images/myassets/shop/upgrade.png');
+    purchaseImg = loadImage('assets/images/myassets/shop/purchase.png');
 
     //Health status img
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);

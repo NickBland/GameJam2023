@@ -18,6 +18,8 @@ class shop {
         this.upgradeBoard;
         this.setupUpgradeBoard();
 
+        this.buttonValue = [20, 30, 40, 50, 60, "UPGRADE"];
+
     }
     
     /**
@@ -66,7 +68,6 @@ class shop {
      * @param {Integer} index The index inside the shop buttons to display text for
      */
     displayFlavourText() {
-        let buttonValue = ["20", "30", "40", "50", "60", "UPGRADE"];
         for (let i = 0; i < this.shopButtonBack.length; i++) {
             let priceBox = new Sprite(this.shopButtonBack[i].x, this.shopButtonBack[i].y-this.shopButtonBack[i].d);
             priceBox.collider = "k";
@@ -79,14 +80,14 @@ class shop {
                 if (i < this.shopButtonBack.length-1) {
                     textSize(12);
                     textAlign(LEFT, CENTER);
-                    text(buttonValue[i], 5, 0);
+                    text(this.buttonValue[i], 5, 0);
                     let icon = mineralImg.get();
                     icon.resize(15,0);
                     image(icon, 0-10, 0);
                 } else {
                     textSize(10);
                     textAlign(CENTER, CENTER);
-                    text(buttonValue[i], 0, 0);
+                    text(this.buttonValue[i], 0, 0);
                 }
             }
             priceBox.visible=false;
@@ -103,6 +104,26 @@ class shop {
         }
         this.upgradeBoard.collider = 'n';
         this.upgradeBoard.visible = false;
+    }
+
+    setupNotEnoughNoti() {
+        let notEnoughNoti = new Sprite();
+        notEnoughNoti.collider = 'n'
+        notEnoughNoti.draw = () => {
+            strokeWeight(2);
+            fill('#8b4049');
+            rect(-width/2+145, -height/2+45, 250, 50, 5);
+
+            image(purchaseImg, -width/2+35, -height/2+35);
+            textFont("myFont", 14);
+            textAlign(LEFT, CENTER);
+            fill('#d19f5a');
+            text("Purchase Failed", -width/2 + 50, -height/2 + 35);
+            noStroke();
+            fill('black');
+            text("Not enough resources", -width/2 + 30, -height/2 + 55);
+        }
+        notEnoughNoti.life = 45;  
     }
 
     checkHover() {
@@ -135,8 +156,13 @@ class shop {
                 
                 if (this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) {
                     if (i < this.shopButtonBack.length-1) {
-                        this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
-                        ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+                        if (data.playerShip.resources >= this.buttonValue[i]) {
+                            this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
+                            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+                            data.playerShip.resources -= this.buttonValue[i]
+                        } else if (data.playerShip.resources < this.buttonValue[i]){
+                            this.setupNotEnoughNoti();
+                        } 
                     } else {
                         this.upgradeBoard.visible = true;
                     }
