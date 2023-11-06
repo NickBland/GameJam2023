@@ -32,11 +32,11 @@ class shop {
             button.y = initialShopPositionY;
             button.w = initialShopPositionWidth;
             button.h = initialShopPositionHeight;
-            button.color = '#d19f5a'
-            button.strokeWeight = 2
-            button.stroke = 'black'
+            button.color = '#d19f5a';
+            button.strokeWeight = 2;
+            button.stroke = 'black';
             button.collider = "k";
-            button.overlaps(data.playerShip.ships)
+            button.overlaps(allSprites);
             this.shopButtonBack.push(button);
 
             let buttonImage = new Sprite();
@@ -46,7 +46,7 @@ class shop {
             requiredAssets[i].resize(initialShopPositionWidth, initialShopPositionWidth);
             buttonImage.img = requiredAssets[i];
             buttonImage.collider = "k";
-            buttonImage.overlaps(data.playerShip.ships);
+            buttonImage.overlaps(allSprites);
             this.shopButtonImages.push(buttonImage);
         }
     }
