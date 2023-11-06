@@ -251,7 +251,7 @@ class userInterface {
         }
 
         // Now handle the mouse!
-        if (mouse.presses("left")) { // DEFAULT BEHAVIOUR
+        if (mouse.presses("left")&& this.miniMapSprites[1].mouse.presses() == false) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
             this.updateSelection();
         }
@@ -324,7 +324,7 @@ class userInterface {
             noFill();
             stroke("red");
             strokeWeight(3);
-            if(thisShip.visible){
+            if (thisShip.visible) {
                 circle(thisShip.x, thisShip.y, thisShip.h * 1.25);
             }
         }
@@ -337,7 +337,7 @@ class userInterface {
      * Defines usage of the click-to-drag selection mechanism
      */
     clickDrag() {
-        if (mouse.pressing()) {
+        if (mouse.pressing() && this.miniMapSprites[1].mouse.pressing() == false) {
             if (mouseX > this.selectionBoxX) {
                 this.selectionBox.w = (mouseX - this.selectionBoxX) + 1;
                 this.selectionBox.x = (this.selectionBoxX + mouseX) / 2;
@@ -406,7 +406,6 @@ class userInterface {
      * Handles the camera Movement
      */
     moveCamera() {
-
         if ((kb.pressing("arrowUp") || mouse.y < 20) && cameraY < 1600) {
             this.moveGame(0, 5);
         }
@@ -440,47 +439,102 @@ class userInterface {
     }
 
     //Initialises the miniMap
-    miniMap(){
+    miniMap() {
         let miniMapBorder = new Sprite();
         miniMapBorder.collider = "n";
         miniMapBorder.color = "#8b4049";
-        miniMapBorder.x=width-100
+        miniMapBorder.x = width - 100
         miniMapBorder.y = 100;
         miniMapBorder.w = 180;
         miniMapBorder.h = 180;
 
         let miniMap = new Sprite();
-        miniMap.collider = "n";
-        miniMap.img= gameBgImg;
+        miniMap.collider = "s";
+        miniMap.overlaps(allSprites);
+        miniMap.img = gameBgImg;
         miniMap.scale = 0.2;
-        miniMap.x = width-100;
+        miniMap.x = width - 100;
         miniMap.y = 100;
 
-        for(let i = 0; i<data.playerShip.ships.length; i++){
+        let miniMapFov = new Sprite();
+        miniMapFov.collider = "n";
+        miniMapFov.img = miniFOV;
+
+        this.miniMapSprites.push(miniMapBorder);
+        this.miniMapSprites.push(miniMap);
+        this.miniMapSprites.push(miniMapFov);
+
+        for (let i = 0; i < data.playerShip.ships.length; i++) {
             this.miniMapSprites.dots.push(this.createMiniMapSprite());
         }
     }
 
     //Adds a new sprite to the miniMap, this should correspond to the appropriate ship
-    createMiniMapSprite(){
+    createMiniMapSprite() {
         let miniShip = new Sprite();
         miniShip.collider = "n";
         miniShip.d = 10;
         miniShip.noStroke;
         miniShip.color = "lime";
-        return(miniShip);
+        return (miniShip);
     }
 
     //Updates the minimap each draw frame
-    miniMapUpdate(){
-        for(let i = 0; i<this.miniMapSprites.dots.length; i++){
+    miniMapUpdate() {
+        let fovLerpX = lerp(764, 636, (cameraX + 800) / 2400);
+        let fovLerpY = lerp(164, 36, (cameraY + 800) / 2400);
+        this.miniMapSprites[2].x = fovLerpX;
+        this.miniMapSprites[2].y = fovLerpY;
+        for (let i = 0; i < this.miniMapSprites.dots.length; i++) {
             let thisDot = this.miniMapSprites.dots[i];
             let thisShip = data.playerShip.ships[i];
-            let leperX = lerp(620, 780, (thisShip.x-cameraX+1600)/3200);
-            let leperY = lerp(20, 180, (thisShip.y-cameraY+1600)/3200);
+            let dotLerpX = lerp(620, 780, (thisShip.x - cameraX + 1600) / 3200);
+            let dotLerpY = lerp(20, 180, (thisShip.y - cameraY + 1600) / 3200);
 
-            thisDot.x = leperX;
-            thisDot.y = leperY;
+            thisDot.x = dotLerpX;
+            thisDot.y = dotLerpY;
+        }
+
+        if (this.miniMapSprites[1].mouse.pressing()) {
+            let moveLerpX = lerp(1600, -800, (mouse.x - 636) / 128);
+            let moveLerpY = lerp(1600, -800, (mouse.y - 36) / 128);
+
+            if (moveLerpX > 1600) {
+                moveLerpX = 1600;
+            }
+            if (moveLerpX < -800) {
+                moveLerpX = -800;
+            }
+            if (moveLerpY > 1600) {
+                moveLerpY = 1600;
+            }
+            if (moveLerpY < -800) {
+                moveLerpY = -800;
+            }
+            let x = -cameraX+moveLerpX;
+            let y = -cameraY+moveLerpY;
+
+            this.moveGame(x, y)
+        }
+
+        if (this.miniMapSprites[1].mouse.pressing("right")) {
+            let moveLerpX = lerp(2000, -1200, (mouse.x - 620) / 160);
+            let moveLerpY = lerp(2000, -1200, (mouse.y - 20) / 160);
+            for (let i = 0; i < data.playerShip.ships.length; i++) {
+                let thisShip = data.playerShip.ships[i];
+                if (thisShip.selected == true) {
+                    let x = -((-400 - cameraX)+(moveLerpX)) ;
+                    let y = -((-400 - cameraY)+(moveLerpY));
+
+                    if (thisShip.moveTimer === 0) {
+                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / 3;
+                        data.playerShip.setDestination(x, y, thisShip);
+                    } else {
+                        thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / 3;
+                        data.playerShip.setDestination(x, y, thisShip);
+                    }
+                }
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 "use strict";
 
 let myfont, myfontB;
-let mainMenuBgImg, gameBgImg;
+let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
@@ -176,7 +176,7 @@ function drawInitialGameState() {
 
 function shipMovement() {
     // Handle player input for ship movement
-    if (mouse.pressing("right")) {
+    if (mouse.pressing("right") && ui.miniMapSprites[1].mouse.pressing("right") == false) {
         for (let i = 0; i < data.playerShip.ships.length; i++) {
             let thisShip = data.playerShip.ships[i];
             if (thisShip.selected == true) {
@@ -185,12 +185,6 @@ function shipMovement() {
         }
     }
 
-    //Unselects all ships when mouse is clicked
-    if (mouse.presses() && mouseY < height - 100) {
-        for (let i = 0; i < data.playerShip.ships.length; i++) {
-            data.playerShip.ships[i].selected = false;
-        }
-    }
     // Handle Ship Movement when in motion
     let playerShips = data.playerShip.ships;   //Turns the ownedShip Object into an array to access it using index not.
     for (let i = 0; i < playerShips.length; i++) {  //Iterates through each type of ship
@@ -324,6 +318,7 @@ function preload() {
     //Background img
     mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu1.png")
     gameBgImg = loadImage("assets/images/myassets/background/game2.png")
+    miniFOV = loadImage("assets/images/myassets/background/clear.png");
 
     //Ships img
     battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
