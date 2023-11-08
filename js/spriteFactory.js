@@ -167,7 +167,11 @@ class spriteFactory {
         let projectile = this.createObject(x, y);
         projectile.w = 5;
         projectile.h = 10;
-        projectile.life = 100
+        projectile.addAni('initial', projectileImg);
+        projectile.addAni('explode', explosionEffect);
+        projectile.changeAni('initial');
+        
+        projectile.life = 100;
         return (projectile);
     }
 }

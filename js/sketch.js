@@ -5,6 +5,7 @@ let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
+let projectileImg, explosionEffect;
 let harvestImg, upgradeImg, purchaseImg;
 let health;
 
@@ -249,12 +250,15 @@ function preload() {
     droneShipImg = loadImage("assets/images/myassets/ships/droneship.png")
     motherShipImg = loadImage("assets/images/myassets/ships/mothership.png")
 
+    //Projectiles Img
+    projectileImg = loadAni("assets/images/myassets/projectile/Missile-Spritesheet.png", { frameSize: [8, 8], frames: 3 })
+    explosionEffect = loadAni("assets/images/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 })
+    
     //Asteroid img
     asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
     specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
-
 
     //Shop UI
     harvestImg = loadImage('assets/images/myassets/shop/harvest.png');
