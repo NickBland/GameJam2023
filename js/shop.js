@@ -59,6 +59,9 @@ class shop {
         }
     }
 
+    /**
+     * Draws some text above the shop buttons
+     */
     displayShopName() {
         fill("#ffe7d6")
         text("Assets", this.shopButtonBack[2].x + this.shopButtonBack[2].d, 731.25*0.95)
@@ -97,6 +100,9 @@ class shop {
         }
     }
 
+    /**
+     * Create the sprite used to display upgrades inside of a new pane
+     */
     setupUpgradeBoard() {
         this.upgradeBoard = new Sprite();
         this.upgradeBoard.draw = () => {
@@ -107,6 +113,9 @@ class shop {
         this.upgradeBoard.visible = false;
     }
 
+    /**
+     * Create the sprite used to display an error notification when the user 
+     */
     setupNotEnoughNoti() {
         let notEnoughNoti = new Sprite();
         notEnoughNoti.collider = 'n'
@@ -127,26 +136,48 @@ class shop {
         notEnoughNoti.life = 45;  
     }
 
+    #checkCost(button) {
+        return (data.playerShip.resources >= this.buttonValue[button]);
+    }
+
+    makePurchase(button) {
+        if (this.#checkCost(button)) {
+            this.gameData.createUnit(ui.groupTypes[button], this.gameData.playerShip, this.gameData.playerMothership);
+            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            data.playerShip.resources -= this.buttonValue[button]
+        } else if (data.playerShip.resources < this.buttonValue[button]){
+            this.setupNotEnoughNoti();
+        }
+    }
+
+    changeColour() {
+        for (let i = 0; i < this.shopButtonBack.length - 1; i++) {
+            if (!this.#checkCost(i)) {
+                this.shopButtonBack[i].color = "#8b4049";
+            } else {
+                this.shopButtonBack[i].color = "#8ea091";
+            }
+        }
+    }
+
     checkHover() {
         if (kb.presses("a")) {
-            this.gameData.createUnit("drone", this.gameData.playerShip, this.gameData.playerMothership);
-            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            this.makePurchase(0);
         }
         if (kb.presses("s")) {
-            this.gameData.createUnit("corsair", this.gameData.playerShip, this.gameData.playerMothership);
-            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            this.makePurchase(1);
         }
         if (kb.presses("d")) {
-            this.gameData.createUnit("destroyer", this.gameData.playerShip, this.gameData.playerMothership);
-            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            this.makePurchase(2);
         }
         if (kb.presses("f")) {
-            this.gameData.createUnit("cruiser", this.gameData.playerShip, this.gameData.playerMothership);
-            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            this.makePurchase(3);
         }
         if (kb.presses("g")) {
-            this.gameData.createUnit("battleship", this.gameData.playerShip, this.gameData.playerMothership);
-            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
+            this.makePurchase(4);
+        }
+        if (kb.presses("h")) {
+            this.upgradeBoard.visible = true;
         }
 
         for (let i = 0; i < this.shopButtonBack.length; i++) {
@@ -157,13 +188,7 @@ class shop {
                 
                 if (this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) {
                     if (i < this.shopButtonBack.length-1) {
-                        if (data.playerShip.resources >= this.buttonValue[i]) {
-                            this.gameData.createUnit(ui.groupTypes[i], this.gameData.playerShip, this.gameData.playerMothership);
-                            ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
-                            data.playerShip.resources -= this.buttonValue[i]
-                        } else if (data.playerShip.resources < this.buttonValue[i]){
-                            this.setupNotEnoughNoti();
-                        } 
+                        this.makePurchase(i);
                     } else {
                         this.upgradeBoard.visible = true;
                     }

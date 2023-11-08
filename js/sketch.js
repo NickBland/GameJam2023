@@ -10,8 +10,8 @@ let health;
 
 let gameState = {
     loading: false,
-    mainMenu: false,
-    game: true,
+    mainMenu: true,
+    game: false,
     endScreen: false,
 }
 
