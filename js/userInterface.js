@@ -340,6 +340,7 @@ class userInterface {
     drawInterface() {
         this.#updateGroupButtonStates();
         this.shopUI.checkHover();
+        this.shopUI.changeColour();
     }
 
     drawPost() {
