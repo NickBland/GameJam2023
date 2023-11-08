@@ -21,7 +21,7 @@ class shop {
         this.buttonValue = [20, 30, 40, 50, 60, "UPGRADE"];
 
     }
-    
+
     /**
      * Function creates the sprites needed for shop purchase selection
      */
@@ -32,7 +32,7 @@ class shop {
         let requiredAssets = [droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get(), upgradeImg.get()];
 
         let initialShopPositionWidth = 32;
-        let initialShopPositionX = width*0.275;
+        let initialShopPositionX = width * 0.275;
         let initialShopPositionY = this.container.y + initialShopPositionWidth * 2.5;
 
         for (let i = 0; i < 6; i++) {
@@ -64,7 +64,7 @@ class shop {
      */
     displayShopName() {
         fill("#ffe7d6")
-        text("Assets", this.shopButtonBack[2].x + this.shopButtonBack[2].d, 731.25*0.95)
+        text("Assets", this.shopButtonBack[2].x + this.shopButtonBack[2].d, 731.25 * 0.95)
     }
     /**
      * This function should display text above the shop interface on cost/flavour text for each unit
@@ -72,7 +72,7 @@ class shop {
      */
     displayFlavourText() {
         for (let i = 0; i < this.shopButtonBack.length; i++) {
-            let priceBox = new Sprite(this.shopButtonBack[i].x, this.shopButtonBack[i].y-this.shopButtonBack[i].d);
+            let priceBox = new Sprite(this.shopButtonBack[i].x, this.shopButtonBack[i].y - this.shopButtonBack[i].d);
             priceBox.collider = "k";
             priceBox.overlaps(allSprites);
             priceBox.draw = () => {
@@ -81,20 +81,20 @@ class shop {
                 rect(0, 0, 60, 20);
                 noStroke();
                 fill('black');
-                if (i < this.shopButtonBack.length-1) {
+                if (i < this.shopButtonBack.length - 1) {
                     textSize(12);
                     textAlign(LEFT, CENTER);
                     text(this.buttonValue[i], 5, 0);
                     let icon = mineralImg.get();
-                    icon.resize(15,0);
-                    image(icon, 0-10, 0);
+                    icon.resize(15, 0);
+                    image(icon, 0 - 10, 0);
                 } else {
                     textSize(10);
                     textAlign(CENTER, CENTER);
                     text(this.buttonValue[i], 0, 0);
                 }
             }
-            priceBox.visible=false;
+            priceBox.visible = false;
 
             this.price.push(priceBox);
         }
@@ -107,7 +107,7 @@ class shop {
         this.upgradeBoard = new Sprite();
         this.upgradeBoard.draw = () => {
             fill(0, 150);
-            rect(0, 62.5, width*0.8, height*0.5);
+            rect(0, 62.5, width * 0.8, height * 0.5);
         }
         this.upgradeBoard.collider = 'n';
         this.upgradeBoard.visible = false;
@@ -122,18 +122,18 @@ class shop {
         notEnoughNoti.draw = () => {
             strokeWeight(2);
             fill('#8b4049');
-            rect(-width/2+145, -height/2+45, 250, 50, 5);
+            rect(-width / 2 + 145, -height / 2 + 45, 250, 50, 5);
 
-            image(purchaseImg, -width/2+35, -height/2+35);
+            image(purchaseImg, -width / 2 + 35, -height / 2 + 35);
             textFont("myFont", 14);
             textAlign(LEFT, CENTER);
             fill('#d19f5a');
-            text("Purchase Failed", -width/2 + 50, -height/2 + 35);
+            text("Purchase Failed", -width / 2 + 50, -height / 2 + 35);
             noStroke();
             fill('black');
-            text("Not enough resources", -width/2 + 30, -height/2 + 55);
+            text("Not enough resources", -width / 2 + 30, -height / 2 + 55);
         }
-        notEnoughNoti.life = 45;  
+        notEnoughNoti.life = 45;
     }
 
     #checkCost(button) {
@@ -145,7 +145,7 @@ class shop {
             this.gameData.createUnit(ui.groupTypes[button], this.gameData.playerShip, this.gameData.playerMothership);
             ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
             data.playerShip.resources -= this.buttonValue[button]
-        } else if (data.playerShip.resources < this.buttonValue[button]){
+        } else if (data.playerShip.resources < this.buttonValue[button]) {
             this.setupNotEnoughNoti();
         }
     }
@@ -185,9 +185,9 @@ class shop {
                 this.shopButtonBack[i].scale = 1.2;
                 this.shopButtonImages[i].rotationSpeed = 1;
                 this.price[i].visible = true;
-                
+
                 if (this.shopButtonBack[i].mouse.presses() || this.shopButtonImages[i].mouse.presses()) {
-                    if (i < this.shopButtonBack.length-1) {
+                    if (i < this.shopButtonBack.length - 1) {
                         this.makePurchase(i);
                     } else {
                         this.upgradeBoard.visible = true;

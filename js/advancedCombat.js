@@ -1,36 +1,36 @@
-class combatHandler{
+class combatHandler {
     /**
      * Weapon types, I wanna make these interchangeable between ships
      */
-    determineWeapon(thisShip, thisEnemy){
-        switch (thisShip.weaponType){
+    determineWeapon(thisShip, thisEnemy) {
+        switch (thisShip.weaponType) {
             case "standard":
                 this.standard(thisShip, thisEnemy);
                 break;
-                case "shotgun":
+            case "shotgun":
                 this.shotgun(thisShip, thisEnemy);
                 break;
-                case "heavy":
+            case "heavy":
                 this.heavyShot(thisShip, thisEnemy);
                 break;
-                case "rapid":
+            case "rapid":
                 this.rapid(thisShip, thisEnemy);
                 break;
         }
     }
-    
-    standard(thisShip, thisEnemy){
+
+    standard(thisShip, thisEnemy) {
         if (frameCount % 30 == 0) {
-        let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
-        projectile.damage = thisShip.damage;
-        projectile.target = thisEnemy;
-        projectile.overlaps(allSprites);
-        projectile.moveTowards(thisEnemy, 0.1);
-        thisShip.team.projectiles.push(projectile);
+            let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
+            projectile.damage = thisShip.damage;
+            projectile.target = thisEnemy;
+            projectile.overlaps(allSprites);
+            projectile.moveTowards(thisEnemy, 0.1);
+            thisShip.team.projectiles.push(projectile);
         }
     }
 
-    shotgun(thisShip, thisEnemy){
+    shotgun(thisShip, thisEnemy) {
         console.log("fires shotgun");
         // if (frameCount % 10 == 0) {
         // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
@@ -42,7 +42,7 @@ class combatHandler{
         // }
     }
 
-    heavyShot(thisShip, thisEnemy){
+    heavyShot(thisShip, thisEnemy) {
         console.log("fires heavy");
         // if (frameCount % 10 == 0) {
         // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
@@ -53,8 +53,8 @@ class combatHandler{
         // projectile.moveTowards(thisEnemy, 0.1);
         // }
     }
-    
-    rapid(thisShip, thisEnemy){
+
+    rapid(thisShip, thisEnemy) {
         console.log("fires rapid");
         // if (frameCount % 10 == 0) {
         // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
@@ -70,36 +70,36 @@ class combatHandler{
     /**
      * Combat movements, Not sure how this'll work but they'll be here
      */
-    determineType(){
-        switch (thisShip.group){
+    determineType() {
+        switch (thisShip.group) {
             case "corsair":
                 this.corsair(thisShip, thisEnemy);
                 break;
-                case "destroyer":
+            case "destroyer":
                 this.destroyer(thisShip, thisEnemy);
                 break;
-                case "cruiser":
+            case "cruiser":
                 this.cruiser(thisShip, thisEnemy);
                 break;
-                case "battleship":
+            case "battleship":
                 this.battleship(thisShip, thisEnemy);
                 break;
         }
     }
 
-    corsair(){
+    corsair() {
 
     }
 
-    destroyer(){
+    destroyer() {
 
     }
 
-    cruiser(){
+    cruiser() {
 
     }
 
-    battleship(){
+    battleship() {
 
     }
 }

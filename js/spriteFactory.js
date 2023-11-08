@@ -31,7 +31,7 @@ class spriteFactory {
         mothership.collider = "s";
         mothership.damage = 10;
         mothership.fastness = 1;
-        
+
         motherShipImg.resize(mothership.w + 20, mothership.h + 20);
         mothership.img = motherShipImg;
         mothership.range = 300;

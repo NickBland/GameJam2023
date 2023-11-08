@@ -8,7 +8,7 @@ class userInterface {
         this.container = {
             w: width,
             h: 125,
-            x: width/2,
+            x: width / 2,
             y: height - 125,
         }
 
@@ -30,7 +30,7 @@ class userInterface {
     }
 
     setupUIBar() {
-        this.UIBar = new Sprite(this.container.x, this.container.y + this.container.h/2, this.container.w, this.container.h);
+        this.UIBar = new Sprite(this.container.x, this.container.y + this.container.h / 2, this.container.w, this.container.h);
         this.UIBar.color = '#787878'
         this.UIBar.stroke = 'black'
         this.UIBar.strokeWeight = 2
@@ -196,7 +196,7 @@ class userInterface {
         }
 
         // Now handle the mouse!
-        if (mouse.presses("left")&& this.miniMapSprites[1].mouse.presses() == false) { // DEFAULT BEHAVIOUR
+        if (mouse.presses("left") && this.miniMapSprites[1].mouse.presses() == false) { // DEFAULT BEHAVIOUR
             this.selectedGroup = this.groupTypes.indexOf("none");
             this.updateSelection();
         }
@@ -372,18 +372,18 @@ class userInterface {
         specialResourceNoti.draw = () => {
             strokeWeight(2);
             fill('#ffe7d6');
-            rect(-width/2+145, -height/2+45, 250, 50, 5);
+            rect(-width / 2 + 145, -height / 2 + 45, 250, 50, 5);
 
-            image(harvestImg, -width/2+35, -height/2+35);
+            image(harvestImg, -width / 2 + 35, -height / 2 + 35);
             textFont("myFont", 14);
             textAlign(LEFT, CENTER);
             fill('#d19f5a');
-            text("MINERALS", -width/2 + 50, -height/2 + 35);
+            text("MINERALS", -width / 2 + 50, -height / 2 + 35);
             noStroke();
             fill('black');
-            text("Special Resource Found!!!", -width/2 + 30, -height/2 + 55);
+            text("Special Resource Found!!!", -width / 2 + 30, -height / 2 + 55);
         }
-        specialResourceNoti.life = 45;  
+        specialResourceNoti.life = 45;
     }
 
     //Initialises the miniMap
@@ -482,8 +482,8 @@ class userInterface {
             if (moveLerpY < -800) {
                 moveLerpY = -800;
             }
-            let x = -cameraObject.cameraX+moveLerpX;
-            let y = -cameraObject.cameraY+moveLerpY;
+            let x = -cameraObject.cameraX + moveLerpX;
+            let y = -cameraObject.cameraY + moveLerpY;
 
             cameraObject.moveGame(x, y)
         }
@@ -494,8 +494,8 @@ class userInterface {
             for (let i = 0; i < data.playerShip.ships.length; i++) {
                 let thisShip = data.playerShip.ships[i];
                 if (thisShip.selected == true) {
-                    let x = -((-400 - cameraObject.cameraX)+(moveLerpX)) ;
-                    let y = -((-400 - cameraObject.cameraY)+(moveLerpY));
+                    let x = -((-400 - cameraObject.cameraX) + (moveLerpX));
+                    let y = -((-400 - cameraObject.cameraY) + (moveLerpY));
 
                     if (thisShip.moveTimer === 0) {
                         thisShip.moveTimer = Math.floor(dist(thisShip.x, thisShip.y, x, y)) / thisShip.fastness;
