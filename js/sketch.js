@@ -254,7 +254,7 @@ function preload() {
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
     mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
     specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
-    
+
 
     //Shop UI
     harvestImg = loadImage('assets/images/myassets/shop/harvest.png');
