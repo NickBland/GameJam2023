@@ -117,7 +117,7 @@ class spriteFactory {
         battleship.health = 300;
         battleship.damage = 75;
         battleship.range = 250;
-        battleship.weaponType = "rapid";
+        battleship.weaponType = "standard";
         battleship.fastness = 3;
 
         battleship.w = 45;
@@ -130,8 +130,8 @@ class spriteFactory {
 
     createAsteroid() {
         let d = Math.floor(random(25, 70));
-        let x = random(d - 1300, 1400 - d);
-        let y = random(d - 1300, 1400 - d);
+        let x = random((camera.cameraX) + 1300, ((camera.cameraX) - 1300));
+        let y = random((camera.cameraY) + 1300, ((camera.cameraY) - 1300));
 
         let asteroid = this.createObject(x, y);
 

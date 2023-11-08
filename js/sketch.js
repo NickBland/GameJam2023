@@ -10,8 +10,8 @@ let health;
 
 let gameState = {
     loading: false,
-    mainMenu: true,
-    game: false,
+    mainMenu: false,
+    game: true,
     endScreen: false,
 }
 
@@ -59,22 +59,24 @@ function drawMainMenuScreen() {
 
 let initialGameState = true;
 
+let camera;
+
 let data;
 
 let ui;
 
 let selectionBox;
 
-let camera;
+
 
 
 function drawInitialGameState() {
+    camera = new customCamera;
+
     data = new gameData();
     data.setupGame();
 
     ui = new userInterface;
-
-    camera = new customCamera;
 
 
     for (let i = 0; i < 16; i++) {
@@ -195,6 +197,10 @@ function drawGameScreen() {
         drawInitialGameState();
         ui.miniMap();
     }
+    else{
+        ui.miniMapSprites.overlaps(data.asteroids);
+    }
+
 
     gameBgImg.resize(width, height);
     image(gameBgImg, camera.cameraX, camera.cameraY, width * 4, height * 4);

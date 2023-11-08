@@ -73,10 +73,10 @@ class gameData {
     }
 
     handleBorders() {
-        this.borderSprites[0].y = ((camera.cameraY + 410) + 1200);
-        this.borderSprites[1].x = ((camera.cameraX + 410) + 1200);
-        this.borderSprites[2].y = ((camera.cameraY - 410) - 1200);
-        this.borderSprites[3].x = ((camera.cameraX - 410) - 1200);
+        this.borderSprites[0].y = ((camera.cameraY) + 1610);
+        this.borderSprites[1].x = ((camera.cameraX) + 1610);
+        this.borderSprites[2].y = ((camera.cameraY) - 1610);
+        this.borderSprites[3].x = ((camera.cameraX) - 1610);
 
         this.borderSprites[0].x = ((camera.cameraX + 400));
         this.borderSprites[1].y = ((camera.cameraY + 400));
