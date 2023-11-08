@@ -39,6 +39,12 @@ class gameData {
         for (let i = 0; i < this.asteroidDensity; i++) {
             this.createAsteroid();
         }
+
+        this.borderSprites = new Group();
+        for(let i = 0; i<4; i++){
+            this.borderSprites.push(new Sprite());
+            this.borderSprites[i].collider = "s";
+        }
     }
 
     createUnit(type, team, teamMotherShip) {
@@ -64,6 +70,27 @@ class gameData {
                 break;
             default:
         }
+    }
+
+    handleBorders(){
+        this.borderSprites[0].y = ((camera.cameraY + 410) + 1200);
+        this.borderSprites[1].x = ((camera.cameraX+410) + 1200);
+        this.borderSprites[2].y = ((camera.cameraY - 410) - 1200);
+        this.borderSprites[3].x = ((camera.cameraX-410) - 1200);
+
+        this.borderSprites[0].x = ((camera.cameraX + 400));
+        this.borderSprites[1].y = ((camera.cameraY + 400));
+        this.borderSprites[2].x = ((camera.cameraX - 400));
+        this.borderSprites[3].y = ((camera.cameraY + 400));
+
+        this.borderSprites[0].w = 4000;
+        this.borderSprites[0].h = 10;
+        this.borderSprites[1].w = 10;
+        this.borderSprites[1].h = 4000;
+        this.borderSprites[2].w = 4000;
+        this.borderSprites[2].h = 10;
+        this.borderSprites[3].w = 10;
+        this.borderSprites[3].h = 4000;
     }
 
     createAsteroid() {

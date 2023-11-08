@@ -20,7 +20,7 @@ class combatHandler{
     }
     
     standard(thisShip, thisEnemy){
-        if (frameCount % 10 == 0) {
+        if (frameCount % 30 == 0) {
         let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
         projectile.damage = thisShip.damage;
         projectile.target = thisEnemy;

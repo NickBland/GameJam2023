@@ -422,7 +422,7 @@ class userInterface {
             drawingContext.setLineDash([2, 10]); // Length of line, Spacing
             drawingContext.lineDashOffset = 5;
 
-            for (let i = 0; i < data.playerShip.ships.length; i++) {
+            for (let i = 1; i < data.playerShip.ships.length; i++) {
                 let thisShip = data.playerShip.ships[i];
                 let thisDot = this.miniMapSprites.dots[i];
                 if (thisShip.selected == true && thisShip.moveTimer !== 0) {

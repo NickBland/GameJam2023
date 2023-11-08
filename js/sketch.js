@@ -209,6 +209,7 @@ function drawGameScreen() {
     ui.miniMapUpdate(camera);
 
     data.fogOfWar();
+    data.handleBorders();
 
     shipMovement();
     shipAction();

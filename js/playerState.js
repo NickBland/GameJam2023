@@ -54,7 +54,9 @@ class playerState {
             //this.ships AND USE THAT INDEX TO ALSO REMOVE THE MINIMAP DOT
             //IN THE ui.miniMapSprites.dots GROUP
             //p.s make it so it only does that for the player ships
-            console.log("Very Dead");
+
+            //Important side note, if we run into undefined problems on implementing this
+            //It's because thhe other side is looping aftere things get destroyed
         }
     }
 
