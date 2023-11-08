@@ -25,6 +25,7 @@ class combatHandler {
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
             projectile.overlaps(allSprites);
+            
             projectile.moveTowards(thisEnemy, 0.1);
             thisShip.team.projectiles.push(projectile);
         }
