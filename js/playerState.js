@@ -2,6 +2,7 @@ class playerState {
     constructor() {
         this.resources = 0;
         this.specialResources = 0;
+        this.shotgunPellets = 3;
 
         this.ships; // ALL SHIPS owned by player
         this.drones;
