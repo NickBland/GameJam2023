@@ -13,12 +13,14 @@ let missileImg, bulletImg, flameshotImg, explosionEffect;
 let harvestImg, upgradeImg, purchaseImg;
 let health;
 
+let winGame;
+
 let pressedButton_sound;
 
 let gameState = {
-    loading: true,
+    loading: false,
     mainMenu: false,
-    game: false,
+    game: true,
     endScreen: false,
 }
 
@@ -248,9 +250,22 @@ function drawGameScreen() {
     }
 }
 
-function drawEndScreen() {
-    background("black");
+// ============================================ END ========================================================
+let endScreen;
+let initialEndState = true;
+function drawInitialEndScreen() {
+    endScreen = new end();
+    endScreen.drawEndScreen();
 }
+
+function drawEndScreen() {
+    if (initialEndState) {
+        drawInitialEndScreen();
+        initialEndState = false;
+    }
+    endScreen.drawEndScreen();
+}
+
 
 function preload() {
     //font

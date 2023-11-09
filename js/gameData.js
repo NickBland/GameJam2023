@@ -152,11 +152,16 @@ class gameData {
     }
 
     gameOver(losingTeam){
+        gameState.game = false;
+        gameState.endScreen = true;
+
         if(losingTeam == data.playerShip){
             console.log("Game Over, You Lose");
+            winGame = false;
         }
         if(losingTeam == data.enemyShip){
             console.log("Game Over, You Win");
+            winGame = true;
         }
     }
 }
