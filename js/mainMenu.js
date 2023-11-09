@@ -72,6 +72,8 @@ class mainMenu {
      * Hide all the sprite-buttons, and then destroy them. Changes game state to game
      */
     playButtonClicked() {
+        pressedButton_sound.play();
+
         this.hideMenuButton();
 
         this.playButton.remove(); // Destroy the sprites
@@ -86,6 +88,8 @@ class mainMenu {
      * Opens up the tutorial pane
      */
     tutorialButtonClicked() {
+        pressedButton_sound.play();
+
         this.hideMenuButton();
         this.tutorialShow = true;
     }
@@ -94,6 +98,8 @@ class mainMenu {
      * Opens the credits pane
      */
     creditsButtonClicked() {
+        pressedButton_sound.play();
+        
         this.hideMenuButton()
         this.creditsShow = true;
     }

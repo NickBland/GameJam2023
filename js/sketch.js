@@ -1,18 +1,24 @@
 "use strict";
 
 let myfont, myfontB;
+
+let loadingAni, loadingDone;
+
 let mainMenuBgImg, gameBgImg, miniFOV;
 let offset_menuX = 0;
+
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
 let missileImg, bulletImg, flameshotImg, explosionEffect;
 let harvestImg, upgradeImg, purchaseImg;
 let health;
 
+let pressedButton_sound;
+
 let gameState = {
-    loading: false,
+    loading: true,
     mainMenu: false,
-    game: true,
+    game: false,
     endScreen: false,
 }
 
@@ -20,7 +26,7 @@ function changeGameState(type) {
     gameState.loading = gameState.mainMenu = gameState.game = gameState.endScreen = false;
     switch (type) {
         case "loading":
-            loading = true;
+            gameState.loading = true;
             break;
         case "mainMenu":
             gameState.mainMenu = true;
@@ -34,8 +40,21 @@ function changeGameState(type) {
     }
 }
 
+// ========================================= LOADING =======================================================
+let loadingScreen;
+let initialLoadingState = true;
+
+function drawInitialLoadingScreen() {
+    loadingScreen = new loading();
+    loadingScreen.drawLoadingScreen();
+}
+
 function drawLoadingScreen() {
-    background("red");
+    if (initialLoadingState) {
+        drawInitialLoadingScreen();
+        initialLoadingState = false;
+    }
+    loadingScreen.drawLoadingScreen();
 }
 
 // ========================================= MAIN MENU =======================================================
@@ -240,27 +259,34 @@ function drawEndScreen() {
 
 function preload() {
     //font
-    myfont = loadFont('assets/font/PixeloidMono.ttf')
-    myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf')
+    myfont = loadFont('assets/font/PixeloidMono.ttf');
+    myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf');
+
+    //sound
+    pressedButton_sound = loadSound('assets/sound/button/vgmenuhighlight.wav')
+
+    //Loading img
+    loadingAni = loadAni("assets/images/myassets/background/loading3.png", { frameSize: [64, 64], frames: 4 })
+    loadingDone = loadAni("assets/images/myassets/background/loading4.png", { frameSize: [64, 64], frames: 2 })
 
     //Background img
-    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu1.png")
-    gameBgImg = loadImage("assets/images/myassets/background/game2.png")
+    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu1.png");
+    gameBgImg = loadImage("assets/images/myassets/background/game2.png");
     miniFOV = loadImage("assets/images/myassets/background/clear.png");
 
     //Ships img
-    battleShipImg = loadImage("assets/images/myassets/ships/battleship.png")
-    corsairShipImg = loadImage("assets/images/myassets/ships/corsairship.png")
-    cruiserShipImg = loadImage("assets/images/myassets/ships/cruisership.png")
-    destroyerShipImg = loadImage("assets/images/myassets/ships/destroyership.png")
-    droneShipImg = loadImage("assets/images/myassets/ships/droneship.png")
-    motherShipImg = loadImage("assets/images/myassets/ships/mothership.png")
+    battleShipImg = loadImage("assets/images/myassets/ships/battleship.png");
+    corsairShipImg = loadImage("assets/images/myassets/ships/corsairship.png");
+    cruiserShipImg = loadImage("assets/images/myassets/ships/cruisership.png");
+    destroyerShipImg = loadImage("assets/images/myassets/ships/destroyership.png");
+    droneShipImg = loadImage("assets/images/myassets/ships/droneship.png");
+    motherShipImg = loadImage("assets/images/myassets/ships/mothership.png");
 
     //Projectiles Img
-    missileImg = loadAni("assets/images/myassets/projectile/Missile-Spritesheet.png", { frameSize: [8, 8], frames: 3 })
-    bulletImg = loadAni("assets/images/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 })
-    flameshotImg = loadAni("assets/images/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 })
-    explosionEffect = loadAni("assets/images/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 })
+    missileImg = loadAni("assets/images/myassets/projectile/Missile-Spritesheet.png", { frameSize: [8, 8], frames: 3 });
+    bulletImg = loadAni("assets/images/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
+    flameshotImg = loadAni("assets/images/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
+    explosionEffect = loadAni("assets/images/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 });
     
     //Asteroid img
     asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
