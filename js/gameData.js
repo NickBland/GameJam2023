@@ -30,11 +30,11 @@ class gameData {
         this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
-        this.createUnit("drone", this.enemyShip, this.enemyMothership)
-        this.createUnit("corsair", this.enemyShip, this.enemyMothership)
-        this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
-        this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
-        this.createUnit("battleship", this.enemyShip, this.enemyMothership)
+        // this.createUnit("drone", this.enemyShip, this.enemyMothership)
+        // this.createUnit("corsair", this.enemyShip, this.enemyMothership)
+        // this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
+        // this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
+        // this.createUnit("battleship", this.enemyShip, this.enemyMothership)
 
         for (let i = 0; i < this.asteroidDensity; i++) {
             this.createAsteroid();

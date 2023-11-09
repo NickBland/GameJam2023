@@ -16,9 +16,9 @@ let health;
 let pressedButton_sound;
 
 let gameState = {
-    loading: true,
+    loading: false,
     mainMenu: false,
-    game: false,
+    game: true,
     endScreen: false,
 }
 
