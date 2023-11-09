@@ -90,8 +90,6 @@ let ui;
 let selectionBox;
 
 
-
-
 function drawInitialGameState() {
     camera = new customCamera;
 
@@ -214,10 +212,9 @@ function drawGameScreen() {
     if (initialGameState) {
         drawInitialGameState();
     }
-    else{
+    else {
         ui.miniMapSprites.overlaps(data.asteroids);
     }
-
 
     gameBgImg.resize(width, height);
     image(gameBgImg, camera.cameraX, camera.cameraY, width * 4, height * 4);
@@ -297,7 +294,7 @@ function preload() {
     bulletImg = loadAni("assets/images/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
     flameshotImg = loadAni("assets/images/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
     explosionEffect = loadAni("assets/images/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 });
-    
+
     //Asteroid img
     asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
     asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });

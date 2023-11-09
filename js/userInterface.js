@@ -75,7 +75,6 @@ class userInterface {
             if (i % 2 !== 0) {
                 offsetY = initialSelectorPositionHeight * 1.5;
             }
-
             button.x = initialSelectorPositionX + i * (initialSelectorPositionWidth * 0.75);
             button.y = initialSelectorPositionY + offsetY;
             button.w = initialSelectorPositionWidth;
@@ -89,12 +88,9 @@ class userInterface {
             button.collider = "k";
             button.overlaps(allSprites)
             buttonArray.push(button);
-
         }
         return buttonArray;
     }
-
-
 
     /**
      * Draws the health of the mothership at the bottom right of the interface

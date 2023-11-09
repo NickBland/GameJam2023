@@ -82,7 +82,7 @@ class combatHandler {
     /**
      * Combat movements, Not sure how this'll work but they'll be here
      */
-    determineType() {
+    determineMove() {
         switch (thisShip.group) {
             case "corsair":
                 this.corsair(thisShip, thisEnemy);
