@@ -41,7 +41,6 @@ class enemyBehaviour {
                 let thisAsteroid = data.asteroids[i];
                 if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources < 10) {
                     data.enemyShip.harvestResources(thisShip, thisAsteroid);
-
                 }
             }
 

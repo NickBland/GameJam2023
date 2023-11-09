@@ -151,21 +151,9 @@ class spriteFactory {
 
         asteroid.resources = floor(d * 1.5);
 
-        /*let index = Math.floor(random(0, 1000)) % asteroidImages.length;
-        asteroid.img = asteroidImages[index].get(); // <------------ GET COPIES IMAGE INSTEAD OF REFERENCE
-        asteroid.img.resize(d, 0); // resize the copied image and sprite hitbox, leaving original intact*/
-
-        //Option1 asteroid 
-        /*let index = Math.floor(random(0, 1000)) % asteroidImgs.length;
-        this.sprite.img = asteroidImg[index].get();
-        this.sprite.img.resize(this.d, 0); // resize the copied image and sprite hitbox, leaving original intact
-        this.sprite.rotation = random(0, 360);*/
-
-        //Option2 asteroid
         asteroid.addAni('initial', asteroidInitial);
         asteroid.addAni('explode', asteroidExplode);
         asteroid.changeAni('initial');
-        // asteroid.debug = true;
 
         asteroid.ani.scale = d / 45;
 
@@ -181,7 +169,7 @@ class spriteFactory {
         let projectile = this.createObject(x, y);
         projectile.w = 5;
         projectile.h = 10;
-        
+
         projectile.life = 100;
         return (projectile);
     }

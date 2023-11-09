@@ -32,11 +32,11 @@ class gameData {
         this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
-        // this.createUnit("drone", this.enemyShip, this.enemyMothership)
-        // this.createUnit("corsair", this.enemyShip, this.enemyMothership)
-        // this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
-        // this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
-        // this.createUnit("battleship", this.enemyShip, this.enemyMothership)
+        this.createUnit("drone", this.enemyShip, this.enemyMothership)
+        this.createUnit("corsair", this.enemyShip, this.enemyMothership)
+        this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
+        this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
+        this.createUnit("battleship", this.enemyShip, this.enemyMothership)
 
         for (let i = 0; i < this.asteroidDensity; i++) {
             this.createAsteroid();
@@ -134,7 +134,6 @@ class gameData {
                         else {
                             this.playerMothership.health -= thisProj.damage;
                         }
-
                         thisProj.remove();
                     }
                 }
@@ -155,15 +154,15 @@ class gameData {
         }
     }
 
-    gameOver(losingTeam){
+    gameOver(losingTeam) {
         gameState.game = false;
         gameState.endScreen = true;
 
-        if(losingTeam == data.playerShip){
+        if (losingTeam == data.playerShip) {
             console.log("Game Over, You Lose");
             winGame = false;
         }
-        if(losingTeam == data.enemyShip){
+        if (losingTeam == data.enemyShip) {
             console.log("Game Over, You Win");
             winGame = true;
         }
@@ -388,8 +387,8 @@ class gameData {
                     enemyOwned: false
                 },
                 {
-                    name: "Jesse's Special",
-                    effectText: "-̷͓̲͔͉̱̫̺̣̅̈́̄̈̈́̏͊̄̇̀̒̃̇͠͝͝͝-̶̨̨̡̡̧̧̛̬̫̮͇͈̩̘̟̥̱̖̬̞͓͙͎͎͚̭̰̞̗͉̳͚̼͗̓̎͂͛͆́́̊̈́̓̈́́̾̈͛̊͂͆̅̀͆̒̏͆͊̔̓̈͗̾̇̑͒̏͑͋̈́͘͘̕̕͝͠͝͠-̵̢̢̧̢̙̩̭̪̙̗̯̯̘̤͍̝͎̺͙̭̲͙̠̼̼̭̳̙̪̩̦̗͎̭͓̺̞̲̙̦̠̬͕͑̈́̀̏̄̃͘͜-̴̧̡̨͎̺̳̖̙̯̳͖̝̜͇͈̠̯̬͍͓̮̗͔͉̬͇̰̲̦͉̠̐̀͗̏͒͑͗̒̈́̂͊̌̑̈́̐̀̔̓̉̎̿͐̇̄͌̇̄̚̚͜͝͝-̷̨̡̛̬͈͓͔̜̗̣͙͕̲̳͉̞̜̣̰̠̱͇̗̎͂̋̿̿̀́̈́̅̑͛̒̏̌͗̚̕͜͝͠ͅ",
+                    name: "Jesse's Jest",
+                    effectText: "No More",
                     cost: 10,
                     playerOwned: false,
                     enemyOwned: false
