@@ -100,6 +100,7 @@ function drawInitialGameState() {
 
     ui = new userInterface;
 
+    ui.miniMap(); // Render the Minimap
 
     for (let i = 0; i < 16; i++) {
         camera.moveGame(100, 100)
@@ -212,7 +213,6 @@ function drawGameScreen() {
     //background("red");
     if (initialGameState) {
         drawInitialGameState();
-        ui.miniMap();
     }
     else{
         ui.miniMapSprites.overlaps(data.asteroids);

@@ -10,6 +10,8 @@ class gameData {
         this.enemyShip = new playerState();
 
         this.asteroidDensity = 100;
+
+        this.upgrades;
     }
 
     setupGame() {
@@ -45,6 +47,8 @@ class gameData {
             this.borderSprites.push(new Sprite());
             this.borderSprites[i].collider = "s";
         }
+
+        this.createUpgradesData();
     }
 
     createUnit(type, team, teamMotherShip) {
@@ -163,5 +167,234 @@ class gameData {
             console.log("Game Over, You Win");
             winGame = true;
         }
+    }
+
+    /**
+     * All data for the upgrades is stored here
+     */
+    createUpgradesData() {
+        this.upgrades = [
+            [
+                "All Ships",
+                {
+                    name: "Better Sensors",
+                    effectText: "Vision Range of all Ships +20%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Denser Hulls",
+                    effectText: "All Ship Hitpoints +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Larger Reactors",
+                    effectText: "Speed of all Ships +1.5 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Powerful Lasers",
+                    effectText: "Damage Dealt by all Ships +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ],
+            [
+                "Drones",
+                {
+                    name: "Efficient Equipment",
+                    effectText: "Collection Speed of Drones 15%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Precision Scanner",
+                    effectText: "Special Resource Change +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Larger Hold",
+                    effectText: "Carrying Capacity of Drones +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Lightweight Materials",
+                    effectText: "Movement Speed of Drones +3.5 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Enrichment Processing",
+                    effectText: "Chance of Double Resource Collection +1%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ],
+            [
+                "Corsairs",
+                {
+                    name: "Optimised Engine Controls",
+                    effectText: "Movement Speed of Corsairs +2.5 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "More Guns",
+                    effectText: "Damage Dealt by Corsairs +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Insulated Padding",
+                    effectText: "Corsair Hitpoints +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Advanced Ordnances",
+                    effectText: "Corsair Rate of Fire +20%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Advanced Targetting System",
+                    effectText: "Corsair Accuracy +20%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ],
+            [
+                "Destroyers",
+                {
+                    name: "Dark Matter Reactor",
+                    effectText: "Movement Speed of Destroyers +2.0 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Heavy Slugs",
+                    effectText: "Destroyer Damamge +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Composite Armour",
+                    effectText: "Destroyer Hitpoints +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Nick's Meds",
+                    effectText: "Shoot 2 More Pellets",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Shell Ejectors",
+                    effectText: "Destroyer Rate of Fire +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ],
+            [
+                "Cruisers",
+                {
+                    name: "Antimatter Reactor",
+                    effectText: "Movement Speed of Cruisers +1.5 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Explosive-Infused Alloys",
+                    effectText: "Cruiser Damage +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Reinforced Weakpoints",
+                    effectText: "Cruiser Hitpoints +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Thien's Optimiser",
+                    effectText: "Chance of Double Shot +5%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Weapon Heatsinks",
+                    effectText: "Cruiser Rate of Fire +15%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ],
+            [
+                "Battleships",
+                {
+                    name: "Strange Matter Reactor",
+                    effectText: "Movement Speed of Battleships +1.0 U/s",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Lead-Tipped Projectiles",
+                    effectText: "Battleship Damage +10%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Shock Absorbing Insulation",
+                    effectText: "Battleship Hitpoints +20%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Barrel Compensators",
+                    effectText: "Battleship Accuracy +20%",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+                {
+                    name: "Jesse's Special",
+                    effectText: "-̷͓̲͔͉̱̫̺̣̅̈́̄̈̈́̏͊̄̇̀̒̃̇͠͝͝͝-̶̨̨̡̡̧̧̛̬̫̮͇͈̩̘̟̥̱̖̬̞͓͙͎͎͚̭̰̞̗͉̳͚̼͗̓̎͂͛͆́́̊̈́̓̈́́̾̈͛̊͂͆̅̀͆̒̏͆͊̔̓̈͗̾̇̑͒̏͑͋̈́͘͘̕̕͝͠͝͠-̵̢̢̧̢̙̩̭̪̙̗̯̯̘̤͍̝͎̺͙̭̲͙̠̼̼̭̳̙̪̩̦̗͎̭͓̺̞̲̙̦̠̬͕͑̈́̀̏̄̃͘͜-̴̧̡̨͎̺̳̖̙̯̳͖̝̜͇͈̠̯̬͍͓̮̗͔͉̬͇̰̲̦͉̠̐̀͗̏͒͑͗̒̈́̂͊̌̑̈́̐̀̔̓̉̎̿͐̇̄͌̇̄̚̚͜͝͝-̷̨̡̛̬͈͓͔̜̗̣͙͕̲̳͉̞̜̣̰̠̱͇̗̎͂̋̿̿̀́̈́̅̑͛̒̏̌͗̚̕͜͝͠ͅ",
+                    cost: 10,
+                    playerOwned: false,
+                    enemyOwned: false
+                },
+            ]
+        ];
     }
 }

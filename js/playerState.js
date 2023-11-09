@@ -11,6 +11,8 @@ class playerState {
         this.cruisers;
         this.battleships;
         this.projectiles;
+
+        this.ownedUpgrades = [];
     }
 
     setupData() {
