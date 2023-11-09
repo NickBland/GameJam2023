@@ -29,7 +29,7 @@ class spriteFactory {
         mothership.h = 60;
         mothership.health = 500;
         mothership.collider = "s";
-        mothership.damage = 10;
+        mothership.damage = 5;
         mothership.fastness = 1;
 
         motherShipImg.resize(mothership.w + 20, mothership.h + 20);
@@ -44,12 +44,17 @@ class spriteFactory {
         let drone = this.createShip(x, y, "drone", team);
 
         drone.resources = 0;
+        drone.collectionSpeed = 1;
+        drone.resourceCap = 10;
         drone.specialResources = 0;
-        drone.health = 50;
-        drone.damage = 10;
-        drone.range = 100;
+        drone.collectCrit = 2;
+        drone.health = 25;
+        drone.damage = 1;
+        drone.range = 50;
         drone.weaponType = "standard";
-        drone.fastness = 8;
+        drone.fireRate = 1;
+        drone.accuracy = 15;
+        drone.fastness = 3;
 
         drone.w = 25;
         drone.h = 25;
@@ -62,11 +67,13 @@ class spriteFactory {
     createCorsair(x, y, team) {
         let corsair = this.createShip(x, y, "corsair", team);
 
-        corsair.health = 100;
-        corsair.damage = 20;
-        corsair.range = 150;
+        corsair.health = 50;
+        corsair.damage = 5;
+        corsair.range = 100;
         corsair.weaponType = "standard";
-        corsair.fastness = 7;
+        corsair.fastness = 2;
+        corsair.fireRate = 1;
+        corsair.accuracy = 15;
 
         corsair.w = 25;
         corsair.h = 25;
@@ -79,11 +86,13 @@ class spriteFactory {
     createDestroyer(x, y, team) {
         let destroyer = this.createShip(x, y, "destroyer", team);
 
-        destroyer.health = 150;
-        destroyer.damage = 25;
-        destroyer.range = 175;
+        destroyer.health = 100;
+        destroyer.damage = 10;
+        destroyer.range = 125;
         destroyer.weaponType = "shotgun";
-        destroyer.fastness = 5;
+        destroyer.fastness = 2;
+        destroyer.fireRate = 1.5;
+        destroyer.accuracy = 45;
 
         destroyer.w = 30;
         destroyer.h = 30;
@@ -96,11 +105,14 @@ class spriteFactory {
     createCruiser(x, y, team) {
         let cruiser = this.createShip(x, y, "cruiser", team);
 
-        cruiser.health = 200;
-        cruiser.damage = 35;
-        cruiser.range = 200;
+        cruiser.health = 150;
+        cruiser.damage = 15;
+        cruiser.range = 150;
         cruiser.weaponType = "heavy";
-        cruiser.fastness = 4;
+        cruiser.fastness = 2;
+        cruiser.fireRate = 1.5;
+        cruiser.accuracy = 10;
+        cruiser.doubleShot = 10;
 
         cruiser.w = 30;
         cruiser.h = 30;
@@ -114,11 +126,13 @@ class spriteFactory {
     createBattleship(x, y, team) {
         let battleship = this.createShip(x, y, "battleship", team);
 
-        battleship.health = 300;
-        battleship.damage = 75;
-        battleship.range = 250;
-        battleship.weaponType = "standard";
-        battleship.fastness = 3;
+        battleship.health = 200;
+        battleship.damage = 30;
+        battleship.range = 200;
+        battleship.weaponType = "rapid";
+        battleship.fastness = 1;
+        battleship.fireRate = 0.5;
+        battleship.accuracy = 10;
 
         battleship.w = 45;
         battleship.h = 45;

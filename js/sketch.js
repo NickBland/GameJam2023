@@ -139,11 +139,6 @@ function shipMovement() {
             thisShip.moveTimer = 10;
         }
     }
-
-    //VERY TEMPORARY, JUST BEFORE THE ENEMY GETS ITS AI
-    for (let i = 0; i < data.enemyShip.ships.length; i++) {
-        data.enemyShip.ships[i].speed = 0;
-    }
 }
 
 //Handles ship combat call and resource collection calls

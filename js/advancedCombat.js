@@ -20,51 +20,62 @@ class combatHandler {
     }
 
     standard(thisShip, thisEnemy) {
-        if (frameCount % 30 == 0) {
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
             projectile.overlaps(allSprites);
-            
-            projectile.moveTowards(thisEnemy, 0.1);
+
+            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+            projectile.rotation = projectile.direction;
             thisShip.team.projectiles.push(projectile);
         }
     }
 
     shotgun(thisShip, thisEnemy) {
-        console.log("fires shotgun");
-        // if (frameCount % 10 == 0) {
-        // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
-        // this.projectiles.push(projectile);
-        // projectile.damage = thisShip.damage;
-        // projectile.target = thisEnemy;
-        // projectile.overlaps(allSprites);
-        // projectile.moveTowards(thisEnemy, 0.1);
-        // }
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
+            for (let i = 0; i < thisShip.team.shotgunPellets; i++) {
+                let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
+                projectile.damage = thisShip.damage;
+                projectile.target = thisEnemy;
+                projectile.overlaps(allSprites);
+
+                projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+                projectile.rotation = projectile.direction;
+                thisShip.team.projectiles.push(projectile);
+            }
+        }
     }
 
     heavyShot(thisShip, thisEnemy) {
-        console.log("fires heavy");
-        // if (frameCount % 10 == 0) {
-        // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
-        // this.projectiles.push(projectile);
-        // projectile.damage = thisShip.damage;
-        // projectile.target = thisEnemy;
-        // projectile.overlaps(allSprites);
-        // projectile.moveTowards(thisEnemy, 0.1);
-        // }
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
+            let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
+            projectile.damage = thisShip.damage;
+            projectile.target = thisEnemy;
+            projectile.scale = 2;
+            projectile.overlaps(allSprites);
+
+            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+            projectile.rotation = projectile.direction;
+            thisShip.team.projectiles.push(projectile);
+
+            if (thisShip.doubleShot >= floor(random(0, 101))) {
+                this.heavyShot(thisShip, thisEnemy);
+            }
+        }
     }
 
     rapid(thisShip, thisEnemy) {
-        console.log("fires rapid");
-        // if (frameCount % 10 == 0) {
-        // let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
-        // this.projectiles.push(projectile);
-        // projectile.damage = thisShip.damage;
-        // projectile.target = thisEnemy;
-        // projectile.overlaps(allSprites);
-        // projectile.moveTowards(thisEnemy, 0.1);
-        // }
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
+            let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
+            projectile.damage = thisShip.damage;
+            projectile.target = thisEnemy;
+            projectile.overlaps(allSprites);
+
+            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+            projectile.rotation = projectile.direction;
+            thisShip.team.projectiles.push(projectile);
+        }
     }
 
 
