@@ -110,12 +110,8 @@ class gameData {
                 for (let j = 0; j < this.enemyShip.ships.length; j++) {
                     let thisShip = this.enemyShip.ships[j];
                     if (thisShip.collides(thisProj)) {
-                        if (j != 0) {
-                            this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
-                        }
-                        else {
-                            this.enemyMothership.health -= thisProj.damage;
-                        }
+                        this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
+                        this.enemyMothership.health -= thisProj.damage;
                         thisProj.remove();
                     }
                 }
@@ -152,6 +148,15 @@ class gameData {
                 }
             }
             thisEnemy.visible = thisEnemyVisible;
+        }
+    }
+
+    gameOver(losingTeam){
+        if(losingTeam == data.playerShip){
+            console.log("Game Over, You Lose");
+        }
+        if(losingTeam == data.enemyShip){
+            console.log("Game Over, You Win");
         }
     }
 }

@@ -48,31 +48,31 @@ class combatHandler {
     }
 
     heavyShot(thisShip, thisEnemy) {
-        if (frameCount % (thisShip.fireRate*100) == 0) {
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
             projectile.scale = 2;
             projectile.overlaps(allSprites);
-            
-            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy),thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+
+            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
             projectile.rotation = projectile.direction;
             thisShip.team.projectiles.push(projectile);
 
-            if(thisShip.doubleShot >= floor(random(0,101))){
-                this.heavyShot(thisShip,thisEnemy);
+            if (thisShip.doubleShot >= floor(random(0, 101))) {
+                this.heavyShot(thisShip, thisEnemy);
             }
         }
     }
 
     rapid(thisShip, thisEnemy) {
-        if (frameCount % (thisShip.fireRate*100) == 0) {
+        if (frameCount % (thisShip.fireRate * 100) == 0) {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
             projectile.overlaps(allSprites);
-            
-            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy),thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
+
+            projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
             projectile.rotation = projectile.direction;
             thisShip.team.projectiles.push(projectile);
         }

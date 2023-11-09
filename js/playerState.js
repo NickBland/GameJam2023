@@ -51,10 +51,13 @@ class playerState {
         thisShip.health -= damage;
         if (thisShip.health <= 0) {
             let number = this.ships.indexOf(thisShip);
-            thisShip.remove();
             if (thisShip.team == data.playerShip) {
                 ui.miniMapSprites.dots[number].remove();
             }
+            if (thisShip == thisShip.team.ships[0]) {
+                data.gameOver(thisShip.team);
+            }
+            thisShip.remove();
         }
     }
 
