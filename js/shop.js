@@ -118,17 +118,17 @@ class shop {
                 let flavour = new Sprite(initialButtonX + initialButtonW*1.5, button.y);
                 flavour.w = 1;
                 flavour.h = 1;
-                flavour.collider = "k";
+                flavour.collider = "n";
                 flavour.draw = () => {
                     noStroke();
                     textSize(16);
                     textAlign(LEFT, CENTER);
 
                     fill('black');
-                    text(column[j].cost, button.x-flavour.x, 0);
+                    text(column[j].cost, button.x-flavour.x - 5, 0);
                     let icon = specialmineralImg.get();
                     icon.resize(20, 0);
-                    image(icon, button.x-flavour.x - 15, 0);
+                    image(icon, button.x-flavour.x - 17, 0);
 
                     image(column_skill[j-1], -1.5*initialButtonW, 0);
 
@@ -172,6 +172,8 @@ class shop {
         this.upgradeNameBack.overlaps(allSprites);
         this.upgradeText.overlaps(allSprites);
         this.upgradeContent.overlaps(allSprites); // Final adjustments
+        //this.upgradeText.layer = 10001;
+        //this.upgradeContent.layer = 10000;
         this.upgradeNameImage[0].rotation = -90;
     }
 
@@ -392,13 +394,19 @@ class shop {
                 this.upgradeText.subgroups[i].visible = true;
                 this.upgradeNameBack[i].visible = true;
                 this.upgradeContent.subgroups[i].visible = true;
-            } else {
+                this.upgradeText.subgroups[i].layer = 10000;
+                this.upgradeContent.subgroups[i].layer = 10000;
+                this.upgrade
+            } 
+            if (i != this.selectedUpgrade) {
                 this.upgradeText.subgroups[i].visible = false;
                 this.upgradeNameBack[i].visible = false;
                 this.upgradeContent.subgroups[i].visible = false;
+                this.upgradeText.subgroups[i].layer = 9999;
+                this.upgradeContent.subgroups[i].layer = 9999;
             }
         }
-
+        
         for (let i=0; i < this.upgradeContent.length; i++) {
             if (this.upgradeContent[i].mouse.hovering()) {
                 this.upgradeContent[i].scale = 1.2;
