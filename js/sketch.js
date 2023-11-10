@@ -273,7 +273,7 @@ function preload() {
     myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf');
 
     //sound
-    pressedButton_sound = loadSound('assets/sound/button/vgmenuhighlight.wav')
+    pressedButton_sound = loadSound('assets/sound/button/vgmenuhighlight.wav');
 
     //Loading img
     loadingAni = loadAni("assets/myassets/background/loading/loading1.png", { frameSize: [64, 64], frames: 4 })
@@ -310,7 +310,7 @@ function preload() {
     harvestImg = loadImage('assets/myassets/shop/harvest.png');
     upgradeImg = loadImage('assets/myassets/shop/upgrade.png');
     purchaseImg = loadImage('assets/myassets/shop/purchase.png');
-    generalUpgradeImg = loadImage('assets/myassets/shop/generalUpgrade.png')
+    generalUpgradeImg = loadImage('assets/myassets/shop/generalUpgrade.png');
 
     //Upgrade UI
     s_allships = loadAnimation("assets/myassets/upgrade/allships/allships1.png", 4);
@@ -327,7 +327,7 @@ function preload() {
 
     //End Game
     wonImg = loadAni("assets/myassets/background/end/won/won.png", { frameSize: [64, 64], frames: 4 });
-    lostImg = loadImage("assets/myassets/background/end/lost/lost.png")
+    lostImg = loadImage("assets/myassets/background/end/lost/lost.png");
 }
 
 function setup() {
@@ -351,5 +351,3 @@ function draw() {
             break;
     }
 }
-
-

@@ -23,7 +23,7 @@ class gameData {
         this.playerMothership = this.factory.createMothership(-1400, -1400, this.playerShip);
         this.playerShip.ships.push(this.playerMothership);
 
-        this.createUnit("drone", this.playerShip, this.playerMothership)
+        this.createUnit("drone", this.playerShip, this.playerMothership);
 
         this.enemyMothership = this.factory.createMothership(-1250, -1250, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
@@ -297,7 +297,7 @@ class gameData {
 
     newShipUpgrade(team, thisShip) {
         for (let upgrade of team.ownedUpgrades) {
-            this.upgradeShips(upgrade[0], upgrade[1], thisShip)
+            this.upgradeShips(upgrade[0], upgrade[1], thisShip);
         }
     }
 

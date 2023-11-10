@@ -125,7 +125,7 @@ class spriteFactory {
 
         cruiser.w = 30;
         cruiser.h = 30;
-        cruiserShipImg.resize(cruiser.w + 20, cruiser.h + 20)
+        cruiserShipImg.resize(cruiser.w + 20, cruiser.h + 20);
         cruiser.img = cruiserShipImg;
 
         data.newShipUpgrade(team, cruiser);
@@ -147,7 +147,7 @@ class spriteFactory {
 
         battleship.w = 45;
         battleship.h = 45;
-        battleShipImg.resize(battleship.w + 20, battleship.h + 20)
+        battleShipImg.resize(battleship.w + 20, battleship.h + 20);
         battleship.img = battleShipImg;
 
         data.newShipUpgrade(team, battleship);
@@ -180,7 +180,7 @@ class spriteFactory {
 
     createProjectile(x, y) {
         let projectile = this.createObject(x, y);
-        projectile.d = 16
+        projectile.d = 16;
 
         projectile.addAni('missile', missileImg);
         projectile.addAni('bullet', bulletImg);

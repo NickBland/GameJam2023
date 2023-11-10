@@ -19,10 +19,6 @@ class shop {
         this.setupUpgradeBoard();
 
         this.upgradeButtons = new Group();
-
-        //this.upgradeContent = new this.upgradeButtons.Group();
-
-        //this.upgradeButtonsText = new this.upgradeButtons.Group();
         this.upgradeTypes = ["all ships", "drone", "corsair", "destroyer", "cruiser", "battleship"];
         this.upgradeSkills = [s_allships, s_drones, s_corsairs, s_destroyers, s_cruisers, s_battleships];
         this.selectedUpgrade = this.upgradeTypes.indexOf("all ships"); // Ensure to set starting selection as "general upgrade"
@@ -104,13 +100,12 @@ class shop {
                 button.x = initialButtonX + 4.75 * (width * 0.8 / 5.75);  // Set Column
                 button.y = initialButtonY + 30 + (j - 1) * (height * 0.4 / 5.5); //Set Row
 
-                button.w = initialButtonW * 2;
+                button.w = initialButtonW * 2.5;
                 button.h = initialButtonW;
                 button.color = '#8ea091';
                 button.strokeWeight = 2;
                 button.stroke = 'black';
                 button.collider = "k";
-                //button.text = column[j].cost;
                 button.cost = column[j].cost;
                 button.indexX = i;
                 button.indexY = j;
@@ -148,7 +143,7 @@ class shop {
             let columnBack = new Sprite(initialButtonX + i * (width * 0.8 / 5.75), initialButtonY - (height * 0.06), 50);
             columnBack.draw = () => {
                 stroke('#d19f5a');
-                line(-20, 25, 20, 25)
+                line(-20, 25, 20, 25);
             }
             columnBack.collider = "k";
             columnBack.overlaps(allSprites);
@@ -175,8 +170,6 @@ class shop {
         this.upgradeNameBack.overlaps(allSprites);
         this.upgradeText.overlaps(allSprites);
         this.upgradeContent.overlaps(allSprites); // Final adjustments
-        //this.upgradeText.layer = 10001;
-        //this.upgradeContent.layer = 10000;
         this.upgradeNameImage[0].rotation = -90;
     }
 
@@ -229,13 +222,6 @@ class shop {
         this.upgradeBoard.draw = () => {
             fill(0, 150);
             rect(0, 62.5, width * 0.8, height * 0.5);
-
-            /*strokeWeight(3);
-            line(-225, -(height * 0.15), -225, (height * 0.3));
-            line(-110, -(height * 0.15), -110, (height * 0.3));
-            line(0, -(height * 0.15), 0, (height * 0.3));
-            line(110, -(height * 0.15), 110, (height * 0.3));
-            line(225, -(height * 0.15), 225, (height * 0.3));*/
         }
         this.upgradeBoard.collider = 'n';
         this.upgradeBoard.visible = false;
@@ -246,7 +232,7 @@ class shop {
      */
     setupNotEnoughNoti() {
         let notEnoughNoti = new Sprite();
-        notEnoughNoti.collider = 'n'
+        notEnoughNoti.collider = 'n';
         notEnoughNoti.draw = () => {
             strokeWeight(2);
             fill('#8b4049');
@@ -277,7 +263,7 @@ class shop {
             if (this.#checkCost(button, ship)) {
                 this.gameData.createUnit(ui.groupTypes[button], this.gameData.playerShip, this.gameData.playerMothership);
                 ui.miniMapSprites.dots.push(ui.createMiniMapSprite());
-                data.playerShip.resources -= this.buttonValue[button]
+                data.playerShip.resources -= this.buttonValue[button];
             } else {
                 this.setupNotEnoughNoti();
             }
@@ -372,7 +358,7 @@ class shop {
         //Upgrade Buttons
         if (this.upgradeBoard.visible) {
             this.upgradeNameImage.visible = true;
-            this.upgradeUpgradeStates();
+            this.updateUpgradeStates();
         } else {
             this.upgradeNameImage.visible = false;
             this.upgradeNameBack.visible = false;
@@ -381,7 +367,7 @@ class shop {
         }
     }
 
-    upgradeUpgradeStates() {
+    updateUpgradeStates() {
         for (let i = 0; i < this.upgradeNameImage.length; i++) {
             if (this.upgradeNameImage[i].mouse.hovering()) {
                 this.upgradeNameImage[i].scale = 1.2;

@@ -55,9 +55,9 @@ class loading {
      * Sets up the loading screen to display the sprites for buttons
      */
     drawLoadingScreen() {
-        background("#253A5E")
+        background("#253A5E");
         noStroke();
-        fill('#8b4049')
+        fill('#8b4049');
         rect(0, height/2, this.startPosition, 10, 10);
         
         if (this.loadingNum<=99) {

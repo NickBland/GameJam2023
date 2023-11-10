@@ -100,7 +100,7 @@ class mainMenu {
     creditsButtonClicked() {
         pressedButton_sound.play();
 
-        this.hideMenuButton()
+        this.hideMenuButton();
         this.creditsShow = true;
     }
 
@@ -151,26 +151,26 @@ class mainMenu {
     drawMainMenuScreen() {
         textFont(myfont)
         mainMenuBgImg.resize(0, height);
-        image(mainMenuBgImg, offset_menuX, 0)
+        image(mainMenuBgImg, offset_menuX, 0);
         image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-        offset_menuX -= 1
+        offset_menuX -= 1;
         if (offset_menuX <= -mainMenuBgImg.width) {
             offset_menuX = 0;
         }
-        stroke('#d19f5a')
-        strokeWeight(5)
-        noFill()
+        stroke('#d19f5a');
+        strokeWeight(5);
+        noFill();
         rect(0.2 * canvas.w, 0.3 * canvas.h, 0.6 * canvas.w, 0.11 * canvas.h, 20);
-        fill('#ffe7d6')
-        stroke('#8b4049')
-        textAlign(CENTER, CENTER)
-        textFont(myfontB, 40)
-        text("Xeno Hunters", canvas.w / 2, 0.35 * canvas.h)
+        fill('#ffe7d6');
+        stroke('#8b4049');
+        textAlign(CENTER, CENTER);
+        textFont(myfontB, 40);
+        text("Xeno Hunters", canvas.w / 2, 0.35 * canvas.h);
         strokeWeight(1);
         textFont(myfont);
     
         if (this.tutorialShow || this.creditsShow) {
-            image(mainMenuBgImg, offset_menuX, 0)
+            image(mainMenuBgImg, offset_menuX, 0);
             image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
     
             noStroke();

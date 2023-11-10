@@ -31,9 +31,9 @@ class userInterface {
 
     setupUIBar() {
         this.UIBar = new Sprite(this.container.x, this.container.y + this.container.h / 2, this.container.w, this.container.h);
-        this.UIBar.color = '#787878'
-        this.UIBar.stroke = 'black'
-        this.UIBar.strokeWeight = 2
+        this.UIBar.color = '#787878';
+        this.UIBar.stroke = 'black';
+        this.UIBar.strokeWeight = 2;
         this.UIBar.color.setAlpha(150);
         this.UIBar.collider = 'n';
         this.UIBar.overlaps(allSprites);
@@ -79,14 +79,14 @@ class userInterface {
             button.y = initialSelectorPositionY + offsetY;
             button.w = initialSelectorPositionWidth;
             button.h = initialSelectorPositionHeight;
-            button.color = '#d19f5a'
-            button.strokeWeight = 2
-            button.stroke = 'black'
-            button.textColor = '#ffe7d6'
-            button.textSize = 14
-            button.text = i + 1
+            button.color = '#d19f5a';
+            button.strokeWeight = 2;
+            button.stroke = 'black';
+            button.textColor = '#ffe7d6';
+            button.textSize = 14;
+            button.text = i + 1;
             button.collider = "k";
-            button.overlaps(allSprites)
+            button.overlaps(allSprites);
             buttonArray.push(button);
         }
         return buttonArray;
@@ -98,15 +98,15 @@ class userInterface {
     #drawHealth() {
         let initialDigitX = width * 0.9;
         let initialDigitY = this.#groupButtons[2].y;
-        textSize(16)
-        textFont(myfontB)
-        fill("#8ea091")
-        stroke('black')
-        text(data.playerMothership.health, initialDigitX, initialDigitY)
+        textSize(16);
+        textFont(myfontB);
+        fill("#8ea091");
+        stroke('black');
+        text(data.playerMothership.health, initialDigitX, initialDigitY);
 
         for (let i = 0; i < 5; i++) {
-            let healthIcon = 100 * i
-            let healthValue
+            let healthIcon = 100 * i;
+            let healthValue;
             if (data.playerMothership.health >= 100 * (i + 1)) {
                 healthValue = 0
             } else {
@@ -120,7 +120,7 @@ class userInterface {
                     healthValue = 4
                 }
             }
-            image(health[healthValue], width * (0.84 + 0.03 * i), this.#groupButtons[1].y)
+            image(health[healthValue], width * (0.84 + 0.03 * i), this.#groupButtons[1].y);
         }
     }
 
@@ -131,12 +131,12 @@ class userInterface {
         let initialDigitX = width * 0.75;
         let initialDigitY = this.#groupButtons[2].y;
         fill('#d19f5a');
-        textFont(myfontB)
-        text(data.playerShip.resources, initialDigitX, initialDigitY)
-        text(data.playerShip.specialResources, initialDigitX, this.#groupButtons[1].y)
+        textFont(myfontB);
+        text(data.playerShip.resources, initialDigitX, initialDigitY);
+        text(data.playerShip.specialResources, initialDigitX, this.#groupButtons[1].y);
         imageMode(CENTER);
-        image(mineralImg, initialDigitX * 0.85, initialDigitY)
-        image(specialmineralImg, initialDigitX * 0.85, this.#groupButtons[1].y)
+        image(mineralImg, initialDigitX * 0.85, initialDigitY);
+        image(specialmineralImg, initialDigitX * 0.85, this.#groupButtons[1].y);
     }
 
     /**
@@ -146,12 +146,8 @@ class userInterface {
         for (let i = 0; i < this.#groupButtons.length; i++) {
             // Stroke
             if (this.#groupButtons[i].mouse.hovering()) {
-                //this.#groupButtons[i].strokeWeight = 3;
-                //this.#groupButtons[i].stroke = "white"
                 this.#groupButtons[i].scale = 1.2
             } else {
-                //this.#groupButtons[i].strokeWeight = 1;
-                //this.#groupButtons[i].stroke = "black"
                 this.#groupButtons[i].scale = 1
             }
 
@@ -323,7 +319,7 @@ class userInterface {
                 let selectedShip = data.playerShip.ships[i];
                 if (this.selectionBox.overlapping(selectedShip)) {
                     selectedShip.selected = true;
-                    selectedShip.stroke = "#ffe7d6"
+                    selectedShip.stroke = "#ffe7d6";
                     selectedShip.strokeWeight = 2;
                 }
             }
@@ -345,7 +341,7 @@ class userInterface {
 
         textFont(myfont)
         textAlign(CENTER, CENTER);
-        fill("#ffe7d6")
+        fill("#ffe7d6");
         text("Selected Group", this.#groupButtons[2].x, this.#groupButtons[2].y * 0.95);
 
         textAlign(RIGHT, CENTER);
@@ -357,7 +353,7 @@ class userInterface {
         textSize(18);
         text("Health", width * 0.9, this.#groupButtons[2].y * 0.95);
 
-        this.shopUI.displayShopName()
+        this.shopUI.displayShopName();
     }
 
 

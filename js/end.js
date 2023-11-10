@@ -4,19 +4,18 @@
 class end {
     
     constructor() {
-        this.backgroundSprite
-        this.restartButton
-        //this.endChar
+        this.backgroundSprite;
+        this.restartButton;
         this.drawInitialEndScreen();
     }
     
     drawInitialEndScreen() {
-        this.backgroundSprite = new Sprite(width/2, height/2, width, height)
+        this.backgroundSprite = new Sprite(width/2, height/2, width, height);
         this.backgroundSprite.draw = () => {
             fill('#253A5E');
             rect(0, 0, width, height);
             textFont(myfontB, 36);
-            textAlign(CENTER, CENTER)
+            textAlign(CENTER, CENTER);
             if (winGame) {
                 fill('#d19f5a')
                 text("Game Over! You Won", 0, -150)
@@ -33,8 +32,8 @@ class end {
         }
         this.backgroundSprite.collider = 'n';
 
-        textFont(myfont)
-        this.restartButton = new Sprite(width/2, height/2+150, 0.3*width, 0.08*height)
+        textFont(myfont);
+        this.restartButton = new Sprite(width/2, height/2+150, 0.3*width, 0.08*height);
         this.restartButton.textFont = myfont;
         this.restartButton.textColor = "#ffe7d6";
         this.restartButton.textSize = 24;
