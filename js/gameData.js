@@ -25,7 +25,7 @@ class gameData {
 
         this.createUnit("drone", this.playerShip, this.playerMothership);
 
-        this.enemyMothership = this.factory.createMothership(-1250, -1250, this.enemyShip);
+        this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
         this.createUnit("drone", this.enemyShip, this.enemyMothership);
