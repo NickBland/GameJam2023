@@ -25,7 +25,7 @@ class gameData {
 
         this.createUnit("drone", this.playerShip, this.playerMothership)
 
-        this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
+        this.enemyMothership = this.factory.createMothership(-1250, -1250, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
         this.createUnit("drone", this.enemyShip, this.enemyMothership);
@@ -107,8 +107,22 @@ class gameData {
                     let thisShip = this.enemyShip.ships[j];
                     if (thisShip.collides(thisProj)) {
                         this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
-                        thisProj.changeAni('explosion');
-                        thisProj.life = 28;
+                        thisProj.collider = "n"
+                        if (thisProj.type == "shotgun") {
+                            thisProj.changeAni('small explosion');
+                            thisProj.ani.rotation = 180;
+                            thisProj.life = 4;
+                        } else if (thisProj.type == "rapid") {
+                            thisProj.changeAni("explosion");
+                            thisProj.ani.scale = 3;
+                            thisProj.life = 28;
+                        } else if (thisProj.type == "heavyshot") {
+                            thisProj.changeAni('big explosion');
+                            thisProj.ani.scale = 0.75;
+                            thisProj.life = 28;
+                        } else {
+                            thisProj.remove();
+                        }
                     }
                 }
             }
@@ -121,7 +135,22 @@ class gameData {
                     let thisShip = this.playerShip.ships[j];
                     if (thisShip.collides(thisProj)) {
                         this.playerShip.takeDamage(thisProj.damage, this.playerShip.ships[j]);
-                        thisProj.remove();
+                        thisProj.collider = "n"
+                        if (thisProj.type == "shotgun") {
+                            thisProj.changeAni('small explosion');
+                            thisProj.ani.rotation = 180;
+                            thisProj.life = 4;
+                        } else if (thisProj.type == "rapid") {
+                            thisProj.changeAni("explosion");
+                            thisProj.ani.scale = 3;
+                            thisProj.life = 28;
+                        } else if (thisProj.type == "heavyshot") {
+                            thisProj.changeAni('big explosion');
+                            thisProj.ani.scale = 0.75;
+                            thisProj.life = 28;
+                        } else {
+                            thisProj.remove();
+                        }
                     }
                 }
             }

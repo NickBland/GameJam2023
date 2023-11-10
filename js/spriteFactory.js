@@ -185,14 +185,14 @@ class spriteFactory {
         projectile.addAni('missile', missileImg);
         projectile.addAni('bullet', bulletImg);
         projectile.addAni('flameshot', flameshotImg);
-        projectile.addAni('explosion', explosionEffect)
+        projectile.addAni('explosion', explosionEffect);
+        projectile.addAni('small explosion', smallexplosionEffect);
+        projectile.addAni('big explosion', bigexplosionEffect);
+
         projectile.changeAni('flameshot');
         projectile.anis.rotation = 90;
         projectile.anis.scale=2;
-
-        
-
-        //projectile.life = 70;
+        projectile.life = 60;
         return (projectile);
     }
 }

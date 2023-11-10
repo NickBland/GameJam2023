@@ -24,6 +24,8 @@ class combatHandler {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
+            projectile.type = "standard";
+            projectile.changeAni('missile');
             projectile.overlaps(allSprites);
 
             projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
@@ -38,6 +40,8 @@ class combatHandler {
                 let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
                 projectile.damage = thisShip.damage;
                 projectile.target = thisEnemy;
+                projectile.type = "shotgun";
+                projectile.changeAni('missile');
                 projectile.overlaps(allSprites);
 
                 projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);
@@ -52,6 +56,8 @@ class combatHandler {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
+            projectile.type = "heavyshot";
+            projectile.changeAni("flameshot");
             projectile.scale = 2;
             projectile.overlaps(allSprites);
 
@@ -70,6 +76,8 @@ class combatHandler {
             let projectile = data.factory.createProjectile(thisShip.x, thisShip.y);
             projectile.damage = thisShip.damage;
             projectile.target = thisEnemy;
+            projectile.type = "rapid";
+            projectile.changeAni("bullet");
             projectile.overlaps(allSprites);
 
             projectile.moveTowards(thisEnemy.x + random(-thisShip.accuracy, thisShip.accuracy), thisEnemy.y + random(-thisShip.accuracy, thisShip.accuracy), 0.1);

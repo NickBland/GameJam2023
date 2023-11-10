@@ -9,7 +9,7 @@ let offset_menuX = 0;
 
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
-let missileImg, bulletImg, flameshotImg, explosionEffect;
+let missileImg, bulletImg, flameshotImg, explosionEffect, bigexplosionEffect, smallexplosionEffect;
 let harvestImg, upgradeImg, purchaseImg, generalUpgradeImg;
 
 let s_allships, s_drones, s_corsairs, s_destroyers, s_cruisers, s_battleships;
@@ -298,6 +298,8 @@ function preload() {
     bulletImg = loadAni("assets/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
     flameshotImg = loadAni("assets/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
     explosionEffect = loadAni("assets/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 });
+    bigexplosionEffect = loadAni("assets/myassets/projectile/Big_Explosion.png", { frameSize: [32, 32], frames: 8 });
+    smallexplosionEffect = loadAni("assets/myassets/projectile/Small_Explosion.png", { frameSize: [16, 16], frames: 2 });
 
     //Asteroid img
     asteroidInitial = loadAni('assets/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
