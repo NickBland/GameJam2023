@@ -13,7 +13,8 @@ let missileImg, bulletImg, flameshotImg, explosionEffect;
 let harvestImg, upgradeImg, purchaseImg;
 let health;
 
-let winGame;
+let winGame; 
+let wonImg, lostImg;
 
 let pressedButton_sound;
 
@@ -311,6 +312,10 @@ function preload() {
     health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
     // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name..
+
+    //End Game
+    wonImg = loadAni("assets/images/myassets/background/end/won/won1.png", { frameSize: [64, 64], frames: 4 });
+    lostImg = loadImage("assets/images/myassets/background/end/lost/lost.png")
 }
 
 function setup() {
