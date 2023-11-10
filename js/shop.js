@@ -86,9 +86,6 @@ class shop {
         let initialButtonW = 32;
 
         let requiredAssets = [generalUpgradeImg.get(), droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get()];
-        requiredAssets[0].resize(30, 0);
-        requiredAssets[1].resize(75,0);
-        requiredAssets[2].resize(70,0);
 
 
         for (let i = 0; i < this.upgrades.length; i++) {
@@ -158,6 +155,12 @@ class shop {
             columnImage.x = initialButtonX + i * (width * 0.8 / 5.75);
             columnImage.y = initialButtonY - (height * 0.06);
             columnImage.collider = "k";
+            requiredAssets[i].resize(50, 0);
+            requiredAssets[0].resize(30, 0);
+            requiredAssets[1].resize(60,0);
+            requiredAssets[2].resize(60,0);
+            
+
             columnImage.img = requiredAssets[i];
 
             columnImage.overlaps(allSprites);
@@ -364,7 +367,7 @@ class shop {
         //Upgrade Buttons
         if (this.upgradeBoard.visible) {
             this.upgradeNameImage.visible = true;
-            this.upgradeUpgradeStates();
+            this.updateUpgradeStates();
         } else {
             this.upgradeNameImage.visible = false;
             this.upgradeNameBack.visible = false;
@@ -373,7 +376,7 @@ class shop {
         }     
     }
 
-    upgradeUpgradeStates() {
+    updateUpgradeStates() {
         for (let i=0; i < this.upgradeNameImage.length; i++) {
             if (this.upgradeNameImage[i].mouse.hovering()) {
                 this.upgradeNameImage[i].scale = 1.2;
