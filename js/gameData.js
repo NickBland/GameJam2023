@@ -24,19 +24,11 @@ class gameData {
         this.playerShip.ships.push(this.playerMothership);
 
         this.createUnit("drone", this.playerShip, this.playerMothership)
-        this.createUnit("corsair", this.playerShip, this.playerMothership)
-        this.createUnit("destroyer", this.playerShip, this.playerMothership)
-        this.createUnit("cruiser", this.playerShip, this.playerMothership)
-        this.createUnit("battleship", this.playerShip, this.playerMothership)
 
-        this.enemyMothership = this.factory.createMothership(-1200, -1200, this.enemyShip);
+        this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
-        this.createUnit("drone", this.enemyShip, this.enemyMothership)
-        // this.createUnit("corsair", this.enemyShip, this.enemyMothership)
-        // this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
-        // this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
-        // this.createUnit("battleship", this.enemyShip, this.enemyMothership)
+        this.createUnit("drone", this.enemyShip, this.enemyMothership);
 
         for (let i = 0; i < this.asteroidDensity; i++) {
             this.createAsteroid();
@@ -115,7 +107,6 @@ class gameData {
                     let thisShip = this.enemyShip.ships[j];
                     if (thisShip.collides(thisProj)) {
                         this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
-                        this.enemyMothership.health -= thisProj.damage;
                         thisProj.changeAni('explosion');
                         thisProj.life = 28;
                     }
@@ -129,12 +120,7 @@ class gameData {
                 for (let j = 0; j < this.playerShip.ships.length; j++) {
                     let thisShip = this.playerShip.ships[j];
                     if (thisShip.collides(thisProj)) {
-                        if (j != 0) {
-                            this.playerShip.takeDamage(thisProj.damage, this.playerShip.ships[j]);
-                        }
-                        else {
-                            this.playerMothership.health -= thisProj.damage;
-                        }
+                        this.playerShip.takeDamage(thisProj.damage, this.playerShip.ships[j]);
                         thisProj.remove();
                     }
                 }
@@ -169,7 +155,7 @@ class gameData {
         }
     }
 
-    upgradeShips(x, y, team) {
+    upgradeShips(x, y, thisShip) {
         let thisUpgrade = this.upgrades[x][y];
         let thisAttribute = thisUpgrade.attribute;
         let thisType = thisUpgrade.type;
@@ -177,7 +163,7 @@ class gameData {
 
         switch (x) {
             case 0:
-                for (let thisShip of team.ships) {
+                if(thisShip) {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -191,7 +177,7 @@ class gameData {
                 break;
 
             case 1:
-                for (let thisShip of team.drones) {
+                if(thisShip.group == "drone") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -205,7 +191,7 @@ class gameData {
                 break;
 
             case 2:
-                for (let thisShip of team.corsairs) {
+                if(thisShip.group == "corsiar") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -219,7 +205,7 @@ class gameData {
                 break;
 
             case 3:
-                for (let thisShip of team.destroyers) {
+                if(thisShip.group == "destroyer") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -233,7 +219,7 @@ class gameData {
                 break;
 
             case 4:
-                for (let thisShip of team.cruisers) {
+                if(thisShip.group == "cruiser") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -247,7 +233,7 @@ class gameData {
                 break;
 
             case 5:
-                for (let thisShip of team.battleships) {
+                if(thisShip.group == "battleship") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -266,15 +252,23 @@ class gameData {
     specialUpgrade(thisUpgrade, thisShip) {
         switch (thisUpgrade.type) {
             case "nick":
-
+                thisShip.team.shotgunPellets += 2;
                 break;
             case "thien":
-
+                thisShip[thisUpgrade[attribute]] *= thisUpgrade.upgrade;
                 break;
             case "jesse":
-
+                thisShip.fireRate *= 0.5;
+                thisShip.health *= 1.25;
+                thisShip.fastness += 1.5;
                 break;
             default:
+        }
+    }
+
+    newShipUpgrade(team, thisShip) {
+        for (let upgrade of team.ownedUpgrades) {
+            this.upgradeShips(upgrade[0], upgrade[1], thisShip)
         }
     }
 
@@ -298,7 +292,7 @@ class gameData {
                 {
                     name: "Denser Hulls",
                     effectText: "All Ship Hitpoints +10%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "health",
@@ -308,7 +302,7 @@ class gameData {
                 {
                     name: "Larger Reactors",
                     effectText: "Speed of all Ships +1.5 U/s",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fastness",
@@ -318,7 +312,7 @@ class gameData {
                 {
                     name: "Powerful Lasers",
                     effectText: "Damage Dealt by all Ships +5%",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "damage",
@@ -336,12 +330,12 @@ class gameData {
                     enemyOwned: false,
                     attribute: "collectionSpeed",
                     type: "percent",
-                    upgrade: 1.15
+                    upgrade: 0.85
                 },
                 {
                     name: "Precision Scanner",
                     effectText: "Special Resource Chance +5%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "specResChance",
@@ -351,7 +345,7 @@ class gameData {
                 {
                     name: "Larger Hold",
                     effectText: "Carrying Capacity of Drones +10%",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "resourceCap",
@@ -361,7 +355,7 @@ class gameData {
                 {
                     name: "Lightweight Materials",
                     effectText: "Movement Speed of Drones +3.5 U/s",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fastness",
@@ -370,13 +364,13 @@ class gameData {
                 },
                 {
                     name: "Enrichment Processing",
-                    effectText: "Chance of Double Resource Collection +1%",
-                    cost: 10,
+                    effectText: "Chance of Double Resource Collection +5%",
+                    cost: 50,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "collectCrit",
                     type: "percent",
-                    upgrade: 1.01
+                    upgrade: 1.1
                 },
             ],
             [
@@ -394,7 +388,7 @@ class gameData {
                 {
                     name: "More Guns",
                     effectText: "Damage Dealt by Corsairs +5%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "damage",
@@ -404,7 +398,7 @@ class gameData {
                 {
                     name: "Insulated Padding",
                     effectText: "Corsair Hitpoints +10%",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "health",
@@ -414,7 +408,7 @@ class gameData {
                 {
                     name: "Advanced Ordnances",
                     effectText: "Corsair Rate of Fire +20%",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fireRate",
@@ -424,7 +418,7 @@ class gameData {
                 {
                     name: "Advanced Targetting System",
                     effectText: "Corsair Accuracy +20%",
-                    cost: 10,
+                    cost: 50,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "accuracy",
@@ -447,7 +441,7 @@ class gameData {
                 {
                     name: "Heavy Slugs",
                     effectText: "Destroyer Damage +5%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "damage",
@@ -457,7 +451,7 @@ class gameData {
                 {
                     name: "Composite Armour",
                     effectText: "Destroyer Hitpoints +10%",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fastness",
@@ -467,7 +461,7 @@ class gameData {
                 {
                     name: "Nick's Meds",
                     effectText: "Shoot 2 More Pellets",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "shotgunPellets",
@@ -477,7 +471,7 @@ class gameData {
                 {
                     name: "Shell Ejectors",
                     effectText: "Destroyer Rate of Fire +10%",
-                    cost: 10,
+                    cost: 50,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fireRate",
@@ -500,7 +494,7 @@ class gameData {
                 {
                     name: "Explosive-Infused Alloys",
                     effectText: "Cruiser Damage +5%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "damage",
@@ -510,7 +504,7 @@ class gameData {
                 {
                     name: "Reinforced Weakpoints",
                     effectText: "Cruiser Hitpoints +10%",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "health",
@@ -520,7 +514,7 @@ class gameData {
                 {
                     name: "Thien's Optimiser",
                     effectText: "Chance of Double Shot +5%",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "doubleShot",
@@ -530,7 +524,7 @@ class gameData {
                 {
                     name: "Weapon Heatsinks",
                     effectText: "Cruiser Rate of Fire +15%",
-                    cost: 10,
+                    cost: 50,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "fireRate",
@@ -553,7 +547,7 @@ class gameData {
                 {
                     name: "Lead-Tipped Projectiles",
                     effectText: "Battleship Damage +10%",
-                    cost: 10,
+                    cost: 20,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "damage",
@@ -563,7 +557,7 @@ class gameData {
                 {
                     name: "Shock Absorbing Insulation",
                     effectText: "Battleship Hitpoints +20%",
-                    cost: 10,
+                    cost: 30,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "health",
@@ -573,7 +567,7 @@ class gameData {
                 {
                     name: "Barrel Compensators",
                     effectText: "Battleship Accuracy +20%",
-                    cost: 10,
+                    cost: 40,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "accuracy",
@@ -583,7 +577,7 @@ class gameData {
                 {
                     name: "Jesse's Jest",
                     effectText: "No More",
-                    cost: 10,
+                    cost: 100,
                     playerOwned: false,
                     enemyOwned: false,
                     attribute: "weaponType",

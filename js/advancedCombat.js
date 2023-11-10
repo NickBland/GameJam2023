@@ -59,7 +59,7 @@ class combatHandler {
             projectile.rotation = projectile.direction;
             thisShip.team.projectiles.push(projectile);
 
-            if (thisShip.doubleShot >= floor(random(0, 101))) {
+            if (thisShip.doubleShot >= random(101)) {
                 this.heavyShot(thisShip, thisEnemy);
             }
         }
