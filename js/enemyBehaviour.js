@@ -29,21 +29,19 @@ class enemyBehaviour {
 
             for (let i = 0; i < data.asteroids.length; i++) {
                 let thisAsteroid = data.asteroids[i];
-                if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources < 10) {
+                if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources <= thisShip.resourceCap) {
                     data.enemyShip.harvestResources(thisShip, thisAsteroid);
                 }
             }
 
             //Handles Resource Harvesting
-            if (thisShip.group == "drone") {
-                if (dist(thisShip.x, thisShip.y, data.enemyMothership.x, data.enemyMothership.y) < 65) {
-                    data.enemyShip.resources += thisShip.resources;
-                    data.enemyShip.specialResources += thisShip.specialResources;
-                    thisShip.resources = 0;
-                    thisShip.specialResources = 0;
-                    if (thisShip.target != null) {
-                        data.enemyShip.setDestination(thisShip.target.x, thisShip.target.y, thisShip);
-                    }
+            if (dist(thisShip.x, thisShip.y, data.enemyMothership.x, data.enemyMothership.y) < 65) {
+                data.enemyShip.resources += thisShip.resources;
+                data.enemyShip.specialResources += thisShip.specialResources;
+                thisShip.resources = 0;
+                thisShip.specialResources = 0;
+                if (thisShip.target != null) {
+                    data.enemyShip.setDestination(thisShip.target.x, thisShip.target.y, thisShip);
                 }
             }
         }
@@ -147,7 +145,6 @@ class enemyBehaviour {
         }
 
         //Researching
-
         let researchArr = [[1, 1], [0, 3], [1, 2], [1, 3], [0, 2], [0, 4], [2, 3], [2, 2], [1, 4], [0, 1], [3, 1], [3, 2], [4, 1], [4, 2], [2, 1], [3, 3], [2, 4], [1, 5], [5, 1], [4, 3], [3, 4], [2, 5], [5, 2], [4, 4], [3, 5], [5, 3], [4, 5], [5, 4], [5, 5]];
         let research = thisState.ownedUpgrades.length;
 

@@ -255,7 +255,7 @@ class gameData {
                 thisShip.team.shotgunPellets += 2;
                 break;
             case "thien":
-                thisShip[thisUpgrade[attribute]] *= thisUpgrade.upgrade;
+                thisShip.doubleShot *= thisUpgrade.upgrade;
                 break;
             case "jesse":
                 thisShip.fireRate *= 0.5;

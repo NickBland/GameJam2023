@@ -86,6 +86,9 @@ class shop {
         let initialButtonW = 32;
 
         let requiredAssets = [generalUpgradeImg.get(), droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get()];
+        requiredAssets[0].resize(30, 0);
+        requiredAssets[1].resize(75, 0);
+        requiredAssets[2].resize(70, 0);
 
 
         for (let i = 0; i < this.upgrades.length; i++) {
@@ -100,8 +103,8 @@ class shop {
                 let button = new Sprite();
                 button.x = initialButtonX + 4.75 * (width * 0.8 / 5.75);  // Set Column
                 button.y = initialButtonY + 30 + (j - 1) * (height * 0.4 / 5.5); //Set Row
-            
-                button.w = initialButtonW*2;
+
+                button.w = initialButtonW * 2;
                 button.h = initialButtonW;
                 button.color = '#8ea091';
                 button.strokeWeight = 2;
@@ -115,7 +118,7 @@ class shop {
 
 
                 // GENERATE FLAVOUR TEXT FOR THIS UPGRADE
-                let flavour = new Sprite(initialButtonX + initialButtonW*1.5, button.y);
+                let flavour = new Sprite(initialButtonX + initialButtonW * 1.5, button.y);
                 flavour.w = 1;
                 flavour.h = 1;
                 flavour.collider = "n";
@@ -125,12 +128,12 @@ class shop {
                     textAlign(LEFT, CENTER);
 
                     fill('black');
-                    text(column[j].cost, button.x-flavour.x - 5, 0);
+                    text(column[j].cost, button.x - flavour.x, 0);
                     let icon = specialmineralImg.get();
                     icon.resize(20, 0);
-                    image(icon, button.x-flavour.x - 17, 0);
+                    image(icon, button.x - flavour.x - 15, 0);
 
-                    image(column_skill[j-1], -1.5*initialButtonW, 0);
+                    image(column_skill[j - 1], -1.5 * initialButtonW, 0);
 
                     fill("#d19f5a");
                     text(column[j].name, 0, -10);
@@ -141,7 +144,7 @@ class shop {
                 };
                 textContent.push(flavour);
             }
-            
+
             let columnBack = new Sprite(initialButtonX + i * (width * 0.8 / 5.75), initialButtonY - (height * 0.06), 50);
             columnBack.draw = () => {
                 stroke('#d19f5a');
@@ -284,7 +287,7 @@ class shop {
                 this.upgrades[this.upgradeContent[button].indexX][this.upgradeContent[button].indexY].playerOwned = true;
                 this.gameData.playerShip.ownedUpgrades.push([this.upgradeContent[button].indexX, this.upgradeContent[button].indexY]);
                 data.playerShip.specialResources -= this.upgradeContent[button].cost;
-                for(let thisShip of data.playerShip.ships){
+                for (let thisShip of data.playerShip.ships) {
                     data.upgradeShips(this.upgradeContent[button].indexX, this.upgradeContent[button].indexY, thisShip);
                 }
             } else {
@@ -369,17 +372,17 @@ class shop {
         //Upgrade Buttons
         if (this.upgradeBoard.visible) {
             this.upgradeNameImage.visible = true;
-            this.updateUpgradeStates();
+            this.upgradeUpgradeStates();
         } else {
             this.upgradeNameImage.visible = false;
             this.upgradeNameBack.visible = false;
             this.upgradeText.visible = false;
             this.upgradeContent.visible = false;
-        }     
+        }
     }
 
-    updateUpgradeStates() {
-        for (let i=0; i < this.upgradeNameImage.length; i++) {
+    upgradeUpgradeStates() {
+        for (let i = 0; i < this.upgradeNameImage.length; i++) {
             if (this.upgradeNameImage[i].mouse.hovering()) {
                 this.upgradeNameImage[i].scale = 1.2;
 
@@ -406,8 +409,8 @@ class shop {
                 this.upgradeContent.subgroups[i].layer = 9999;
             }
         }
-        
-        for (let i=0; i < this.upgradeContent.length; i++) {
+
+        for (let i = 0; i < this.upgradeContent.length; i++) {
             if (this.upgradeContent[i].mouse.hovering()) {
                 this.upgradeContent[i].scale = 1.2;
                 if (this.upgradeContent[i].mouse.presses()) {
