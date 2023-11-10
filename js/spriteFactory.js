@@ -180,10 +180,19 @@ class spriteFactory {
 
     createProjectile(x, y) {
         let projectile = this.createObject(x, y);
-        projectile.w = 5;
-        projectile.h = 10;
+        projectile.d = 16
 
-        projectile.life = 100;
+        projectile.addAni('missile', missileImg);
+        projectile.addAni('bullet', bulletImg);
+        projectile.addAni('flameshot', flameshotImg);
+        projectile.addAni('explosion', explosionEffect)
+        projectile.changeAni('flameshot');
+        projectile.anis.rotation = 90;
+        projectile.anis.scale=2;
+
+        
+
+        //projectile.life = 70;
         return (projectile);
     }
 }

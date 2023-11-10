@@ -277,56 +277,56 @@ function preload() {
     pressedButton_sound = loadSound('assets/sound/button/vgmenuhighlight.wav')
 
     //Loading img
-    loadingAni = loadAni("assets/images/myassets/background/loading3.png", { frameSize: [64, 64], frames: 4 })
-    loadingDone = loadAni("assets/images/myassets/background/loading4.png", { frameSize: [64, 64], frames: 2 })
+    loadingAni = loadAni("assets/myassets/background/loading/loading1.png", { frameSize: [64, 64], frames: 4 })
+    loadingDone = loadAni("assets/myassets/background/loading/loading2.png", { frameSize: [64, 64], frames: 2 })
 
     //Background img
-    mainMenuBgImg = loadImage("assets/images/myassets/background/mainMenu1.png");
-    gameBgImg = loadImage("assets/images/myassets/background/game2.png");
-    miniFOV = loadImage("assets/images/myassets/background/clear.png");
+    mainMenuBgImg = loadImage("assets/myassets/background/mainmenu/mainmenu.png");
+    gameBgImg = loadImage("assets/myassets/background/game/game.png");
+    miniFOV = loadImage("assets/myassets/background/minimap/clear.png");
 
     //Ships img
-    battleShipImg = loadImage("assets/images/myassets/ships/battleship.png");
-    corsairShipImg = loadImage("assets/images/myassets/ships/corsairship.png");
-    cruiserShipImg = loadImage("assets/images/myassets/ships/cruisership.png");
-    destroyerShipImg = loadImage("assets/images/myassets/ships/destroyership.png");
-    droneShipImg = loadImage("assets/images/myassets/ships/droneship.png");
-    motherShipImg = loadImage("assets/images/myassets/ships/mothership.png");
+    battleShipImg = loadImage("assets/myassets/ships/battleship.png");
+    corsairShipImg = loadImage("assets/myassets/ships/corsairship.png");
+    cruiserShipImg = loadImage("assets/myassets/ships/cruisership.png");
+    destroyerShipImg = loadImage("assets/myassets/ships/destroyership.png");
+    droneShipImg = loadImage("assets/myassets/ships/droneship.png");
+    motherShipImg = loadImage("assets/myassets/ships/mothership.png");
 
     //Projectiles Img
-    missileImg = loadAni("assets/images/myassets/projectile/Missile-Spritesheet.png", { frameSize: [8, 8], frames: 3 });
-    bulletImg = loadAni("assets/images/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
-    flameshotImg = loadAni("assets/images/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
-    explosionEffect = loadAni("assets/images/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 });
+    missileImg = loadAni("assets/myassets/projectile/Missile-Spritesheet.png", { frameSize: [8, 8], frames: 3 });
+    bulletImg = loadAni("assets/myassets/projectile/Bullets-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
+    flameshotImg = loadAni("assets/myassets/projectile/Flameshot-Spritesheet.png", { frameSize: [8, 8], frames: 2 });
+    explosionEffect = loadAni("assets/myassets/projectile/Explosion-Spritesheet.png", { frameSize: [16, 16], frames: 8 });
 
     //Asteroid img
-    asteroidInitial = loadAni('assets/images/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
-    asteroidExplode = loadAni('assets/images/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
-    mineralImg = loadImage('assets/images/myassets/asteroids/mineral.png');
-    specialmineralImg = loadImage('assets/images/myassets/asteroids/specialmineral.png');
+    asteroidInitial = loadAni('assets/myassets/asteroids/asteroidInitial.png', { frameSize: [96, 96], frames: 1 });
+    asteroidExplode = loadAni('assets/myassets/asteroids/asteroidExplode.png', { frameSize: [96, 96], frames: 8 });
+    mineralImg = loadImage('assets/myassets/asteroids/mineral.png');
+    specialmineralImg = loadImage('assets/myassets/asteroids/specialmineral.png');
 
     //Shop UI
-    harvestImg = loadImage('assets/images/myassets/shop/harvest.png');
-    upgradeImg = loadImage('assets/images/myassets/shop/upgrade.png');
-    purchaseImg = loadImage('assets/images/myassets/shop/purchase.png');
-    generalUpgradeImg = loadImage('assets/images/myassets/shop/generalUpgrade.png')
+    harvestImg = loadImage('assets/myassets/shop/harvest.png');
+    upgradeImg = loadImage('assets/myassets/shop/upgrade.png');
+    purchaseImg = loadImage('assets/myassets/shop/purchase.png');
+    generalUpgradeImg = loadImage('assets/myassets/shop/generalUpgrade.png')
 
     //Upgrade UI
-    s_allships = loadAnimation("assets/images/myassets/upgrade/allships/allships1.png", 4);
-    s_drones = loadAnimation("assets/images/myassets/upgrade/drones/drones1.png", 5);
-    s_corsairs = loadAnimation("assets/images/myassets/upgrade/corsairs/corsairs1.png", 5);
-    s_destroyers = loadAnimation("assets/images/myassets/upgrade/destroyers/destroyers1.png", 5);
-    s_cruisers = loadAnimation("assets/images/myassets/upgrade/cruisers/cruisers1.png", 5);
-    s_battleships = loadAnimation("assets/images/myassets/upgrade/battleships/battleships1.png", 5);
+    s_allships = loadAnimation("assets/myassets/upgrade/allships/allships1.png", 4);
+    s_drones = loadAnimation("assets/myassets/upgrade/drones/drones1.png", 5);
+    s_corsairs = loadAnimation("assets/myassets/upgrade/corsairs/corsairs1.png", 5);
+    s_destroyers = loadAnimation("assets/myassets/upgrade/destroyers/destroyers1.png", 5);
+    s_cruisers = loadAnimation("assets/myassets/upgrade/cruisers/cruisers1.png", 5);
+    s_battleships = loadAnimation("assets/myassets/upgrade/battleships/battleships1.png", 5);
 
     //Health status img
-    health = loadAnimation("assets/images/myassets/health/heart0.png", 4);
+    health = loadAnimation("assets/myassets/health/heart0.png", 4);
     // Load as an animation which is effectively an array. HOWEVER, the ordering is not messed up due to the async nature of preload
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name..
 
     //End Game
-    wonImg = loadAni("assets/images/myassets/background/end/won/won1.png", { frameSize: [64, 64], frames: 4 });
-    lostImg = loadImage("assets/images/myassets/background/end/lost/lost.png")
+    wonImg = loadAni("assets/myassets/background/end/won/won.png", { frameSize: [64, 64], frames: 4 });
+    lostImg = loadImage("assets/myassets/background/end/lost/lost.png")
 }
 
 function setup() {

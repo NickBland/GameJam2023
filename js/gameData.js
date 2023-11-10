@@ -23,7 +23,7 @@ class gameData {
         this.playerMothership = this.factory.createMothership(-1400, -1400, this.playerShip);
         this.playerShip.ships.push(this.playerMothership);
 
-        this.createUnit("drone", this.playerShip, this.playerMothership);
+        this.createUnit("drone", this.playerShip, this.playerMothership)
 
         this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
@@ -107,7 +107,8 @@ class gameData {
                     let thisShip = this.enemyShip.ships[j];
                     if (thisShip.collides(thisProj)) {
                         this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
-                        thisProj.remove();
+                        thisProj.changeAni('explosion');
+                        thisProj.life = 28;
                     }
                 }
             }
