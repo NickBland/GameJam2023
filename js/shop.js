@@ -19,12 +19,23 @@ class shop {
         this.setupUpgradeBoard();
 
         this.upgradeButtons = new Group();
-        this.upgradeButtonsBack = new this.upgradeButtons.Group();
-        this.upgradeButtonsText = new this.upgradeButtons.Group();
-        this.upgradeButtonsImage = new this.upgradeButtons.Group();
+
+        //this.upgradeContent = new this.upgradeButtons.Group();
+
+        //this.upgradeButtonsText = new this.upgradeButtons.Group();
+        this.upgradeTypes = ["all ships", "drone", "corsair", "destroyer", "cruiser", "battleship"];
+        this.upgradeSkills = [s_allships, s_drones, s_corsairs, s_destroyers, s_cruisers, s_battleships];
+        this.selectedUpgrade = this.upgradeTypes.indexOf("all ships"); // Ensure to set starting selection as "general upgrade"
+
+        this.upgradeNameImage = new this.upgradeButtons.Group();
+        this.upgradeNameBack = new this.upgradeButtons.Group();
+        this.upgradeContent = new this.upgradeButtons.Group();
+        this.upgradeText = new this.upgradeButtons.Group();
+
         this.upgrades = this.gameData.upgrades;
+
         this.setupUpgradeButtons();
-        this.upgradeButtonsText.layer = 10000;
+        this.upgradeText.layer = 10000;
 
         this.buttonValue = [20, 30, 40, 50, 60, "UPGRADE"];
     }
@@ -74,82 +85,91 @@ class shop {
         let initialButtonY = height * 0.425;
         let initialButtonW = 32;
 
-        let requiredAssets = [upgradeImg.get(), droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get()];
+        let requiredAssets = [generalUpgradeImg.get(), droneShipImg.get(), corsairShipImg.get(), destroyerShipImg.get(), cruiserShipImg.get(), battleShipImg.get()];
         requiredAssets[0].resize(30, 0);
+        requiredAssets[1].resize(75,0);
+        requiredAssets[2].resize(70,0);
+
 
         for (let i = 0; i < this.upgrades.length; i++) {
             let column = this.upgrades[i];
+            let column_skill = this.upgradeSkills[i];
+
+            let buttons = new this.upgradeContent.Group();
+            let textContent = new this.upgradeText.Group();
             for (let j = 1; j < column.length; j++) {
+                let icon = specialmineralImg.get();
+                icon.resize(20, 0);
                 let button = new Sprite();
-                button.x = initialButtonX + i * (width * 0.8 / 5.75);  // Set Column
-                button.y = initialButtonY + ((j - 1)) * (height * 0.5 / 5.5); //Set Row
-                button.d = initialButtonW;
+                button.x = initialButtonX + 4.75 * (width * 0.8 / 5.75);  // Set Column
+                button.y = initialButtonY + 30 + (j - 1) * (height * 0.4 / 5.5); //Set Row
+            
+                button.w = initialButtonW*2;
+                button.h = initialButtonW;
                 button.color = '#8ea091';
                 button.strokeWeight = 2;
                 button.stroke = 'black';
                 button.collider = "k";
-                button.text = j;
+                //button.text = column[j].cost;
                 button.cost = column[j].cost;
                 button.indexX = i;
                 button.indexY = j;
-                this.upgradeButtonsBack.push(button);
+                buttons.push(button);
 
 
                 // GENERATE FLAVOUR TEXT FOR THIS UPGRADE
-                let x;
-                if (i === 0) {
-                    x = button.x + button.d;
-                } else if (i === this.upgrades.length - 1) {
-                    x = button.x - button.d;
-                } else {
-                    x = button.x;
-                }
-                let flavour = new Sprite(x, button.y - button.d * 2);
+                let flavour = new Sprite(initialButtonX + initialButtonW*1.5, button.y);
                 flavour.w = 1;
                 flavour.h = 1;
                 flavour.collider = "k";
                 flavour.draw = () => {
-                    let width;
-
-                    if (column[j].name.length > column[j].effectText.length) {
-                        width = column[j].name.length;
-                    } else {
-                        width = column[j].effectText.length;
-                    }
-
-                    fill('#ffe7d6');
-                    strokeWeight(2);
-                    rect(0, 0, width * 10, 80);
                     noStroke();
-                    fill('black');
-
-                    textSize(14);
+                    textSize(16);
                     textAlign(LEFT, CENTER);
-                    text(column[j].cost, -(width * 4.5) + 20, -20);
+
+                    fill('black');
+                    text(column[j].cost, button.x-flavour.x, 0);
                     let icon = specialmineralImg.get();
                     icon.resize(20, 0);
-                    image(icon, -(width * 4.5), -20);
-                    text(column[j].name, -(width * 4.5), -6);
-                    text(column[j].effectText, -(width * 4.5), 8);
+                    image(icon, button.x-flavour.x - 15, 0);
+
+                    image(column_skill[j-1], -1.5*initialButtonW, 0);
+
+                    fill("#d19f5a");
+                    text(column[j].name, 0, -10);
+
+                    fill('#ffe7d6')
+                    text(column[j].effectText, 0, 10);
 
                 };
-                this.upgradeButtonsText.push(flavour);
+                textContent.push(flavour);
             }
+            
+            let columnBack = new Sprite(initialButtonX + i * (width * 0.8 / 5.75), initialButtonY - (height * 0.06), 50);
+            columnBack.draw = () => {
+                stroke('#d19f5a');
+                line(-20, 25, 20, 25)
+            }
+            columnBack.collider = "k";
+            columnBack.overlaps(allSprites);
+            this.upgradeNameBack.push(columnBack);
 
             let columnImage = new Sprite();
             columnImage.x = initialButtonX + i * (width * 0.8 / 5.75);
             columnImage.y = initialButtonY - (height * 0.06);
             columnImage.collider = "k";
             columnImage.img = requiredAssets[i];
-            columnImage.overlaps(allSprites);
-            this.upgradeButtonsImage.push(columnImage);
-        }
-        this.upgradeButtons.visible = false;
 
-        this.upgradeButtonsBack.overlaps(allSprites); // Final adjustments
-        this.upgradeButtonsText.overlaps(allSprites);
-        this.upgradeButtonsImage.overlaps(allSprites)
-        this.upgradeButtonsImage[0].rotation = -90;
+            columnImage.overlaps(allSprites);
+            this.upgradeNameImage.push(columnImage);
+        }
+
+        this.upgradeButtons.visible = false;
+        this.upgradeNameImage.overlaps(allSprites);
+        this.upgradeNameBack.overlaps(allSprites);
+        this.upgradeText.overlaps(allSprites);
+        this.upgradeContent.overlaps(allSprites); // Final adjustments
+        this.upgradeNameImage[0].rotation = -90;
     }
 
     /**
@@ -202,12 +222,12 @@ class shop {
             fill(0, 150);
             rect(0, 62.5, width * 0.8, height * 0.5);
 
-            strokeWeight(3);
+            /*strokeWeight(3);
             line(-225, -(height * 0.15), -225, (height * 0.3));
             line(-110, -(height * 0.15), -110, (height * 0.3));
             line(0, -(height * 0.15), 0, (height * 0.3));
             line(110, -(height * 0.15), 110, (height * 0.3));
-            line(225, -(height * 0.15), 225, (height * 0.3));
+            line(225, -(height * 0.15), 225, (height * 0.3));*/
         }
         this.upgradeBoard.collider = 'n';
         this.upgradeBoard.visible = false;
@@ -240,7 +260,7 @@ class shop {
         if (ship) {
             return (data.playerShip.resources >= this.buttonValue[button]);
         } else {
-            return (data.playerShip.specialResources >= this.upgradeButtonsBack[button].cost);
+            return (data.playerShip.specialResources >= this.upgradeContent[button].cost);
         }
     }
 
@@ -254,11 +274,11 @@ class shop {
                 this.setupNotEnoughNoti();
             }
         } else {
-            let boughtCheck = this.upgrades[this.upgradeButtonsBack[button].indexX][this.upgradeButtonsBack[button].indexY].playerOwned;
+            let boughtCheck = this.upgrades[this.upgradeContent[button].indexX][this.upgradeContent[button].indexY].playerOwned;
             if (this.#checkCost(button) && boughtCheck == false) {
-                this.upgrades[this.upgradeButtonsBack[button].indexX][this.upgradeButtonsBack[button].indexY].playerOwned = true;
-                this.gameData.playerShip.ownedUpgrades.push([this.upgradeButtonsBack[button].indexX, this.upgradeButtonsBack[button].indexY]);
-                data.upgradeShips(this.upgradeButtonsBack[button].indexX, this.upgradeButtonsBack[button].indexY, data.playerShip);
+                this.upgrades[this.upgradeContent[button].indexX][this.upgradeContent[button].indexY].playerOwned = true;
+                this.gameData.playerShip.ownedUpgrades.push([this.upgradeContent[button].indexX, this.upgradeContent[button].indexY]);
+                data.upgradeShips(this.upgradeButtonsBack[button].indexX, this.upgradeContent[button].indexY, data.playerShip);
             } else {
                 this.setupNotEnoughNoti();
             }
@@ -275,14 +295,14 @@ class shop {
         }
 
         if (this.upgradeBoard.visible) {
-            for (let i = 0; i < this.upgradeButtonsBack.length; i++) {
-                if (this.upgrades[this.upgradeButtonsBack[i].indexX][this.upgradeButtonsBack[i].indexY].playerOwned) {
-                    this.upgradeButtonsBack[i].color = "#515262";
+            for (let i = 0; i < this.upgradeContent.length; i++) {
+                if (this.upgrades[this.upgradeContent[i].indexX][this.upgradeContent[i].indexY].playerOwned) {
+                    this.upgradeContent[i].color = "#515262";
                 } else {
                     if (!this.#checkCost(i, false)) {
-                        this.upgradeButtonsBack[i].color = "#8b4049";
+                        this.upgradeContent[i].color = "#8b4049";
                     } else {
-                        this.upgradeButtonsBack[i].color = "#8ea091";
+                        this.upgradeContent[i].color = "#8ea091";
                     }
                 }
             }
@@ -309,6 +329,7 @@ class shop {
             this.upgradeBoard.visible = true;
         }
 
+        // Shop Buttons
         for (let i = 0; i < this.shopButtonBack.length; i++) {
             if (this.shopButtonBack[i].mouse.hovering() || this.shopButtonImages[i].mouse.hovering()) {
                 this.shopButtonBack[i].scale = 1.2;
@@ -320,9 +341,6 @@ class shop {
                         this.makePurchase(i, true);
                     } else {
                         this.upgradeBoard.visible = !this.upgradeBoard.visible;
-                        this.upgradeButtonsBack.visible = !this.upgradeButtonsBack.visible;
-                        this.upgradeButtonsImage.visible = !this.upgradeButtonsImage.visible;
-
                     }
                 }
             } else {
@@ -332,24 +350,57 @@ class shop {
                 this.price[i].visible = false;
                 if (kb.presses("escape")) {
                     this.upgradeBoard.visible = false;
-                    this.upgradeButtonsBack.visible = false;
-                    this.upgradeButtonsImage.visible = false;
+                    this.upgradeContent.visible = false;
+                    this.upgradeNameImage.visible = false;
+                    this.upgradeNameBack.visible = false;
+                    this.upgradeText.visible = false;
                 }
             }
         }
 
+        //Upgrade Buttons
         if (this.upgradeBoard.visible) {
-            for (let i = 0; i < this.upgradeButtonsBack.length; i++) {
-                if (this.upgradeButtonsBack[i].mouse.hovering()) {
-                    this.upgradeButtonsBack[i].scale = 1.2;
-                    this.upgradeButtonsText[i].visible = true;
-                    if (this.upgradeButtonsBack[i].mouse.presses()) {
-                        this.makePurchase(i, false);
-                    }
-                } else {
-                    this.upgradeButtonsBack[i].scale = 1;
-                    this.upgradeButtonsText[i].visible = false;
+            this.upgradeNameImage.visible = true;
+            this.upgradeUpgradeStates();
+        } else {
+            this.upgradeNameImage.visible = false;
+            this.upgradeNameBack.visible = false;
+            this.upgradeText.visible = false;
+            this.upgradeContent.visible = false;
+        }     
+    }
+
+    upgradeUpgradeStates() {
+        for (let i=0; i < this.upgradeNameImage.length; i++) {
+            if (this.upgradeNameImage[i].mouse.hovering()) {
+                this.upgradeNameImage[i].scale = 1.2;
+
+                if (this.upgradeNameImage[i].mouse.presses()) {
+                    this.selectedUpgrade = i;
                 }
+            } else {
+                this.upgradeNameImage[i].scale = 1;
+            }
+
+            if (i === this.selectedUpgrade) {
+                this.upgradeText.subgroups[i].visible = true;
+                this.upgradeNameBack[i].visible = true;
+                this.upgradeContent.subgroups[i].visible = true;
+            } else {
+                this.upgradeText.subgroups[i].visible = false;
+                this.upgradeNameBack[i].visible = false;
+                this.upgradeContent.subgroups[i].visible = false;
+            }
+        }
+
+        for (let i=0; i < this.upgradeContent.length; i++) {
+            if (this.upgradeContent[i].mouse.hovering()) {
+                this.upgradeContent[i].scale = 1.2;
+                if (this.upgradeContent[i].mouse.presses()) {
+                    this.makePurchase(i, false);
+                }
+            } else {
+                this.upgradeContent[i].scale = 1;
             }
         }
     }

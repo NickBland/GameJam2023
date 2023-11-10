@@ -445,7 +445,7 @@ class gameData {
                 },
                 {
                     name: "Heavy Slugs",
-                    effectText: "Destroyer Damamge +5%",
+                    effectText: "Destroyer Damage +5%",
                     cost: 10,
                     playerOwned: false,
                     enemyOwned: false,

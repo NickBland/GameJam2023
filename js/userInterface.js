@@ -110,11 +110,11 @@ class userInterface {
             if (data.playerMothership.health >= 100 * (i + 1)) {
                 healthValue = 0
             } else {
-                if ((data.playerMothership.health - healthIcon) == 75) {
+                if ((data.playerMothership.health - healthIcon) >= 75) {
                     healthValue = 1
-                } else if ((data.playerMothership.health - healthIcon) == 50) {
+                } else if ((data.playerMothership.health - healthIcon) >= 50) {
                     healthValue = 2
-                } else if ((data.playerMothership.health - healthIcon) == 25) {
+                } else if ((data.playerMothership.health - healthIcon) >= 25) {
                     healthValue = 3
                 } else {
                     healthValue = 4
@@ -374,7 +374,7 @@ class userInterface {
             textFont("myFont", 14);
             textAlign(LEFT, CENTER);
             fill('#d19f5a');
-            text("MINERALS", -width / 2 + 50, -height / 2 + 35);
+            text("Minerals", -width / 2 + 50, -height / 2 + 35);
             noStroke();
             fill('black');
             text("Special Resource Found!!!", -width / 2 + 30, -height / 2 + 55);
