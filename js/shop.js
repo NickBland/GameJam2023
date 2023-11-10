@@ -147,6 +147,8 @@ class shop {
         this.upgradeButtons.visible = false;
 
         this.upgradeButtonsBack.overlaps(allSprites); // Final adjustments
+        this.upgradeButtonsText.overlaps(allSprites);
+        this.upgradeButtonsImage.overlaps(allSprites)
         this.upgradeButtonsImage[0].rotation = -90;
     }
 
