@@ -47,6 +47,7 @@ class spriteFactory {
         drone.collectionSpeed = 1;
         drone.resourceCap = 10;
         drone.specialResources = 0;
+        drone.specResChance = 5;
         drone.collectCrit = 2;
         drone.health = 25;
         drone.damage = 1;

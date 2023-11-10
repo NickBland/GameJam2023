@@ -274,9 +274,11 @@ class shop {
                 this.setupNotEnoughNoti();
             }
         } else {
-            if (this.#checkCost(button)) {
+            let boughtCheck = this.upgrades[this.upgradeContent[button].indexX][this.upgradeContent[button].indexY].playerOwned;
+            if (this.#checkCost(button) && boughtCheck == false) {
                 this.upgrades[this.upgradeContent[button].indexX][this.upgradeContent[button].indexY].playerOwned = true;
                 this.gameData.playerShip.ownedUpgrades.push([this.upgradeContent[button].indexX, this.upgradeContent[button].indexY]);
+                data.upgradeShips(this.upgradeButtonsBack[button].indexX, this.upgradeContent[button].indexY, data.playerShip);
             } else {
                 this.setupNotEnoughNoti();
             }

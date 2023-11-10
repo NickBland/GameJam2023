@@ -33,10 +33,10 @@ class gameData {
         this.enemyShip.ships.push(this.enemyMothership);
 
         this.createUnit("drone", this.enemyShip, this.enemyMothership)
-        this.createUnit("corsair", this.enemyShip, this.enemyMothership)
-        this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
-        this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
-        this.createUnit("battleship", this.enemyShip, this.enemyMothership)
+        // this.createUnit("corsair", this.enemyShip, this.enemyMothership)
+        // this.createUnit("destroyer", this.enemyShip, this.enemyMothership)
+        // this.createUnit("cruiser", this.enemyShip, this.enemyMothership)
+        // this.createUnit("battleship", this.enemyShip, this.enemyMothership)
 
         for (let i = 0; i < this.asteroidDensity; i++) {
             this.createAsteroid();
@@ -168,6 +168,115 @@ class gameData {
         }
     }
 
+    upgradeShips(x, y, team) {
+        let thisUpgrade = this.upgrades[x][y];
+        let thisAttribute = thisUpgrade.attribute;
+        let thisType = thisUpgrade.type;
+        let thisGrowth = thisUpgrade.upgrade;
+
+        switch (x) {
+            case 0:
+                for (let thisShip of team.ships) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+
+            case 1:
+                for (let thisShip of team.drones) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+
+            case 2:
+                for (let thisShip of team.corsairs) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+
+            case 3:
+                for (let thisShip of team.destroyers) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+
+            case 4:
+                for (let thisShip of team.cruisers) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+
+            case 5:
+                for (let thisShip of team.battleships) {
+                    if (thisType == "percent") {
+                        thisShip[thisAttribute] *= thisGrowth;
+                    }
+                    else if (thisType == "static") {
+                        thisShip[thisAttribute] += thisGrowth;
+                    }
+                    else {
+                        this.specialUpgrade(thisUpgrade, thisShip);
+                    }
+                }
+                break;
+            default:
+        }
+    }
+
+    specialUpgrade(thisUpgrade, thisShip) {
+        switch (thisUpgrade.type) {
+            case "nick":
+
+                break;
+            case "thien":
+
+                break;
+            case "jesse":
+
+                break;
+            default:
+        }
+    }
+
     /**
      * All data for the upgrades is stored here
      */
@@ -180,28 +289,40 @@ class gameData {
                     effectText: "Vision Range of all Ships +20%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "range",
+                    type: "percent",
+                    upgrade: 1.2
                 },
                 {
                     name: "Denser Hulls",
                     effectText: "All Ship Hitpoints +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "health",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Larger Reactors",
                     effectText: "Speed of all Ships +1.5 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 1.5
                 },
                 {
                     name: "Powerful Lasers",
                     effectText: "Damage Dealt by all Ships +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "damage",
+                    type: "percent",
+                    upgrade: 1.05
                 },
             ],
             [
@@ -211,35 +332,50 @@ class gameData {
                     effectText: "Collection Speed of Drones 15%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "collectionSpeed",
+                    type: "percent",
+                    upgrade: 1.15
                 },
                 {
                     name: "Precision Scanner",
-                    effectText: "Special Resource Change +5%",
+                    effectText: "Special Resource Chance +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "specResChance",
+                    type: "percent",
+                    upgrade: 1.05
                 },
                 {
                     name: "Larger Hold",
                     effectText: "Carrying Capacity of Drones +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "resourceCap",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Lightweight Materials",
                     effectText: "Movement Speed of Drones +3.5 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 3.5
                 },
                 {
                     name: "Enrichment Processing",
                     effectText: "Chance of Double Resource Collection +1%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "collectCrit",
+                    type: "percent",
+                    upgrade: 1.01
                 },
             ],
             [
@@ -249,35 +385,50 @@ class gameData {
                     effectText: "Movement Speed of Corsairs +2.5 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 2.5
                 },
                 {
                     name: "More Guns",
                     effectText: "Damage Dealt by Corsairs +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "damage",
+                    type: "percent",
+                    upgrade: 1.05
                 },
                 {
                     name: "Insulated Padding",
                     effectText: "Corsair Hitpoints +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "health",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Advanced Ordnances",
                     effectText: "Corsair Rate of Fire +20%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fireRate",
+                    type: "percent",
+                    upgrade: 0.8
                 },
                 {
                     name: "Advanced Targetting System",
                     effectText: "Corsair Accuracy +20%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "accuracy",
+                    type: "percent",
+                    upgrade: 0.8
                 },
             ],
             [
@@ -287,35 +438,50 @@ class gameData {
                     effectText: "Movement Speed of Destroyers +2.0 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 2
                 },
                 {
                     name: "Heavy Slugs",
                     effectText: "Destroyer Damage +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "damage",
+                    type: "percent",
+                    upgrade: 1.05
                 },
                 {
                     name: "Composite Armour",
                     effectText: "Destroyer Hitpoints +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Nick's Meds",
                     effectText: "Shoot 2 More Pellets",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "shotgunPellets",
+                    type: "nick",
+                    upgrade: 2
                 },
                 {
                     name: "Shell Ejectors",
                     effectText: "Destroyer Rate of Fire +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fireRate",
+                    type: "percent",
+                    upgrade: 0.9
                 },
             ],
             [
@@ -325,35 +491,50 @@ class gameData {
                     effectText: "Movement Speed of Cruisers +1.5 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 1.5
                 },
                 {
                     name: "Explosive-Infused Alloys",
                     effectText: "Cruiser Damage +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "damage",
+                    type: "percent",
+                    upgrade: 1.05
                 },
                 {
                     name: "Reinforced Weakpoints",
                     effectText: "Cruiser Hitpoints +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "health",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Thien's Optimiser",
                     effectText: "Chance of Double Shot +5%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "doubleShot",
+                    type: "thien",
+                    upgrade: 1.05
                 },
                 {
                     name: "Weapon Heatsinks",
                     effectText: "Cruiser Rate of Fire +15%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fireRate",
+                    type: "percent",
+                    upgrade: 1.15
                 },
             ],
             [
@@ -363,35 +544,50 @@ class gameData {
                     effectText: "Movement Speed of Battleships +1.0 U/s",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "fastness",
+                    type: "static",
+                    upgrade: 1
                 },
                 {
                     name: "Lead-Tipped Projectiles",
                     effectText: "Battleship Damage +10%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "damage",
+                    type: "percent",
+                    upgrade: 1.1
                 },
                 {
                     name: "Shock Absorbing Insulation",
                     effectText: "Battleship Hitpoints +20%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "health",
+                    type: "percent",
+                    upgrade: 1.2
                 },
                 {
                     name: "Barrel Compensators",
                     effectText: "Battleship Accuracy +20%",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "accuracy",
+                    type: "percent",
+                    upgrade: 0.8
                 },
                 {
                     name: "Jesse's Jest",
                     effectText: "No More",
                     cost: 10,
                     playerOwned: false,
-                    enemyOwned: false
+                    enemyOwned: false,
+                    attribute: "weaponType",
+                    type: "jesse",
+                    upgrade: 0
                 },
             ]
         ];

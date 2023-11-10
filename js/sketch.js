@@ -241,6 +241,7 @@ function drawGameScreen() {
     data.enemy.collect();
     data.enemy.move();
     data.enemy.explore();
+    data.enemy.progression();
 
     data.combatHandling();
 
