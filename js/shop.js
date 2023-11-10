@@ -165,9 +165,9 @@ class shop {
         }
 
         this.upgradeButtons.visible = false;
-        
+        this.upgradeNameImage.overlaps(allSprites);
         this.upgradeNameBack.overlaps(allSprites);
-        
+        this.upgradeText.overlaps(allSprites);
         this.upgradeContent.overlaps(allSprites); // Final adjustments
         this.upgradeNameImage[0].rotation = -90;
     }
@@ -362,7 +362,12 @@ class shop {
         if (this.upgradeBoard.visible) {
             this.upgradeNameImage.visible = true;
             this.upgradeUpgradeStates();
-        }        
+        } else {
+            this.upgradeNameImage.visible = false;
+            this.upgradeNameBack.visible = false;
+            this.upgradeText.visible = false;
+            this.upgradeContent.visible = false;
+        }     
     }
 
     upgradeUpgradeStates() {

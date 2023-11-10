@@ -374,7 +374,7 @@ class userInterface {
             textFont("myFont", 14);
             textAlign(LEFT, CENTER);
             fill('#d19f5a');
-            text("MINERALS", -width / 2 + 50, -height / 2 + 35);
+            text("Minerals", -width / 2 + 50, -height / 2 + 35);
             noStroke();
             fill('black');
             text("Special Resource Found!!!", -width / 2 + 30, -height / 2 + 55);
