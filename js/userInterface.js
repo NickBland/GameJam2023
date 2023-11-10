@@ -227,15 +227,15 @@ class userInterface {
                 noStroke(); // And of course, no stroke
                 circle(thisShip.x, thisShip.y, thisShip.h * 1.25); // Draw a translucent circle around selected ship
 
-                miniMapDot.color = "white";
+                miniMapDot.color = "#ffe7d6";
 
                 if (thisShip.moveTimer !== 0) {
                     // Now draw a dotted line for their path
-                    stroke(255);
+                    stroke("#ffe7d6");
                     drawingContext.setLineDash([10, 20]); // Length of line, Spacing
                     drawingContext.lineDashOffset = 5;
                     line(thisShip.x, thisShip.y, thisShip.destinationX, thisShip.destinationY);
-                    fill(255);
+                    fill("#ffe7d6");
                     circle(thisShip.destinationX, thisShip.destinationY, 7.5);
                 }
 
@@ -245,7 +245,7 @@ class userInterface {
                 noFill();
                 stroke(0);
             } else {
-                miniMapDot.color = "lime";
+                miniMapDot.color = "#a1cf46";
             }
         }
         //Draws the circle around the mothership
@@ -323,7 +323,7 @@ class userInterface {
                 let selectedShip = data.playerShip.ships[i];
                 if (this.selectionBox.overlapping(selectedShip)) {
                     selectedShip.selected = true;
-                    selectedShip.stroke = "white"
+                    selectedShip.stroke = "#ffe7d6"
                     selectedShip.strokeWeight = 2;
                 }
             }
@@ -414,7 +414,7 @@ class userInterface {
         }
 
         miniMap.update = () => {
-            stroke(255);
+            stroke("#ffe7d6");
             strokeWeight(0.75);
             drawingContext.setLineDash([2, 10]); // Length of line, Spacing
             drawingContext.lineDashOffset = 5;
@@ -442,7 +442,7 @@ class userInterface {
         miniShip.collider = "n";
         miniShip.d = 6;
         miniShip.strokeWeight = 0;
-        miniShip.color = "lime";
+        miniShip.color = "#a1cf46";
         return (miniShip);
     }
 

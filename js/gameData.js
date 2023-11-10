@@ -29,7 +29,7 @@ class gameData {
         this.createUnit("cruiser", this.playerShip, this.playerMothership)
         this.createUnit("battleship", this.playerShip, this.playerMothership)
 
-        this.enemyMothership = this.factory.createMothership(width + 600, height + 500, this.enemyShip);
+        this.enemyMothership = this.factory.createMothership(-1200, -1200, this.enemyShip);
         this.enemyShip.ships.push(this.enemyMothership);
 
         this.createUnit("drone", this.enemyShip, this.enemyMothership)
@@ -116,7 +116,8 @@ class gameData {
                     if (thisShip.collides(thisProj)) {
                         this.enemyShip.takeDamage(thisProj.damage, this.enemyShip.ships[j]);
                         this.enemyMothership.health -= thisProj.damage;
-                        thisProj.remove();
+                        thisProj.changeAni('explosion');
+                        thisProj.life = 28;
                     }
                 }
             }

@@ -99,7 +99,7 @@ class mainMenu {
      */
     creditsButtonClicked() {
         pressedButton_sound.play();
-        
+
         this.hideMenuButton()
         this.creditsShow = true;
     }
