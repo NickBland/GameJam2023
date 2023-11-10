@@ -92,7 +92,6 @@ let ui;
 
 let selectionBox;
 
-
 function drawInitialGameState() {
     camera = new customCamera;
 
@@ -165,7 +164,7 @@ function shipAction() {
         //Checks if a drone can harvest resources
         for (let i = 0; i < data.asteroids.length; i++) {
             let thisAsteroid = data.asteroids[i];
-            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources < 10) {
+            if (dist(thisShip.x, thisShip.y, thisAsteroid.x, thisAsteroid.y) < (thisAsteroid.radius + 20) && thisShip.group == "drone" && thisShip.resources <= thisShip.resourceCap) {
                 data.playerShip.harvestResources(thisShip, thisAsteroid);
             }
         }
