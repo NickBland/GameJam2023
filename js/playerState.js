@@ -64,12 +64,17 @@ class playerState {
     }
 
     harvestResources(thisShip, thisAsteroid) {
-        if (frameCount % 10 == 0) {
+        if (frameCount % (thisShip.collectionSpeed*100) == 0) {
             thisShip.resources++;
             thisAsteroid.resources--;
-        } if (frameCount % 100 == 0 && random(0, 1) <= 0.1) {
-            thisShip.specialResources++;
-        }
+            if(thisShip.collectCrit >= random(101)){
+                thisShip.resources++;
+                thisAsteroid.resources--;
+            }
+            if (thisShip.specResChance>= random(101)) {
+                thisShip.specialResources++;
+            }
+        } 
         if (thisAsteroid.resources <= 0) {
             for (let i = 0; i < this.drones.length; i++) {
                 if (this.drones[i].target == thisAsteroid) {
@@ -79,7 +84,7 @@ class playerState {
             this.getNewResourceTarget(thisAsteroid);
             return (data.destroyAsteroid(thisAsteroid));
         }
-        if (thisShip.resources >= 10) {
+        if (thisShip.resources >= thisShip.resourceCap) {
             this.setDestination(this.ships[0].x, this.ships[0].y, thisShip);
             thisShip.moveTimer = dist(this.ships[0].x, this.ships[0].y, thisShip.x, thisShip.y);
         }

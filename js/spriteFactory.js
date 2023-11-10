@@ -37,6 +37,8 @@ class spriteFactory {
         mothership.range = 300;
         mothership.weaponType = "standard";
 
+        data.newShipUpgrade(team, mothership);
+
         return mothership;
     }
 
@@ -47,7 +49,7 @@ class spriteFactory {
         drone.collectionSpeed = 1;
         drone.resourceCap = 10;
         drone.specialResources = 0;
-        drone.specResChance = 5;
+        drone.specResChance = 15;
         drone.collectCrit = 2;
         drone.health = 25;
         drone.damage = 1;
@@ -61,6 +63,8 @@ class spriteFactory {
         drone.h = 25;
         droneShipImg.resize(drone.w + 20, drone.h + 20);
         drone.img = droneShipImg;
+
+        data.newShipUpgrade(team, drone);
 
         return drone;
     }
@@ -81,6 +85,8 @@ class spriteFactory {
         corsairShipImg.resize(corsair.w + 20, corsair.h + 20);
         corsair.img = corsairShipImg;
 
+        data.newShipUpgrade(team, corsair);
+
         return corsair;
     }
 
@@ -99,6 +105,8 @@ class spriteFactory {
         destroyer.h = 30;
         destroyerShipImg.resize(destroyer.w + 20, destroyer.h + 20);
         destroyer.img = destroyerShipImg;
+
+        data.newShipUpgrade(team, destroyer);
 
         return destroyer;
     }
@@ -120,6 +128,8 @@ class spriteFactory {
         cruiserShipImg.resize(cruiser.w + 20, cruiser.h + 20)
         cruiser.img = cruiserShipImg;
 
+        data.newShipUpgrade(team, cruiser);
+
         return cruiser;
 
     }
@@ -139,6 +149,8 @@ class spriteFactory {
         battleship.h = 45;
         battleShipImg.resize(battleship.w + 20, battleship.h + 20)
         battleship.img = battleShipImg;
+
+        data.newShipUpgrade(team, battleship);
 
         return battleship;
     }

@@ -8,24 +8,14 @@ class enemyBehaviour {
             if (thisShip.target != null) {
                 thisShip.moveTimer = 10;
             }
-
-            let enemyShips = data.enemyShip.ships;   //Turns the ownedShip Object into an array to access it using index not.
-            for (let i = 0; i < enemyShips.length; i++) {  //Iterates through each type of ship
-                let thisShip = enemyShips[i];
-                if (thisShip.moveTimer > 0) {
-                    data.enemyShip.travel(thisShip);
-                    thisShip.moveTimer--;
-                } else if (thisShip.moveTimer === 0) {
-                    thisShip.speed = 0;
-                    thisShip.rotationSpeed = 0;
-                } else if (thisShip.moveTimer < 0) {
-                    thisShip.moveTimer = 0;
-                }
-                for (let j = 0; j < enemyShips.length; j++) {
-                    if (dist(enemyShips[j].x, enemyShips[j].y, thisShip.x, thisShip.y) < 50 && enemyShips[j] != thisShip) {
-                        enemyShips[j].attractTo(thisShip, -2);
-                    }
-                }
+            if (thisShip.moveTimer > 0) {
+                data.enemyShip.travel(thisShip);
+                thisShip.moveTimer--;
+            } else if (thisShip.moveTimer === 0) {
+                thisShip.speed = 0;
+                thisShip.rotationSpeed = 0;
+            } else if (thisShip.moveTimer < 0) {
+                thisShip.moveTimer = 0;
             }
         }
     }
