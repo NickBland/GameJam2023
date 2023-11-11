@@ -75,7 +75,8 @@ class playerState {
                 thisShip.specialResources++;
             }
         } 
-        if (thisAsteroid.resources == 0) {
+        if (thisAsteroid.resources <= 0) {
+            thisAsteroid.collider = "n";
             for (let i = 0; i < this.drones.length; i++) {
                 if (this.drones[i].target == thisAsteroid) {
                     this.setDestination(this.ships[0].x, this.ships[0].y, this.drones[i]);

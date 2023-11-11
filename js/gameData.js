@@ -95,7 +95,6 @@ class gameData {
 
     destroyAsteroid(thisAsteroid) {
         thisAsteroid.changeAni('explode');
-        thisAsteroid.collider = "n";
         thisAsteroid.life = 28;
     }
 

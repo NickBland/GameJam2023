@@ -169,7 +169,7 @@ class spriteFactory {
         asteroid.changeAni('initial');
         asteroid.anis.frameDelay = 4;
 
-        asteroid.ani.scale = d / 45;
+        asteroid.anis.scale = d / 45;
 
         asteroid.d = d;
         asteroid.collider = "k";

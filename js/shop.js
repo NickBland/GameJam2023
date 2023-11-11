@@ -31,7 +31,7 @@ class shop {
         this.upgrades = this.gameData.upgrades;
 
         this.setupUpgradeButtons();
-        this.upgradeText.layer = 10000;
+        this.upgradeText.layer = 100000;
 
         this.buttonValue = [20, 30, 40, 50, 60, "UPGRADE"];
     }
@@ -383,16 +383,16 @@ class shop {
                 this.upgradeText.subgroups[i].visible = true;
                 this.upgradeNameBack[i].visible = true;
                 this.upgradeContent.subgroups[i].visible = true;
-                this.upgradeText.subgroups[i].layer = 10000;
-                this.upgradeContent.subgroups[i].layer = 10000;
+                this.upgradeText.subgroups[i].layer = 100000;
+                this.upgradeContent.subgroups[i].layer = 100000;
                 this.upgrade
             } 
             if (i != this.selectedUpgrade) {
                 this.upgradeText.subgroups[i].visible = false;
                 this.upgradeNameBack[i].visible = false;
                 this.upgradeContent.subgroups[i].visible = false;
-                this.upgradeText.subgroups[i].layer = 9999;
-                this.upgradeContent.subgroups[i].layer = 9999;
+                this.upgradeText.subgroups[i].layer = 99999;
+                this.upgradeContent.subgroups[i].layer = 99999;
             }
         }
 
