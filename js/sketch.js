@@ -21,8 +21,8 @@ let wonImg, lostImg;
 let pressedButton_sound;
 
 let gameState = {
-    loading: true,
-    mainMenu: false,
+    loading: false,
+    mainMenu: true,
     game: false,
     endScreen: false,
 }

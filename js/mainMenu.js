@@ -2,7 +2,7 @@
  * @Class Class to hold main menu sprites and data.
  */
 class mainMenu {
-    
+
     constructor() {
         this.tutorialShow = false;
         this.creditsShow = false;
@@ -10,7 +10,7 @@ class mainMenu {
 
         this.drawInitialMainMenuScreen();
     }
-    
+
     /**
      * Sets up the main menu screen to display the sprites for buttons
      */
@@ -49,7 +49,7 @@ class mainMenu {
         this.playButton.collider = "k";
 
     }
-    
+
     /**
      * Show all sprite-buttons on the screen
      */
@@ -67,7 +67,7 @@ class mainMenu {
         this.tutorialButton.visible = false;
         this.creditsButton.visible = false;
     }
-    
+
     /**
      * Hide all the sprite-buttons, and then destroy them. Changes game state to game
      */
@@ -95,6 +95,23 @@ class mainMenu {
     }
 
     /**
+     * Shows text on the screen for the tutorial
+     */
+    showTutorial() {
+        textAlign(LEFT, TOP);
+        fill('#ffe7d6');
+        textSize(32);
+        text("GOAL: DEFEAT THE ENEMY MOTHERSHIP", width / 20 + 5, height / 10);
+        textSize(24);
+        text("Step 1: Harvest resources with mining drones \n(Group 1)", width / 20 + 5, (height / 10) * 2);
+        text("Step 2: Make more drones, and fighter ships", width / 20 + 5, (height / 10) * 3.25);
+        text("Step 3: Purchase upgrades to get stronger", width / 20 + 5, (height / 10) * 4.25);
+        text("Step 4: Get the coveted `Jesse's Jest` \nUpgrade", width / 20 + 5, (height / 10) * 5.25);
+        text("Step 5: KILL THOSE XENOS", width / 20 + 5, (height / 10) * 6.5);
+
+    }
+
+    /**
      * Opens the credits pane
      */
     creditsButtonClicked() {
@@ -102,6 +119,13 @@ class mainMenu {
 
         this.hideMenuButton();
         this.creditsShow = true;
+    }
+
+    /**
+     * Shows the credits on top of the pane 
+     */
+    showCredits() {
+
     }
 
     /**
@@ -143,7 +167,7 @@ class mainMenu {
             this.creditsButton.color = "#d19f5a";
         }
     }
-    
+
     /**
      * Draw non p5play elements on the screen with each draw cycle -- Text at top, etc.
      * Additionally, handles scrolling background.
@@ -168,11 +192,11 @@ class mainMenu {
         text("Xeno Hunters", canvas.w / 2, 0.35 * canvas.h);
         strokeWeight(1);
         textFont(myfont);
-    
+
         if (this.tutorialShow || this.creditsShow) {
             image(mainMenuBgImg, offset_menuX, 0);
             image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
-    
+
             noStroke();
             fill(0, 150);
             rect(width / 20, height / 20, 0.9 * width, 0.9 * height);
@@ -180,6 +204,12 @@ class mainMenu {
                 this.tutorialShow = false;
                 this.creditsShow = false;
                 this.showMenuButton();
+            }
+
+            if (this.tutorialShow) {
+                this.showTutorial();
+            } else {
+                this.showCredits();
             }
         }
         this.checkMouseOnButtons();
