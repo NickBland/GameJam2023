@@ -21,9 +21,9 @@ let wonImg, lostImg;
 let pressedButton_sound;
 
 let gameState = {
-    loading: false,
+    loading: true,
     mainMenu: false,
-    game: true,
+    game: false,
     endScreen: false,
 }
 
@@ -103,9 +103,9 @@ function drawInitialGameState() {
     ui.miniMap(); // Render the Minimap
 
     for (let i = 0; i < 16; i++) {
-        camera.moveGame(100, 100)
+        camera.moveGame(100, 100);
     }
-
+    initialEndState = true;
     initialGameState = false;
 }
 
@@ -250,10 +250,11 @@ function drawGameScreen() {
     }
 }
 
-// ============================================ END ========================================================
+// =======  ===================================== END ========================================================
 let endScreen;
 let initialEndState = true;
 function drawInitialEndScreen() {
+    allSprites.remove();
     endScreen = new end();
     endScreen.drawEndScreen();
 }
@@ -262,6 +263,8 @@ function drawEndScreen() {
     if (initialEndState) {
         drawInitialEndScreen();
         initialEndState = false;
+        initialGameState = true;
+        initialMenuState = true;
     }
     endScreen.drawEndScreen();
 }
