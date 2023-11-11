@@ -98,16 +98,20 @@ class mainMenu {
      * Shows text on the screen for the tutorial
      */
     showTutorial() {
+        textAlign(CENTER, TOP)
+        fill('#d19f5a');
+        textFont(myfontB, 27);
+        text("GOAL: DEFEAT THE ENEMY MOTHERSHIP", width / 2, height / 10);
         textAlign(LEFT, TOP);
         fill('#ffe7d6');
-        textSize(32);
-        text("GOAL: DEFEAT THE ENEMY MOTHERSHIP", width / 20 + 5, height / 10);
-        textSize(24);
-        text("Step 1: Harvest resources with mining drones \n(Group 1)", width / 20 + 5, (height / 10) * 2);
-        text("Step 2: Make more drones, and fighter ships", width / 20 + 5, (height / 10) * 3.25);
-        text("Step 3: Purchase upgrades to get stronger", width / 20 + 5, (height / 10) * 4.25);
-        text("Step 4: Get the coveted `Jesse's Jest` \nUpgrade", width / 20 + 5, (height / 10) * 5.25);
-        text("Step 5: KILL THOSE XENOS", width / 20 + 5, (height / 10) * 6.5);
+        textFont(myfont, 20)
+        text("Step 1: Harvest resources with mining drones \n(Group 1)", width / 10, (height / 10) * 2);
+        text("Step 2: Make more drones, and fighter ships", width /10, (height / 10) * 3.25);
+        text("Step 3: Purchase upgrades to get stronger", width /10, (height / 10) * 4.25);
+        text("Step 4: Get the coveted `Jesse's Jest` \nUpgrade", width /10, (height / 10) * 5.25);
+        text("Step 5: KILL THOSE XENOS", width / 10, (height / 10) * 6.5);
+
+
 
     }
 
@@ -125,7 +129,7 @@ class mainMenu {
      * Shows the credits on top of the pane 
      */
     showCredits() {
-
+        
     }
 
     /**
@@ -173,7 +177,8 @@ class mainMenu {
      * Additionally, handles scrolling background.
      */
     drawMainMenuScreen() {
-        textFont(myfont)
+        textFont(myfont);
+        imageMode(CORNER);
         mainMenuBgImg.resize(0, height);
         image(mainMenuBgImg, offset_menuX, 0);
         image(mainMenuBgImg, offset_menuX + mainMenuBgImg.width, 0);
