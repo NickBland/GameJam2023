@@ -236,7 +236,7 @@ class shop {
         notEnoughNoti.draw = () => {
             strokeWeight(2);
             fill('#8b4049');
-            rect(-width / 2 + 145, -height / 2 + 45, 250, 50, 5);
+            rect(-width / 2 + 200, -height / 2 + 45, 360, 50, 5);
 
             image(purchaseImg, -width / 2 + 35, -height / 2 + 35);
             textFont("myFont", 14);
@@ -245,7 +245,7 @@ class shop {
             text("Purchase Failed", -width / 2 + 50, -height / 2 + 35);
             noStroke();
             fill('black');
-            text("Not enough resources", -width / 2 + 30, -height / 2 + 55);
+            text("Not enough resources / Not available", -width / 2 + 30, -height / 2 + 55);
         }
         notEnoughNoti.life = 45;
     }

@@ -73,6 +73,8 @@ class mainMenu {
      */
     playButtonClicked() {
         pressedButton_sound.play();
+        menuMusic.stop();
+        gameMusic.loop();
 
         this.hideMenuButton();
 
@@ -103,16 +105,24 @@ class mainMenu {
         textFont(myfontB, 27);
         text("GOAL: DEFEAT THE ENEMY MOTHERSHIP", width / 2, height / 10);
         textAlign(LEFT, TOP);
+        textFont(myfont, 20);
+        text("Control:", width / 10, (height / 10) * 6.25)
+
         fill('#ffe7d6');
-        textFont(myfont, 20)
         text("Step 1: Harvest resources with mining drones \n(Group 1)", width / 10, (height / 10) * 2);
-        text("Step 2: Make more drones, and fighter ships", width /10, (height / 10) * 3.25);
-        text("Step 3: Purchase upgrades to get stronger", width /10, (height / 10) * 4.25);
-        text("Step 4: Get the coveted `Jesse's Jest` \nUpgrade", width /10, (height / 10) * 5.25);
-        text("Step 5: KILL THOSE XENOS", width / 10, (height / 10) * 6.5);
+        text("Step 2: Make more drones, and fighter ships", width /10, (height / 10) * 3);
+        text("Step 3: Purchase upgrades to get stronger", width /10, (height / 10) * 3.75);
+        text("Step 4: Get the coveted `Jesse's Jest` Upgrade", width /10, (height / 10) * 4.5);
+        text("Step 5: KILL THOSE XENOS", width / 10, (height / 10) * 5.25);
 
+        textSize(18);
+        text("* The Player's view will follow the Mouse movement", width/10, (height / 10) * 7);
+        text("* The ships can be selected by click-to-drag \nselection / specified key for each ship", width / 10, (height / 10) * 7.75)
+        text("* Right Click for controlling the ship movement", width / 10, (height / 10) * 8.75);
 
-
+        tutorialAni.scale = 4;
+        scale(-1, 1)
+        animation(tutorialAni, -0.8 * width, (height / 10) * 5.75)
     }
 
     /**
@@ -129,7 +139,49 @@ class mainMenu {
      * Shows the credits on top of the pane 
      */
     showCredits() {
+        textAlign(CENTER, TOP);
+        fill('#d19f5a');
+        textFont(myfontB, 32);
+        text("ATTRIBUTION", width / 2, 0.25 * height);
+
+        textAlign(LEFT, TOP);
+        textFont(myfontB, 25);
+        //Categories
+        text("FONT", width/10, 0.35 * height);
+        text("BACKGROUND", width/10, 0.5 * height);
+        text("BACKGROUND MUSIC", width/10, 0.7 * height);
+        text("SOUND EFFECT", 0.6 * width, 0.35 * height);
+        text("GAME ASSETS", 0.6 * width, 0.5 * height);
+
+        fill('#ffe7d6');
+        textFont(myfont, 20);
+        //Font 
+        text("GGBotNet", width/10, 0.4 * height);
         
+        //Game assets
+        text("Deep-Fold", width/10, 0.55 * height);
+        text("kayillustrations", width/10, 0.6 * height);
+        
+        //Background music
+        text("TinyWorlds", width/10, 0.75 * height);
+        text("nene", width/10, 0.8 * height);
+        text("Wolfgang_", width/10, 0.85 * height);
+
+        //Sound effect
+        text("Fupi", 0.6 * width, 0.4 * height);
+        
+        //Game assets
+        text("FoozleCC", 0.6 * width, 0.55 * height);
+        text("Craftpix", 0.6 * width, 0.6 * height);
+        text("duckive", 0.6 * width, 0.65 * height);
+        text("Pixelsnorf", 0.6 * width, 0.7 * height);
+        text("alphawaves", 0.6 * width, 0.75 * height);
+        text("MattWalkden", 0.6 * width, 0.8 * height);
+        text("brullov", 0.6 * width, 0.85 * height);
+
+        //fill('#8b4049')
+        textFont(myfont, 27);
+        text("This game is created by ... ASSHOLES", width/10, 0.125* height);
     }
 
     /**

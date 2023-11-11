@@ -4,9 +4,11 @@ let myfont, myfontB;
 
 let loadingAni, loadingDone;
 
-let mainMenuBgImg, gameBgImg, miniFOV;
+let mainMenuBgImg;
 let offset_menuX = 0;
+let tutorialAni;
 
+let gameBgImg, miniFOV;
 let motherShipImg, droneShipImg, destroyerShipImg, cruiserShipImg, corsairShipImg, battleShipImg;
 let asteroidInitial, asteroidExplode, mineralImg, specialmineralImg;
 let missileImg, bulletImg, flameshotImg, explosionEffect, bigexplosionEffect, smallexplosionEffect;
@@ -18,7 +20,9 @@ let health;
 let winGame;
 let wonImg, lostImg;
 
-let pressedButton_sound;
+let cursorImg, pressedButton_sound;
+
+let menuMusic, gameMusic, wonMusic, lostMusic;
 
 let gameState = {
     loading: true,
@@ -248,6 +252,14 @@ function drawGameScreen() {
     if (data.asteroids.length < 100) {
         data.createAsteroid();
     }
+
+    //Selecting asteroid
+    cursor(ARROW);
+    for (let i=0; i<data.asteroids.length; i++) {
+        if (data.asteroids[i].mouse.hovering()) {
+            cursor(CROSS);
+        }
+    }
 }
 
 // =======  ===================================== END ========================================================
@@ -275,15 +287,27 @@ function preload() {
     myfont = loadFont('assets/font/PixeloidMono.ttf');
     myfontB = loadFont('assets/font/PixeloidSans-Bold.ttf');
 
-    //sound
+    //sound effect
     pressedButton_sound = loadSound('assets/sound/button/vgmenuhighlight.wav');
 
-    //Loading img
-    loadingAni = loadAni("assets/myassets/background/loading/loading1.png", { frameSize: [64, 64], frames: 4 })
-    loadingDone = loadAni("assets/myassets/background/loading/loading2.png", { frameSize: [64, 64], frames: 2 })
+    //background music
+    menuMusic = loadSound('assets/music/menuMusic.wav');
+    gameMusic = loadSound('assets/music/gameMusic.mp3');
+    wonMusic = loadSound('assets/music/wonMusic.ogg');
+    lostMusic = loadSound('assets/music/lostMusic.wav');
+    
+    //cursor
+    cursorImg = loadImage('assets/cursor/cursor.png');
 
-    //Background img
+    //Loading img
+    loadingAni = loadAni("assets/myassets/background/loading/loading1.png", { frameSize: [64, 64], frames: 4 });
+    loadingDone = loadAni("assets/myassets/background/loading/loading2.png", { frameSize: [64, 64], frames: 2 });
+
+    //Main Menu img
     mainMenuBgImg = loadImage("assets/myassets/background/mainmenu/mainmenu.png");
+    tutorialAni = loadAni("assets/myassets/background/mainmenu/tutorialAni.png", { frameSize: [64, 64], frames: 4 });
+
+    //Game img
     gameBgImg = loadImage("assets/myassets/background/game/game.png");
     miniFOV = loadImage("assets/myassets/background/minimap/clear.png");
 
@@ -329,8 +353,8 @@ function preload() {
     // Previously, a for loop like asteroids would put the digits in all sorts of orders. Not great when you need to display the corresponding number to the asset name..
 
     //End Game
-    wonImg = loadAni("assets/myassets/background/end/won/won.png", { frameSize: [64, 64], frames: 4 });
-    lostImg = loadImage("assets/myassets/background/end/lost/lost.png");
+    wonImg = loadImage("assets/myassets/background/end/won/won.png");
+    lostImg = loadAni("assets/myassets/background/end/lost/lost.png", { frameSize: [64, 64], frames: 4 });
 }
 
 function setup() {

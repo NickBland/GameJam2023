@@ -45,6 +45,9 @@ class loading {
 
     startButtonClicked() {
         pressedButton_sound.play();
+        menuMusic.setVolume(0.3);
+        menuMusic.loop();
+
         this.startButton.remove();
         this.loadingChar.remove();
         

@@ -173,14 +173,21 @@ class gameData {
     gameOver(losingTeam) {
         gameState.game = false;
         gameState.endScreen = true;
+        gameMusic.stop();
 
         if (losingTeam == data.playerShip) {
             console.log("Game Over, You Lose");
             winGame = false;
+            lostMusic.setVolume(0.3)
+            lostMusic.loop();
+            wonMusic.stop();
         }
         if (losingTeam == data.enemyShip) {
             console.log("Game Over, You Win");
             winGame = true;
+            wonMusic.setVolume(0.3)
+            wonMusic.loop();
+            lostMusic.stop();
         }
     }
 

@@ -167,6 +167,7 @@ class spriteFactory {
         asteroid.addAni('initial', asteroidInitial);
         asteroid.addAni('explode', asteroidExplode);
         asteroid.changeAni('initial');
+        asteroid.anis.frameDelay = 4;
 
         asteroid.ani.scale = d / 45;
 

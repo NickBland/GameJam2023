@@ -17,17 +17,28 @@ class end {
             textFont(myfontB, 36);
             textAlign(CENTER, CENTER);
             if (winGame) {
-                fill('#d19f5a')
-                text("Game Over! You Won", 0, -150)
-                wonImg.scale = 4
-                wonImg.frameDelay = 7
-                animation(wonImg, 0 ,0)
+                fill('#d19f5a');
+                text("Game Over! You Won", 0, -150);
+                wonImg.resize(254, 0);
+                image(wonImg, 0, 0);
+                
+                fill('#ffe7d6');
+                rect(110, -50, 180, 40, 10);
+                fill('black');
+                textSize(14);
+                text("Dead...", 110, -50);
             } else {
+                fill("#8b4049");
+                text("Game Over! You Lost", 0, -150);
+                lostImg.scale = 4;
+                lostImg.frameDelay = 7;
+                animation(lostImg, 0 ,0);
 
-                fill("#8b4049")
-                text("Game Over! You Lost", 0, -150)
-                lostImg.resize(254, 0)
-                image(lostImg, 0, 0)
+                fill('#ffe7d6');
+                rect(110, -50, 180, 40, 10);
+                fill('black');
+                textSize(14);
+                text("Haha Losers !!!", 110, -50);
             }
         }
         this.backgroundSprite.collider = 'n';
@@ -55,6 +66,11 @@ class end {
     }
 
     restartButtonClicked() {
+        pressedButton_sound.play();
+        wonMusic.stop();
+        lostMusic.stop();
+        menuMusic.loop();        
+
         this.restartButton.remove();
         this.backgroundSprite.remove();
 
