@@ -245,6 +245,7 @@ function drawGameScreen() {
     data.enemy.move();
     data.enemy.explore();
     data.enemy.progression();
+    data.enemy.hunt();
 
     data.combatHandling();
 
@@ -255,7 +256,7 @@ function drawGameScreen() {
 
     //Selecting asteroid
     cursor(ARROW);
-    for (let i=0; i<data.asteroids.length; i++) {
+    for (let i = 0; i < data.asteroids.length; i++) {
         if (data.asteroids[i].mouse.hovering()) {
             cursor(CROSS);
         }
@@ -295,7 +296,7 @@ function preload() {
     gameMusic = loadSound('assets/music/gameMusic.mp3');
     wonMusic = loadSound('assets/music/wonMusic.ogg');
     lostMusic = loadSound('assets/music/lostMusic.wav');
-    
+
     //cursor
     cursorImg = loadImage('assets/cursor/cursor.png');
 

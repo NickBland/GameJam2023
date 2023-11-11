@@ -192,7 +192,7 @@ class spriteFactory {
 
         projectile.changeAni('flameshot');
         projectile.anis.rotation = 90;
-        projectile.anis.scale=2;
+        projectile.anis.scale = 2;
         projectile.life = 60;
         return (projectile);
     }

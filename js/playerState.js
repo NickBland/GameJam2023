@@ -64,17 +64,17 @@ class playerState {
     }
 
     harvestResources(thisShip, thisAsteroid) {
-        if (frameCount % (thisShip.collectionSpeed*100) == 0) {
+        if (frameCount % (thisShip.collectionSpeed * 100) == 0) {
             thisShip.resources++;
             thisAsteroid.resources--;
-            if(thisShip.collectCrit >= random(101)){
+            if (thisShip.collectCrit >= random(101)) {
                 thisShip.resources++;
                 thisAsteroid.resources--;
             }
-            if (thisShip.specResChance>= random(101)) {
+            if (thisShip.specResChance >= random(101)) {
                 thisShip.specialResources++;
             }
-        } 
+        }
         if (thisAsteroid.resources <= 0) {
             thisAsteroid.collider = "n";
             for (let i = 0; i < this.drones.length; i++) {
@@ -102,8 +102,7 @@ class playerState {
                     nextTarget = data.asteroids[0];
                 }
                 for (let newAsteroid of data.asteroids) {
-                    let teamMotherShip = thisShip.team.ships[0];
-                    if ((dist(nextTarget.x, nextTarget.y, teamMotherShip.x, teamMotherShip.y) > dist(newAsteroid.x, newAsteroid.y, teamMotherShip.x, teamMotherShip.y)) && thisAsteroid != newAsteroid) {
+                    if ((dist(nextTarget.x, nextTarget.y, thisShip.x, thisShip.y) > dist(newAsteroid.x, newAsteroid.y, thisShip.x, thisShip.y)) && thisAsteroid != newAsteroid) {
                         nextTarget = newAsteroid;
                     }
                 }

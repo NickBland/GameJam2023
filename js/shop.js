@@ -155,9 +155,9 @@ class shop {
             columnImage.collider = "k";
             requiredAssets[i].resize(50, 0);
             requiredAssets[0].resize(30, 0);
-            requiredAssets[1].resize(60,0);
-            requiredAssets[2].resize(60,0);
-            
+            requiredAssets[1].resize(60, 0);
+            requiredAssets[2].resize(60, 0);
+
 
             columnImage.img = requiredAssets[i];
 
@@ -386,7 +386,7 @@ class shop {
                 this.upgradeText.subgroups[i].layer = 100000;
                 this.upgradeContent.subgroups[i].layer = 100000;
                 this.upgrade
-            } 
+            }
             if (i != this.selectedUpgrade) {
                 this.upgradeText.subgroups[i].visible = false;
                 this.upgradeNameBack[i].visible = false;

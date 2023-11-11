@@ -21,6 +21,9 @@ class enemyBehaviour {
     }
 
     collect() {
+        if (frameCount % 600 == 0) {
+            data.enemyShip.resources++;
+        }
         for (let thisShip of data.enemyShip.drones) {
             if (thisShip.target == null) {
                 data.enemyShip.getNewResourceTarget(data.asteroids[100]);
@@ -63,8 +66,20 @@ class enemyBehaviour {
 
                 if (thisShip.target != null) {
                     data.enemyShip.setDestination(thisShip.target.x, thisShip.target.y, thisShip);
-                    if (dist(thisShip.x, thisShip.y, thisShip.target.x, thisShip.target.y) > thisShip.range) {
+                    if (dist(thisShip.x, thisShip.y, thisShip.target.x, thisShip.target.y) > thisShip.range && thisShip.target != data.playerShip.ships[0]) {
                         thisShip.target = null;
+                    }
+                }
+            }
+        }
+    }
+
+    hunt() {
+        for (let thisShip of data.enemyShip.ships) {
+            if (thisShip.group != "mothership" && thisShip.group != "drone") {
+                if (frameCount % 120 == 0) {
+                    if (data.enemyShip.ships.length >= random(2000)) {
+                        thisShip.target = data.playerShip.ships[0];
                     }
                 }
             }
@@ -75,55 +90,55 @@ class enemyBehaviour {
         let thisState = data.enemyShip;
         //Ship construction
         switch (true) {
-            case thisState.drones.length < 3 && thisState.resources >= 20:
+            case thisState.drones.length < 5 && thisState.resources >= 20:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.corsairs.length < 1 && thisState.resources >= 30 && thisState.drones.length >= 3:
+            case thisState.corsairs.length < 3 && thisState.resources >= 30 && thisState.drones.length >= 5:
                 this.makePurchase("corsair", false, 30);
                 break;
 
-            case thisState.drones.length < 5 && thisState.resources >= 20 && thisState.corsairs.length >= 1:
+            case thisState.drones.length < 8 && thisState.resources >= 20 && thisState.corsairs.length >= 3:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.destroyers.length < 1 && thisState.resources >= 40 && thisState.drones.length >= 5:
+            case thisState.destroyers.length < 2 && thisState.resources >= 40 && thisState.drones.length >= 8:
                 this.makePurchase("destroyer", false, 40);
                 break;
 
-            case thisState.drones.length < 7 && thisState.resources >= 20 && thisState.destroyers.length >= 1:
+            case thisState.drones.length < 10 && thisState.resources >= 20 && thisState.destroyers.length >= 2:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.cruisers.length < 1 && thisState.resources >= 50 && thisState.drones.length >= 7:
+            case thisState.cruisers.length < 2 && thisState.resources >= 50 && thisState.drones.length >= 10:
                 this.makePurchase("cruiser", false, 50);
                 break;
 
-            case thisState.drones.length < 9 && thisState.resources >= 20 && thisState.cruisers.length >= 1:
+            case thisState.drones.length < 12 && thisState.resources >= 20 && thisState.cruisers.length >= 2:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.destroyers.length < 2 && thisState.resources >= 40 && thisState.drones.length >= 9:
+            case thisState.destroyers.length < 2 && thisState.resources >= 40 && thisState.drones.length >= 12:
                 this.makePurchase("destroyer", false, 40);
                 break;
 
-            case thisState.corsairs.length < 3 && thisState.resources >= 30 && thisState.destroyers.length >= 2:
+            case thisState.corsairs.length < 5 && thisState.resources >= 30 && thisState.destroyers.length >= 2:
                 this.makePurchase("corsair", false, 30);
                 break;
 
-            case thisState.drones.length < 11 && thisState.resources >= 20 && thisState.corsairs.length >= 3:
+            case thisState.drones.length < 15 && thisState.resources >= 20 && thisState.corsairs.length >= 5:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.battleships.length < 1 && thisState.resources >= 60 && thisState.drones.length >= 11:
+            case thisState.battleships.length < 1 && thisState.resources >= 60 && thisState.drones.length >= 15:
                 this.makePurchase("battleship", false, 60);
                 break;
 
-            case thisState.cruisers.length < 3 && thisState.resources >= 50 & thisState.battleships.length >= 1:
+            case thisState.cruisers.length < 4 && thisState.resources >= 50 & thisState.battleships.length >= 1:
                 this.makePurchase("cruiser", false, 50);
                 break;
 
-            case thisState.battleships.length < 2 && thisState.resources >= 60 && thisState.cruisers.length >= 3:
+            case thisState.battleships.length < 2 && thisState.resources >= 60 && thisState.cruisers.length >= 4:
                 this.makePurchase("battleship", false, 60);
                 break;
 
@@ -131,15 +146,15 @@ class enemyBehaviour {
                 this.makePurchase("destroyer", false, 40);
                 break;
 
-            case thisState.drones.length < 13 && thisState.resources >= 20 && thisState.destroyers.length >= 4:
+            case thisState.drones.length < 18 && thisState.resources >= 20 && thisState.destroyers.length >= 4:
                 this.makePurchase("drone", false, 20);
                 break;
 
-            case thisState.cruisers.length < 4 && thisState.resources >= 50 && thisState.drones.length >= 13:
+            case thisState.cruisers.length < 8 && thisState.resources >= 50 && thisState.drones.length >= 18:
                 this.makePurchase("cruiser", false, 50);
                 break;
 
-            case thisState.battleships.length < 20 && thisState.resources >= 60 && thisState.cruisers.length >= 4:
+            case thisState.battleships.length < 20 && thisState.resources >= 60 && thisState.cruisers.length >= 8:
                 this.makePurchase("battleship", false, 60);
                 break;
         }

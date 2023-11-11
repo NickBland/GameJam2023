@@ -175,14 +175,12 @@ class gameData {
         gameMusic.stop();
 
         if (losingTeam == data.playerShip) {
-            console.log("Game Over, You Lose");
             winGame = false;
             lostMusic.setVolume(0.3)
             lostMusic.loop();
             wonMusic.stop();
         }
         if (losingTeam == data.enemyShip) {
-            console.log("Game Over, You Win");
             winGame = true;
             wonMusic.setVolume(0.3)
             wonMusic.loop();
@@ -198,7 +196,7 @@ class gameData {
 
         switch (x) {
             case 0:
-                if(thisShip) {
+                if (thisShip) {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -212,7 +210,7 @@ class gameData {
                 break;
 
             case 1:
-                if(thisShip.group == "drone") {
+                if (thisShip.group == "drone") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -226,7 +224,7 @@ class gameData {
                 break;
 
             case 2:
-                if(thisShip.group == "corsiar") {
+                if (thisShip.group == "corsiar") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -240,7 +238,7 @@ class gameData {
                 break;
 
             case 3:
-                if(thisShip.group == "destroyer") {
+                if (thisShip.group == "destroyer") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -254,7 +252,7 @@ class gameData {
                 break;
 
             case 4:
-                if(thisShip.group == "cruiser") {
+                if (thisShip.group == "cruiser") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
@@ -268,7 +266,7 @@ class gameData {
                 break;
 
             case 5:
-                if(thisShip.group == "battleship") {
+                if (thisShip.group == "battleship") {
                     if (thisType == "percent") {
                         thisShip[thisAttribute] *= thisGrowth;
                     }
