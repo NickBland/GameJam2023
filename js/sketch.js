@@ -15,14 +15,14 @@ let harvestImg, upgradeImg, purchaseImg, generalUpgradeImg;
 let s_allships, s_drones, s_corsairs, s_destroyers, s_cruisers, s_battleships;
 let health;
 
-let winGame; 
+let winGame;
 let wonImg, lostImg;
 
 let pressedButton_sound;
 
 let gameState = {
-    loading: false,
-    mainMenu: true,
+    loading: true,
+    mainMenu: false,
     game: false,
     endScreen: false,
 }
