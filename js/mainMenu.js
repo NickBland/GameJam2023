@@ -118,7 +118,7 @@ class mainMenu {
         textSize(18);
         text("* The Player's view will follow the Mouse movement", width/10, (height / 10) * 7);
         text("* The ships can be selected by click-to-drag \nselection / specified key for each ship", width / 10, (height / 10) * 7.75)
-        text("* Right Click for controlling the ship movement", width / 10, (height / 10) * 8.75);
+        text("* Right Click to control the ship's position", width / 10, (height / 10) * 8.75);
 
         tutorialAni.scale = 4;
         scale(-1, 1)
