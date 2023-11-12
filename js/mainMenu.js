@@ -180,9 +180,9 @@ class mainMenu {
         text("brullov", 0.6 * width, 0.85 * height);
 
         //fill('#8b4049')
-        textFont(myfont, 27);
-        text("This game is created by ... ASSHOLES", width/10, 0.125* height);
-        text("Assholes: Thien, Nick and Jesse", width/10, 0.2* height);
+        textFont(myfont, 25);
+        text("This game is created by ... ASSHOLES", width/10, 0.1* height);
+        text("Assholes: Thien, Nick and Jesse", width/10, 0.15* height);
     }
 
     /**
