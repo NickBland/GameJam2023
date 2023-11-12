@@ -78,7 +78,7 @@ class enemyBehaviour {
         for (let thisShip of data.enemyShip.ships) {
             if (thisShip.group != "mothership" && thisShip.group != "drone") {
                 if (frameCount % 120 == 0) {
-                    if (data.enemyShip.ships.length >= random(2000)) {
+                    if (data.enemyShip.ships.length >= random(1000)) {
                         thisShip.target = data.playerShip.ships[0];
                     }
                 }
