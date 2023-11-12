@@ -2,7 +2,7 @@
 # JamesJam 2023 - Group 8
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![wakatime](https://wakatime.com/badge/user/1d38e8c4-1b41-48a3-be33-c2f87af55349/project/018b7ed7-7042-4349-b0e3-6e8c5203fdda.svg)](https://wakatime.com/badge/user/1d38e8c4-1b41-48a3-be33-c2f87af55349/project/018b7ed7-7042-4349-b0e3-6e8c5203fdda)
+[![wakatime](https://wakatime.com/badge/user/1d38e8c4-1b41-48a3-be33-c2f87af55349/project/018b7ed7-7042-4349-b0e3-6e8c5203fdda.svg)](https://wakatime.com/@1d38e8c4-1b41-48a3-be33-c2f87af55349/projects/xpgtxjdvat?start=2023-11-06&end=2023-11-12)
 [![Static Badge](https://img.shields.io/badge/P5Play-3.15-brightgreen)](https://libraries.io/npm/p5play/3.15.1)
 [![Static Badge](https://img.shields.io/badge/P5.js-1.7.0-brightgreen)](https://libraries.io/bower/p5js/v1.7.0)
 
