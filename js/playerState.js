@@ -75,7 +75,7 @@ class playerState {
                 thisShip.specialResources++;
             }
         }
-        if (thisAsteroid.resources <= 0) {
+        if (thisAsteroid.resources <= 0 && thisAsteroid.life > 100) {
             thisAsteroid.collider = "n";
             for (let i = 0; i < this.drones.length; i++) {
                 if (this.drones[i].target == thisAsteroid) {
