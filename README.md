@@ -28,7 +28,7 @@ Group 8
 
 - [@NickBland](https://www.github.com/NickBland)
 - [@Jesse-Caitlyn-James](https://www.github.com/Jesse-Caitlyn-James)
-- [@Alice25092003](https://www.github.com/Alice25092003)
+- [@Alice-Bui](https://www.github.com/Alice-Bui)
 
 James (GameJam Coordinator)
 
