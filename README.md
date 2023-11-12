@@ -12,6 +12,8 @@ In Homeworld, the player has a central, large, ship which commands smaller ships
 
 In the JamesJam, groups are given two weeks to construct a game given the theme using P5.js. This year, P5Play v3 was released, meaning that groups had a larger range of features and options available to utilise.
 
+In case the link for the hosted final version ever dies, the github pages version can be found here -> https://nickbland.github.io/GameJam2023/
+
 ## Difficulties
 
 Overall, our group did not experience too many gamebreaking, or development slowing issues. However, some annoyances inside the way p5 was written did hinder the development of some features. For example, p5play draws sprites at the end of the p5 draw cycle in its own post function. While this normally is not an issue, it does mean that sprites will be overlayed over any vanilla p5 functions such as rect or line. In particular, the UI contains elements of regular text on top of a transparent rectangle. This meant that text would always appear behind the background, or asteroids would move in front of the text, making it incredibly hard to read.
